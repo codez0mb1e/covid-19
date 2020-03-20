@@ -5,7 +5,7 @@ ___Attempts to analyze the situation around the [2019-nCoV](https://en.wikipedia
 ## Steps
 
 1. Upload the latest data fro [Kaggle API](https://www.kaggle.com/docs/api): 
-`kaggle datasets download -d sudalairajkumar/novel-corona-virus-2019-dataset`
+`kaggle datasets download -d sudalairajkumar/novel-corona-virus-2019-dataset -p ../input/`
 
 2. ...
 
