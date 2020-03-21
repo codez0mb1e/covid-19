@@ -23,7 +23,12 @@
 1. Tomas Pueyo. [Coronavirus: Why You Must Act Now](https://medium.com/@tomaspueyo/coronavirus-act-today-or-people-will-die-f4d3d9cd99ca), Medium.
 1. COVID-19 Data Resource Hub: [COVID-19 Cases Dashboard](https://public.tableau.com/profile/covid.19.data.resource.hub#!/vizhome/COVID-19Cases_15840488375320/COVID-19Cases), Tableau.
 1. [COVID-19 Cases Map](https://yandex.ru/web-maps/covid19), Yandex.
+1. [COVID-19 Animated Spread Map](https://www.healthmap.org/covid-19/), healthmap.org.
 
+#### Timeline
+
+1. [Timeline of the 2019–20 coronavirus pandemic](https://en.wikipedia.org/wiki/Timeline_of_the_2019%E2%80%9320_coronavirus_pandemic), Wikipedia.
+2. Huang C., Wang Y., et. al. [Timeline of the coronavirus onset](https://els-jbs-prod-cdn.literatumonline.com/pb/assets/raw/Lancet/infographics/coronavirus/Coronavirus_MedianTimeline_Infographic-1584612208650.jpg), The Lancet.
 
 #### Datasets
 
@@ -31,7 +36,7 @@
 1. [Coronavirus disease (COVID-2019) situation reports](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports), World Health Organization.
 1. [COVID-19 Open Research Dataset (CORD-19)](https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge), Kaggle.
 1. [COVID-19 Complete Dataset (Updated every 24hrs)](https://www.kaggle.com/imdevskp/corona-virus-report), Kaggle.
-
+1. [COVID-19 Data Repository by Johns Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19), GitHub.
 
 Country level datasets:
 
