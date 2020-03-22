@@ -1,9 +1,12 @@
 ---
 title: "COVID-19 Analytics"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   github_document:
     toc: true
     toc_depth: 2
+    fig_width: 12 
+    fig_height: 8 
 ---
 
 ```{r setup, include=FALSE}
@@ -11,10 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-
-## Import dependencies and read config
-
-```{r include=FALSE}
+```{r import_dependecies, include=FALSE}
 options(max.print = 1e3, scipen = 999, width = 1e2)
 options(stringsAsFactors = F)
 
@@ -34,7 +34,14 @@ suppressPackageStartupMessages({
 ```
 
 
+```{r set_params, include=FALSE}
+caption <- ""
+```
+
+
 ## Load dataset
+
+Get datasets list:
 
 ```{r}
 input_data_container <- "../input/novel-corona-virus-2019-dataset.zip"
@@ -42,19 +49,32 @@ input_data_container <- "../input/novel-corona-virus-2019-dataset.zip"
 print(
   as.character(unzip(input_data_container, list = T)$Name)
 )
+```
 
-
+Load COVID-19 data:
+```{r}
 covid_data <- read.csv(unz(input_data_container, "covid_19_data.csv"), 
                        na.strings = c("NA", "None", ""),
                        header = T, sep = ",")
 
-covid_data %>% as_tibble
+```
+
+Data structure:
+```{r}
+str(covid_data)
+```
+
+
+View data:
+```{r}
+covid_data %>% sample_n(100) %>% as_tibble
 ```
 
 
 ## Preprocessing data
 
 ```{r}
+# repair names
 names(covid_data) <- names(covid_data) %>% str_replace_all(fixed("."), "_") %>% str_to_lower
 
 covid_data %<>% 
@@ -79,7 +99,7 @@ covid_data %<>%
 covid_data %>% as_tibble
 ```
 
-Get data structure:
+Get data structure after preprocessing:
 ```{r}
 covid_data %>% skim_to_wide
 ```
@@ -88,7 +108,11 @@ covid_data %>% skim_to_wide
 
 ## COVID-19 spread
 
+Get virus spread statistics grouped by `area`:
+
 ### Prepare data
+
+Calculate total confirmed, deaths, and recovered cases:
 
 ```{r}
 spread_df <- covid_data %>% 
@@ -99,8 +123,7 @@ spread_df <- covid_data %>%
     confirmed_total = sum(confirmed),
     deaths_total = sum(deaths),
     recovered_total = sum(recovered)
-  ) %>% 
-  mutate(deaths_total = -deaths_total)
+  )
 
 spread_df %>% arrange(desc(observation_date))
 ```
@@ -112,16 +135,18 @@ spread_df %>% arrange(desc(observation_date))
 ggplot(spread_df, aes(observation_date)) +
   
   geom_col(aes(y = recovered_total), alpha = .6, fill = "gold") +
-  geom_col(aes(y = deaths_total), alpha = .6, fill = "black") +
+  geom_col(aes(y = -deaths_total), alpha = .6, fill = "black") +
   geom_line(aes(y = confirmed_total, color = area), size = .75) +
 
   scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
   scale_color_discrete(name = "Infected cases") +
   
+  #scale_y_continuous(trans = "log2") +
+  
   labs(x = "", y = "Number of cases", 
        title = "COVID-19 Spread", 
        subtitle = "Virus spread by Hubei, China (without Hubei), US, and Rest of World. \n* Lines - confirmed cases in area; gold bar - all recovered cases; black bar - all deaths cases.", 
-       caption = "") +
+       caption = caption) +
   
   theme_minimal() +
   theme(legend.position = "top")
@@ -129,7 +154,9 @@ ggplot(spread_df, aes(observation_date)) +
 
 
 
-## Daily Dynamics of Infection
+## Dynamics of Infection
+
+Get daily dynamics of the number of infected and recovered cases.
 
 ### Prepare data
 
@@ -142,7 +169,7 @@ covid_daily <- spread_df %>%
   ungroup() %>% 
   transmute(
     area, observation_date,
-    retired_per_day = recovered_total_per_day + abs(deaths_total_per_day),
+    retired_per_day = recovered_total_per_day + deaths_total_per_day,
     infected_per_day = confirmed_total_per_day
   ) %>% 
   mutate_at(
@@ -160,16 +187,16 @@ covid_daily %>%
 
 ```{r}
 ggplot(covid_daily, aes(x = observation_date)) +
-  geom_col(aes(y = retired_per_day), fill = "gold", alpha = .7) +
-  geom_col(aes(y = -infected_per_day), fill = "black", alpha = .7) +
-  geom_smooth(aes(y = retired_per_day - infected_per_day), method = "loess", color = "grey", alpha = .25) +
+  geom_col(aes(y = -retired_per_day), fill = "gold", alpha = .7) +
+  geom_col(aes(y = infected_per_day), fill = "black", alpha = .7) +
+  geom_smooth(aes(y = infected_per_day - retired_per_day), method = "loess", color = "grey", alpha = .25) +
   
   facet_grid(area ~ ., scale = "free") +
   
-  labs(title = "Daily Dynamics of Infection", 
-       subtitle = "Daily dynamics by Hubei, China (without Hubei), US, and Rest of World. \n* Lines - infected minus healed or deaths cases; gold bar - healed or deaths cases; black bar - infected cases.", 
+  labs(title = "Daily Dynamic of Infection", 
+       subtitle = "Daily dynamics by Hubei, China (without Hubei), US, and Rest of World. \n* Lines - infected minus healed and deaths cases; gold bar - healed plus deaths cases; black bar - infected cases.", 
        x = "", y = "Number of cases per day",
-       caption = "") +
+       caption = caption) +
   
   theme_minimal()
 ```
@@ -223,7 +250,7 @@ ggplot(mortality_df, aes(x = n_days)) +
   labs(x = "Number of days from 1-st deaths case", y = "Mortality rate", 
        title = "COVID-19 Mortality Rate", 
        subtitle = "Rate by Hubei, China (without Hubei), US, and Rest of World. \n* Grey area - deaths to recovered cases ratio, black area - deaths to confirmed cases ratio.", 
-       caption = "") +
+       caption = caption) +
   
   theme_minimal()
 ```
