@@ -7,7 +7,7 @@
 1. Upload the latest data from [Kaggle API](https://www.kaggle.com/docs/api): 
 `kaggle datasets download -d sudalairajkumar/novel-corona-virus-2019-dataset -p ../input/`
 
-1. Run [covid_19_data.Rmd](src/covid_19_data.Rmd) or [**see results**](src/covid_19_data.md).
+1. Run [covid_19_data.Rmd](src/covid-19-data.Rmd) or [**see results**](src/covid-19-data.md).
 
 
 ## References
