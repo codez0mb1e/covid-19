@@ -70,8 +70,9 @@ covid_data %>% skim_tee
 
 
 
-# Wuhan vs China vs Rest of World ----
-## Prepare data
+# COVID-19 spread ----
+
+# Prepare data
 spread_df <- covid_data %>% 
   group_by(
     area, observation_date
@@ -83,33 +84,78 @@ spread_df <- covid_data %>%
   ) %>% 
   mutate(deaths_total = -deaths_total)
 
-spread_df
+spread_df %>% arrange(desc(observation_date))
 
 
-## Hubei, China (without Hubei), US, and Rest of World virus spread
+# Visualize
 ggplot(spread_df, aes(observation_date)) +
   
   geom_col(aes(y = recovered_total), alpha = .6, fill = "gold") +
   geom_col(aes(y = deaths_total), alpha = .6, fill = "black") +
-  geom_line(aes(y = confirmed_total, color = area), alpha = .85, size = 1) +
+  geom_line(aes(y = confirmed_total, color = area), size = .75) +
 
   scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
+  scale_color_discrete(name = "Infected cases") +
   
   labs(x = "", y = "Number of cases", 
        title = "COVID-19 Spread", 
-       subtitle = "Virus spread by Hubei, China (without Hubei), US, and Rest of World \nGreen bar - recovered cases, black bar - deaths cases.", 
+       subtitle = "Virus spread by Hubei, China (without Hubei), US, and Rest of World. \n* Lines - confirmed cases in area; gold bar - all recovered cases; black bar - all deaths cases.", 
        caption = "") +
   
   theme_minimal() +
-  theme(legend.position = "top", 
-        legend.direction = "horizontal", 
-        legend.title = element_blank())
+  theme(legend.position = "top")
+
+
+
+## ----
+
+# Prepare data
+covid_daily <- spread_df %>% 
+  mutate_at(
+    vars(ends_with("_total")),
+    list("per_day" = ~ (. - lag(.)))
+  ) %>% 
+  ungroup() %>% 
+  transmute(
+    area, observation_date,
+    retired_per_day = recovered_total_per_day + abs(deaths_total_per_day),
+    infected_per_day = confirmed_total_per_day
+  ) %>% 
+  mutate_at(
+    vars(ends_with("_per_day")), 
+    list(~ replace_na(., 0))
+  )
+  
+covid_daily %>% 
+  filter(area == "Hubei") %>% 
+  arrange(desc(observation_date))
+
+
+# Visualize
+ggplot(covid_daily, aes(x = observation_date)) +
+  geom_col(aes(y = retired_per_day), fill = "gold", alpha = .7) +
+  geom_col(aes(y = -infected_per_day), fill = "black", alpha = .7) +
+  geom_smooth(aes(y = retired_per_day - infected_per_day), method = "loess", color = "grey", alpha = .25) +
+  
+  facet_grid(area ~ ., scale = "free") +
+  
+  labs(title = "Daily Dynamics of Infection", 
+       subtitle = "Daily dynamics by Hubei, China (without Hubei), US, and Rest of World. \n* Lines - infected minus healed or deaths cases; gold bar - healed or deaths cases; black bar - infected cases.", 
+       x = "", y = "Number of cases per day",
+       caption = "") +
+  
+  theme_minimal()
+
+
+ggplot(covid_daily) +
+  geom_jitter(aes(x = retired_per_day, y = infected_per_day, color = area))
+  
 
 
   
 # Mortality rate ----
 
-## Prepare data
+# Prepare data
 mortality_df <- covid_data %>% 
   group_by(area, observation_date) %>% 
   summarise(
@@ -140,7 +186,7 @@ mortality_df %>%
 
 
 
-## Mortality rate visualization
+# Visualize
 ggplot(mortality_df, aes(x = n_days)) +
   geom_area(aes(y = recovered_deaths_total), alpha = .5, fill = "grey") +
   geom_area(aes(y = confirmed_deaths_rate), alpha = .75, fill = "black") +
@@ -151,7 +197,7 @@ ggplot(mortality_df, aes(x = n_days)) +
   
   labs(x = "Number of days from 1-st deaths case", y = "Mortality rate", 
        title = "COVID-19 Mortality Rate", 
-       subtitle = "Rate by Hubei, China (without Hubei), US, and Rest of World \nGrey area - deaths to recovered cases, black area - deaths to confirmed cases", 
+       subtitle = "Rate by Hubei, China (without Hubei), US, and Rest of World. \n* Grey area - deaths to recovered cases ratio, black area - deaths to confirmed cases ratio.", 
        caption = "") +
   
   theme_minimal()
@@ -167,7 +213,7 @@ ggplot(mortality_df, aes(x = n_days)) +
   
   labs(x = "Number of days from 1-st deaths case", y = "Mortality rate", 
        title = "COVID-19 Mortality Rate", 
-       subtitle = "Rate by Hubei, China (without Hubei), US, and Rest of World", 
+       subtitle = "Deaths to recovered cases ratio by Hubei, China (without Hubei), US, and Rest of World", 
        caption = "") +
   
   theme_minimal() +
