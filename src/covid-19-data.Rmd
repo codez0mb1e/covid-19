@@ -194,7 +194,7 @@ ggplot(covid_daily, aes(x = observation_date)) +
   facet_grid(area ~ ., scale = "free") +
   
   labs(title = "Daily Dynamic of Infection", 
-       subtitle = "Daily dynamics by Hubei, China (without Hubei), US, and Rest of World. \n* Lines - infected minus healed and deaths cases; gold bar - healed plus deaths cases; black bar - infected cases.", 
+       subtitle = "Daily dynamics by Hubei, China (without Hubei), US, and Rest of World. \n* Lines - active (infected minus healed and deaths) cases; gold bar - healed plus deaths cases; black bar - infected cases.", 
        x = "", y = "Number of cases per day",
        caption = caption) +
   
@@ -217,22 +217,23 @@ mortality_df <- covid_data %>%
   ungroup() %>% 
   inner_join(
     covid_data %>% 
-      filter(deaths > 0) %>% 
+      filter(deaths > 10) %>% 
       group_by(area) %>% 
-      summarise(first_observation_date = min(observation_date)),
+      summarise(reference_date = min(observation_date)),
     by = "area"
   ) %>% 
   mutate(
     confirmed_deaths_rate = deaths_total/confirmed_total,
-    recovered_deaths_total = deaths_total/recovered_total,
-    n_days = observation_date %>% difftime(first_observation_date, units = "days") %>% as.numeric
+    recovered_deaths_rate = deaths_total/(recovered_total + deaths_total),
+    n_days = observation_date %>% difftime(reference_date, units = "days") %>% as.numeric
   ) %>% 
   filter(n_days >= 0)
 
 
 mortality_df %>% 
   filter(area == "US") %>% 
-  arrange(desc(observation_date))
+  arrange(desc(observation_date)) %>% 
+  select(area, ends_with("_date"), recovered_total, contains("deaths_"))
 ```
 
 
@@ -240,16 +241,16 @@ mortality_df %>%
 
 ```{r}
 ggplot(mortality_df, aes(x = n_days)) +
-  geom_area(aes(y = recovered_deaths_total), alpha = .5, fill = "grey") +
-  geom_area(aes(y = confirmed_deaths_rate), alpha = .75, fill = "black") +
+  geom_area(aes(y = recovered_deaths_rate), alpha = .75, fill = "gold") +
+  geom_area(aes(y = confirmed_deaths_rate), fill = "grey") +
   
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   
-  facet_wrap(area ~ ., scales = "free") +
+  facet_grid(area ~ ., scales = "free") +
   
-  labs(x = "Number of days from 1-st deaths case", y = "Mortality rate", 
+  labs(x = "Number of days after 10-th deaths case", y = "Mortality rate", 
        title = "COVID-19 Mortality Rate", 
-       subtitle = "Rate by Hubei, China (without Hubei), US, and Rest of World. \n* Grey area - deaths to recovered cases ratio, black area - deaths to confirmed cases ratio.", 
+       subtitle = "Rate by Hubei, China (without Hubei), US, and Rest of World. \n* Gold area - deaths to recovered cases ratio, grey area - deaths to confirmed cases ratio.", 
        caption = caption) +
   
   theme_minimal()
@@ -258,20 +259,38 @@ ggplot(mortality_df, aes(x = n_days)) +
 ```{r}
 ggplot(mortality_df, aes(x = n_days)) +
   geom_line(aes(y = confirmed_deaths_rate, color = area), size = 1, alpha = .75) +
-  
   geom_hline(aes(yintercept = mean(mortality_df$confirmed_deaths_rate)), linetype = "dashed", color = "red", alpha = .75) +
   annotate(geom = "text", label = "Mean mortality rate (all time)", x = 4, y = mean(mortality_df$confirmed_deaths_rate), vjust = -1) +
 
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   
-  labs(x = "Number of days from first deaths case", y = "Mortality rate", 
+  labs(x = "Number of days after 10-th deaths case", y = "Mortality rate", 
        title = "COVID-19 Mortality Rate", 
-       subtitle = "Deaths to recovered cases ratio by Hubei, China (without Hubei), US, and Rest of World", 
-       caption = "") +
+       subtitle = "Deaths to confirmed cases ratio by Hubei, China (without Hubei), US, and Rest of World", 
+       caption = caption) +
   
   theme_minimal() +
   theme(legend.position = "top", 
         legend.title = element_blank())
 
 ```
+
+```{r}
+ggplot(mortality_df, aes(x = n_days)) +
+  geom_line(aes(y = recovered_deaths_rate, color = area), size = 1, alpha = .75) +
+  geom_hline(aes(yintercept = mean(mortality_df$recovered_deaths_rate)), linetype = "dashed", color = "red", alpha = .75) +
+  annotate(geom = "text", label = "Mean mortality rate (all time)", x = 4, y = mean(mortality_df$confirmed_deaths_rate), vjust = -1) +
+
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+  
+  labs(x = "Number of days after 10-th deaths case", y = "Mortality rate", 
+       title = "COVID-19 Mortality Rate", 
+       subtitle = "Deaths to recovered cases ratio by Hubei, China (without Hubei), US, and Rest of World", 
+       caption = caption) +
+  
+  theme_minimal() +
+  theme(legend.position = "top", 
+        legend.title = element_blank())
+```
+
 
