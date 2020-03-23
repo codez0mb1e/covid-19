@@ -134,18 +134,16 @@ spread_df %>% arrange(desc(observation_date))
 ```{r}
 ggplot(spread_df, aes(observation_date)) +
   
-  geom_col(aes(y = recovered_total), alpha = .6, fill = "gold") +
-  geom_col(aes(y = -deaths_total), alpha = .6, fill = "black") +
-  geom_line(aes(y = confirmed_total, color = area), size = .75) +
+  geom_col(aes(y = confirmed_total), alpha = .5, fill = "grey") +
+  geom_col(aes(y = recovered_total), alpha = .75, fill = "gold") +
+  geom_col(aes(y = -deaths_total), alpha = .75, fill = "black") +
 
   scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
   scale_color_discrete(name = "Infected cases") +
-  
-  #scale_y_continuous(trans = "log2") +
-  
+
   labs(x = "", y = "Number of cases", 
        title = "COVID-19 Spread", 
-       subtitle = "Virus spread by Hubei, China (without Hubei), US, and Rest of World. \n* Lines - confirmed cases in area; gold bar - all recovered cases; black bar - all deaths cases.", 
+       subtitle = "Virus spread by Hubei, China (without Hubei), US, and Rest of World. \n* Grey - all confirmed cases; gold bar - all recovered cases; black bar - all deaths cases.", 
        caption = caption) +
   
   theme_minimal() +
@@ -242,7 +240,7 @@ mortality_df %>%
 ```{r}
 ggplot(mortality_df, aes(x = n_days)) +
   geom_area(aes(y = recovered_deaths_rate), alpha = .75, fill = "gold") +
-  geom_area(aes(y = confirmed_deaths_rate), alpha = .9, fill = "black") +
+  geom_area(aes(y = confirmed_deaths_rate), alpha = .75, fill = "black") +
   
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   
