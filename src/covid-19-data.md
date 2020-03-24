@@ -1,6 +1,6 @@
 COVID-19 Analytics
 ================
-23 March, 2020
+24 March, 2020
 
 ## Load dataset
 
@@ -32,7 +32,7 @@ Data structure:
 str(covid_data)
 ```
 
-    ## 'data.frame':    7926 obs. of  8 variables:
+    ## 'data.frame':    11341 obs. of  8 variables:
     ##  $ SNo            : int  1 2 3 4 5 6 7 8 9 10 ...
     ##  $ ObservationDate: chr  "01/22/2020" "01/22/2020" "01/22/2020" "01/22/2020" ...
     ##  $ Province.State : chr  "Anhui" "Beijing" "Chongqing" "Fujian" ...
@@ -49,18 +49,18 @@ covid_data %>% sample_n(100) %>% as_tibble
 ```
 
     ## # A tibble: 100 x 8
-    ##      SNo ObservationDate Province.State     Country.Region Last.Update    Confirmed Deaths Recovered
-    ##    <int> <chr>           <chr>              <chr>          <chr>              <dbl>  <dbl>     <dbl>
-    ##  1   930 02/07/2020      Guizhou            Mainland China 2020-02-07T11…        81      1         6
-    ##  2  2343 02/25/2020      <NA>               Philippines    2020-02-12T07…         3      1         1
-    ##  3  3348 03/04/2020      Washington County… US             2020-03-03T03…         2      0         0
-    ##  4   740 02/04/2020      Queensland         Australia      2020-02-04T16…         3      0         0
-    ##  5  7577 03/21/2020      <NA>               Mauritania     2020-03-19T02…         2      0         0
-    ##  6  3141 03/03/2020      <NA>               Vietnam        2020-02-25T08…        16      0        16
-    ##  7  5066 03/12/2020      District of Colum… US             2020-03-11T22…        10      0         0
-    ##  8  2374 02/25/2020      San Antonio, TX    US             2020-02-13T18…         1      0         0
-    ##  9  3287 03/04/2020      King County, WA    US             2020-03-04T19…        31      9         1
-    ## 10  4618 03/10/2020      <NA>               Azerbaijan     2020-03-10T16…        11      0         0
+    ##      SNo ObservationDate Province.State    Country.Region Last.Update     Confirmed Deaths Recovered
+    ##    <int> <chr>           <chr>             <chr>          <chr>               <dbl>  <dbl>     <dbl>
+    ##  1  2289 02/25/2020      Zhejiang          Mainland China 2020-02-25T09:…      1205      1       808
+    ##  2  1054 02/09/2020      Zhejiang          Mainland China 2020-02-09T12:…      1075      0       201
+    ##  3  9968 03/23/2020      Nebraska          US             2020-03-23 23:…         0      0         0
+    ##  4  8525 03/23/2020      South Carolina    US             2020-03-23 23:…         1      0         0
+    ##  5  4473 03/09/2020      Jefferson County… US             2020-03-07T16:…         1      0         0
+    ##  6  2376 02/25/2020      Tempe, AZ         US             2020-02-25T21:…         1      0         1
+    ##  7  5247 03/13/2020      <NA>              Belarus        2020-03-11T20:…        27      0         3
+    ##  8  9394 03/23/2020      Minnesota         US             2020-03-23 23:…         0      0         0
+    ##  9  5244 03/13/2020      <NA>              Nigeria        2020-03-11T20:…         2      0         0
+    ## 10  5650 03/15/2020      Jiangxi           Mainland China 2020-03-12T02:…       935      1       934
     ## # … with 90 more rows
 
 ## Preprocessing data
@@ -91,7 +91,7 @@ covid_data %<>%
 covid_data %>% as_tibble
 ```
 
-    ## # A tibble: 7,926 x 9
+    ## # A tibble: 11,341 x 9
     ##      sno observation_date province_state country_region last_update         confirmed deaths
     ##    <int> <date>           <chr>          <chr>          <dttm>                  <dbl>  <dbl>
     ##  1     1 2020-01-22       Anhui          Mainland China 2020-01-22 17:00:00         1      0
@@ -104,7 +104,7 @@ covid_data %>% as_tibble
     ##  8     8 2020-01-22       Guizhou        Mainland China 2020-01-22 17:00:00         1      0
     ##  9     9 2020-01-22       Hainan         Mainland China 2020-01-22 17:00:00         4      0
     ## 10    10 2020-01-22       Hebei          Mainland China 2020-01-22 17:00:00         1      0
-    ## # … with 7,916 more rows, and 2 more variables: recovered <dbl>, area <fct>
+    ## # … with 11,331 more rows, and 2 more variables: recovered <dbl>, area <fct>
 
 Get data structure after preprocessing:
 
@@ -115,15 +115,15 @@ covid_data %>% skim_to_wide
     ## # A tibble: 9 x 20
     ##   type  variable missing complete n     min   max   empty n_unique median top_counts ordered mean 
     ##   <chr> <chr>    <chr>   <chr>    <chr> <chr> <chr> <chr> <chr>    <chr>  <chr>      <chr>   <chr>
-    ## 1 char… country… 0       7926     7926  2     32    0     200      <NA>   <NA>       <NA>    <NA> 
-    ## 2 char… provinc… 3436    4490     7926  2     43    0     280      <NA>   <NA>       <NA>    <NA> 
-    ## 3 Date  observa… 0       7926     7926  2020… 2020… <NA>  61       2020-… <NA>       <NA>    <NA> 
-    ## 4 fact… area     0       7926     7926  <NA>  <NA>  <NA>  4        <NA>   Res: 4420… FALSE   <NA> 
-    ## 5 inte… sno      0       7926     7926  <NA>  <NA>  <NA>  <NA>     <NA>   <NA>       <NA>    3963…
-    ## 6 nume… confirm… 0       7926     7926  <NA>  <NA>  <NA>  <NA>     <NA>   <NA>       <NA>    655.…
-    ## 7 nume… deaths   0       7926     7926  <NA>  <NA>  <NA>  <NA>     <NA>   <NA>       <NA>    " 22…
-    ## 8 nume… recover… 0       7926     7926  <NA>  <NA>  <NA>  <NA>     <NA>   <NA>       <NA>    237.…
-    ## 9 POSI… last_up… 0       7926     7926  2020… 2020… <NA>  1860     2020-… <NA>       <NA>    <NA> 
+    ## 1 char… country… 0       11341    11341 2     32    0     203      <NA>   <NA>       <NA>    <NA> 
+    ## 2 char… provinc… 3598    7743     11341 2     43    0     284      <NA>   <NA>       <NA>    <NA> 
+    ## 3 Date  observa… 0       11341    11341 2020… 2020… <NA>  62       2020-… <NA>       <NA>    <NA> 
+    ## 4 fact… area     0       11341    11341 <NA>  <NA>  <NA>  4        <NA>   US: 4796,… FALSE   <NA> 
+    ## 5 inte… sno      0       11341    11341 <NA>  <NA>  <NA>  <NA>     <NA>   <NA>       <NA>    5671 
+    ## 6 nume… confirm… 0       11341    11341 <NA>  <NA>  <NA>  <NA>     <NA>   <NA>       <NA>    491.…
+    ## 7 nume… deaths   0       11341    11341 <NA>  <NA>  <NA>  <NA>     <NA>   <NA>       <NA>    " 17…
+    ## 8 nume… recover… 0       11341    11341 <NA>  <NA>  <NA>  <NA>     <NA>   <NA>       <NA>    174.…
+    ## 9 POSI… last_up… 0       11341    11341 2020… 2020… <NA>  1897     2020-… <NA>       <NA>    <NA> 
     ## # … with 7 more variables: sd <chr>, p0 <chr>, p25 <chr>, p50 <chr>, p75 <chr>, p100 <chr>,
     ## #   hist <chr>
 
@@ -149,21 +149,21 @@ spread_df <- covid_data %>%
 spread_df %>% arrange(desc(observation_date))
 ```
 
-    ## # A tibble: 244 x 5
+    ## # A tibble: 248 x 5
     ## # Groups:   area [4]
     ##    area                observation_date confirmed_total deaths_total recovered_total
     ##    <fct>               <date>                     <dbl>        <dbl>           <dbl>
-    ##  1 China without Hubei 2020-03-22                 13260          117           12819
-    ##  2 Hubei               2020-03-22                 67800         3144           59433
-    ##  3 Rest of World       2020-03-22                221621        10956           25452
-    ##  4 US                  2020-03-22                 33276          417             178
-    ##  5 China without Hubei 2020-03-21                 13214          116           12803
-    ##  6 Hubei               2020-03-21                 67800         3139           58946
-    ##  7 Rest of World       2020-03-21                198021         9411           19756
-    ##  8 US                  2020-03-21                 25493          307             171
-    ##  9 China without Hubei 2020-03-20                 13177          116           12776
-    ## 10 Hubei               2020-03-20                 67800         3133           58382
-    ## # … with 234 more rows
+    ##  1 China without Hubei 2020-03-23                 13316          117           12827
+    ##  2 Hubei               2020-03-23                 67800         3153           59882
+    ##  3 Rest of World       2020-03-23                253504        12675           28249
+    ##  4 US                  2020-03-23                 43667          552               0
+    ##  5 China without Hubei 2020-03-22                 13260          117           12819
+    ##  6 Hubei               2020-03-22                 67800         3144           59433
+    ##  7 Rest of World       2020-03-22                221621        10956           25452
+    ##  8 US                  2020-03-22                 33276          417             178
+    ##  9 China without Hubei 2020-03-21                 13214          116           12803
+    ## 10 Hubei               2020-03-21                 67800         3139           58946
+    ## # … with 238 more rows
 
 ### Visualize
 
@@ -216,20 +216,20 @@ covid_daily %>%
   arrange(desc(observation_date))
 ```
 
-    ## # A tibble: 61 x 4
+    ## # A tibble: 62 x 4
     ##    area  observation_date retired_per_day infected_per_day
     ##    <fct> <date>                     <dbl>            <dbl>
-    ##  1 Hubei 2020-03-22                   492                0
-    ##  2 Hubei 2020-03-21                   570                0
-    ##  3 Hubei 2020-03-20                   703                0
-    ##  4 Hubei 2020-03-19                   763                0
-    ##  5 Hubei 2020-03-18                   935                1
-    ##  6 Hubei 2020-03-17                   873                1
-    ##  7 Hubei 2020-03-16                   868                4
-    ##  8 Hubei 2020-03-15                  1338                4
-    ##  9 Hubei 2020-03-14                  1420                4
-    ## 10 Hubei 2020-03-13                  1241                5
-    ## # … with 51 more rows
+    ##  1 Hubei 2020-03-23                   458                0
+    ##  2 Hubei 2020-03-22                   492                0
+    ##  3 Hubei 2020-03-21                   570                0
+    ##  4 Hubei 2020-03-20                   703                0
+    ##  5 Hubei 2020-03-19                   763                0
+    ##  6 Hubei 2020-03-18                   935                1
+    ##  7 Hubei 2020-03-17                   873                1
+    ##  8 Hubei 2020-03-16                   868                4
+    ##  9 Hubei 2020-03-15                  1338                4
+    ## 10 Hubei 2020-03-14                  1420                4
+    ## # … with 52 more rows
 
 ### Visualize
 
@@ -285,26 +285,27 @@ mortality_df %>%
   select(area, ends_with("_date"), recovered_total, contains("deaths_"))
 ```
 
-    ## # A tibble: 17 x 7
+    ## # A tibble: 18 x 7
     ##    area  observation_date reference_date recovered_total deaths_total confirmed_death…
     ##    <fct> <date>           <date>                   <dbl>        <dbl>            <dbl>
-    ##  1 US    2020-03-22       2020-03-06                 178          417           0.0125
-    ##  2 US    2020-03-21       2020-03-06                 171          307           0.0120
-    ##  3 US    2020-03-20       2020-03-06                 147          244           0.0128
-    ##  4 US    2020-03-19       2020-03-06                 108          200           0.0146
-    ##  5 US    2020-03-18       2020-03-06                 106          118           0.0152
-    ##  6 US    2020-03-17       2020-03-06                  17          108           0.0168
-    ##  7 US    2020-03-16       2020-03-06                  17           85           0.0184
-    ##  8 US    2020-03-15       2020-03-06                  12           63           0.0180
-    ##  9 US    2020-03-14       2020-03-06                  12           54           0.0198
-    ## 10 US    2020-03-13       2020-03-06                  12           47           0.0216
-    ## 11 US    2020-03-12       2020-03-06                  12           40           0.0241
-    ## 12 US    2020-03-11       2020-03-06                   8           36           0.0281
-    ## 13 US    2020-03-10       2020-03-06                   8           28           0.0292
-    ## 14 US    2020-03-09       2020-03-06                   8           22           0.0364
-    ## 15 US    2020-03-08       2020-03-06                   8           21           0.0391
-    ## 16 US    2020-03-07       2020-03-06                   8           17           0.0408
-    ## 17 US    2020-03-06       2020-03-06                   8           14           0.0504
+    ##  1 US    2020-03-23       2020-03-06                   0          552           0.0126
+    ##  2 US    2020-03-22       2020-03-06                 178          417           0.0125
+    ##  3 US    2020-03-21       2020-03-06                 171          307           0.0120
+    ##  4 US    2020-03-20       2020-03-06                 147          244           0.0128
+    ##  5 US    2020-03-19       2020-03-06                 108          200           0.0146
+    ##  6 US    2020-03-18       2020-03-06                 106          118           0.0152
+    ##  7 US    2020-03-17       2020-03-06                  17          108           0.0168
+    ##  8 US    2020-03-16       2020-03-06                  17           85           0.0184
+    ##  9 US    2020-03-15       2020-03-06                  12           63           0.0180
+    ## 10 US    2020-03-14       2020-03-06                  12           54           0.0198
+    ## 11 US    2020-03-13       2020-03-06                  12           47           0.0216
+    ## 12 US    2020-03-12       2020-03-06                  12           40           0.0241
+    ## 13 US    2020-03-11       2020-03-06                   8           36           0.0281
+    ## 14 US    2020-03-10       2020-03-06                   8           28           0.0292
+    ## 15 US    2020-03-09       2020-03-06                   8           22           0.0364
+    ## 16 US    2020-03-08       2020-03-06                   8           21           0.0391
+    ## 17 US    2020-03-07       2020-03-06                   8           17           0.0408
+    ## 18 US    2020-03-06       2020-03-06                   8           14           0.0504
     ## # … with 1 more variable: recovered_deaths_rate <dbl>
 
 ### Visualize
