@@ -10,7 +10,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
 
@@ -19,29 +19,34 @@ options(max.print = 1e3, scipen = 999, width = 1e2)
 options(stringsAsFactors = F)
 
 suppressPackageStartupMessages({
+  # data manipulations
   library(dplyr)
   library(tidyr)
   library(purrr)
   library(magrittr)
   
+  # convert and formatting
   library(stringr)
   library(lubridate)
   
+  # tools
   library(skimr)
   
+  # graphics
   library(ggplot2)
+  library(ggthemes)
 })
 ```
 
 
 ```{r set_params, include=FALSE}
-caption <- ""
+caption <- "Data source: Novel Corona Virus 2019 Dataset. \n© 2020, Dmitry Petukhov. CC BY-SA 4.0 license."
 ```
 
 
 ## Load dataset
 
-Get datasets list:
+Get list of files in datasets container:
 
 ```{r}
 input_data_container <- "../input/novel-corona-virus-2019-dataset.zip"
@@ -51,28 +56,25 @@ print(
 )
 ```
 
-Load COVID-19 data:
+Load `covid_19_data.csv` dataset:
 ```{r}
 covid_data <- read.csv(unz(input_data_container, "covid_19_data.csv"), 
                        na.strings = c("NA", "None", ""),
                        header = T, sep = ",")
 
+covid_data %>% sample_n(100) %>% as_tibble
 ```
 
-Data structure:
+Get dataset structure:
 ```{r}
 str(covid_data)
 ```
 
 
-View data:
-```{r}
-covid_data %>% sample_n(100) %>% as_tibble
-```
-
 
 ## Preprocessing data
 
+Set `area` column, processing `province_state` columns, and format dates columns:
 ```{r}
 # repair names
 names(covid_data) <- names(covid_data) %>% str_replace_all(fixed("."), "_") %>% str_to_lower
@@ -99,7 +101,7 @@ covid_data %<>%
 covid_data %>% as_tibble
 ```
 
-Get data structure after preprocessing:
+Get dataset structure after preprocessing:
 ```{r}
 covid_data %>% skim_to_wide
 ```
@@ -132,9 +134,11 @@ spread_df %>% arrange(desc(observation_date))
 ### Visualize
 
 ```{r}
+# TODO: add color legend
+
 ggplot(spread_df, aes(observation_date)) +
   
-  geom_col(aes(y = confirmed_total), alpha = .5, fill = "grey") +
+  geom_col(aes(y = confirmed_total), alpha = .75, fill = "grey") +
   geom_col(aes(y = recovered_total), alpha = .75, fill = "gold") +
   geom_col(aes(y = -deaths_total), alpha = .75, fill = "black") +
 
@@ -143,7 +147,7 @@ ggplot(spread_df, aes(observation_date)) +
 
   labs(x = "", y = "Number of cases", 
        title = "COVID-19 Spread", 
-       subtitle = "Virus spread by Hubei, China (without Hubei), US, and Rest of World. \n* Grey - all confirmed cases; gold bar - all recovered cases; black bar - all deaths cases.", 
+       subtitle = "Virus spread by Hubei, China (without Hubei), US, and Rest of World. \n* Grey bar - all confirmed cases; gold bar - all recovered cases; black bar - all deaths cases.", 
        caption = caption) +
   
   theme_minimal() +
@@ -154,7 +158,7 @@ ggplot(spread_df, aes(observation_date)) +
 
 ## Dynamics of Infection
 
-Get daily dynamics of the number of infected and recovered cases.
+Get daily dynamics of new infected and recovered cases.
 
 ### Prepare data
 
@@ -191,7 +195,7 @@ ggplot(covid_daily, aes(x = observation_date)) +
   
   facet_grid(area ~ ., scale = "free") +
   
-  labs(title = "New COVID-19 Cases", 
+  labs(title = "COVID-19 New Cases", 
        subtitle = "Daily dynamics by Hubei, China (without Hubei), US, and Rest of World. \n* Lines - active (infected minus healed and deaths) cases; gold bar - healed plus deaths cases; black bar - infected cases.", 
        x = "", y = "Number of cases per day",
        caption = caption) +
