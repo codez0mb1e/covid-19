@@ -125,6 +125,9 @@ spread_df <- covid_data %>%
     confirmed_total = sum(confirmed),
     deaths_total = sum(deaths),
     recovered_total = sum(recovered)
+  ) %>% 
+  mutate(
+    active_total = confirmed_total - (recovered_total + deaths_total)
   )
 
 spread_df %>% arrange(desc(observation_date))
@@ -147,7 +150,7 @@ ggplot(spread_df, aes(observation_date)) +
 
   labs(x = "", y = "Number of cases", 
        title = "COVID-19 Spread", 
-       subtitle = "Virus spread by Hubei, China (without Hubei), US, and Rest of World. \n* Grey bar - all confirmed cases; gold bar - all recovered cases; black bar - all deaths cases.", 
+       subtitle = "Virus spread by Hubei, China (without Hubei), US, and Rest of World. \n* Grey bar - all infected cases; gold bar - all recovered cases; black bar - all deaths cases.", 
        caption = caption) +
   
   theme_minimal() +
@@ -164,11 +167,13 @@ Get daily dynamics of new infected and recovered cases.
 
 ```{r}
 covid_daily <- spread_df %>% 
+  ## calc cases per day stats
   mutate_at(
     vars(ends_with("_total")),
     list("per_day" = ~ (. - lag(.)))
   ) %>% 
   ungroup() %>% 
+  ## calс infected and retired cases
   transmute(
     area, observation_date,
     retired_per_day = recovered_total_per_day + deaths_total_per_day,
@@ -189,6 +194,7 @@ covid_daily %>%
 
 ```{r}
 ggplot(covid_daily, aes(x = observation_date)) +
+  
   geom_col(aes(y = -retired_per_day), fill = "gold", alpha = .7) +
   geom_col(aes(y = infected_per_day), fill = "black", alpha = .7) +
   geom_smooth(aes(y = infected_per_day - retired_per_day), method = "loess", color = "grey", alpha = .25) +
@@ -246,7 +252,7 @@ ggplot(mortality_df, aes(x = n_days)) +
   geom_area(aes(y = recovered_deaths_rate), alpha = .75, fill = "gold") +
   geom_area(aes(y = confirmed_deaths_rate), alpha = .75, fill = "black") +
   
-  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = .1)) +
   
   facet_grid(area ~ ., scales = "free") +
   
@@ -260,9 +266,10 @@ ggplot(mortality_df, aes(x = n_days)) +
 
 ```{r}
 ggplot(mortality_df, aes(x = n_days)) +
-  geom_line(aes(y = confirmed_deaths_rate, color = area), size = 1, alpha = .75) +
-  geom_hline(aes(yintercept = mean(mortality_df$confirmed_deaths_rate)), linetype = "dashed", color = "red", alpha = .75) +
+  
+  geom_hline(aes(yintercept = mean(mortality_df$confirmed_deaths_rate)), linetype = "dashed", color = "black", alpha = .33) +
   annotate(geom = "text", label = "Mean mortality rate (all time)", x = 4, y = mean(mortality_df$confirmed_deaths_rate), vjust = -1) +
+  geom_line(aes(y = confirmed_deaths_rate, color = area), size = 1, alpha = .75) +
 
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   
@@ -279,9 +286,10 @@ ggplot(mortality_df, aes(x = n_days)) +
 
 ```{r}
 ggplot(mortality_df, aes(x = n_days)) +
+  
+  geom_hline(aes(yintercept = mean(mortality_df$recovered_deaths_rate)), linetype = "dashed", color = "black", alpha = .33) +
+  annotate(geom = "text", label = "Mean mortality rate (all time)", x = 4, y = mean(mortality_df$recovered_deaths_rate), vjust = -1) +
   geom_line(aes(y = recovered_deaths_rate, color = area), size = 1, alpha = .75) +
-  geom_hline(aes(yintercept = mean(mortality_df$recovered_deaths_rate)), linetype = "dashed", color = "red", alpha = .75) +
-  annotate(geom = "text", label = "Mean mortality rate (all time)", x = 4, y = mean(mortality_df$confirmed_deaths_rate), vjust = -1) +
 
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
   
