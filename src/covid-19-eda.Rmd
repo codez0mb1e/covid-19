@@ -5,8 +5,8 @@ output:
   github_document:
     toc: true
     toc_depth: 2
-    fig_width: 12 
-    fig_height: 8 
+    fig_width: 8 
+    fig_height: 6 
 ---
 
 ```{r setup, include=FALSE}
@@ -337,7 +337,7 @@ ggplot(mortality_df, aes(x = n_days)) +
 ggplot(mortality_df, aes(x = n_days)) +
   
   geom_hline(aes(yintercept = mean(mortality_df$confirmed_deaths_rate)), linetype = "dashed", color = "black", alpha = .33) +
-  annotate(geom = "text", label = "Mean mortality rate (over time time)", x = 4, y = mean(mortality_df$confirmed_deaths_rate), vjust = -1) +
+  annotate(geom = "text", label = "Mean mortality rate (over time)", x = 8, y = mean(mortality_df$confirmed_deaths_rate), vjust = -1) +
   geom_line(aes(y = confirmed_deaths_rate, color = area), size = 1, alpha = .75) +
 
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
@@ -359,7 +359,7 @@ ggplot(mortality_df, aes(x = n_days)) +
 ggplot(mortality_df, aes(x = n_days)) +
   
   geom_hline(aes(yintercept = mean(mortality_df$recovered_deaths_rate)), linetype = "dashed", color = "black", alpha = .33) +
-  annotate(geom = "text", label = "Mean mortality rate (over time)", x = 4, y = mean(mortality_df$recovered_deaths_rate), vjust = -1) +
+  annotate(geom = "text", label = "Mean mortality rate (over time)", x = 8, y = mean(mortality_df$recovered_deaths_rate), vjust = -1) +
   geom_line(aes(y = recovered_deaths_rate, color = area), size = 1, alpha = .75) +
 
   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
@@ -614,7 +614,7 @@ countries_cases_last %>%
 
 
 
-### Select countries to monitoring
+#### Select countries to monitoring
 
 Get top N countries:
 
@@ -634,7 +634,7 @@ observed_countries
 ```
 
 
-#### Active cases per 1M population x # of days since 1st infected case
+#### Active cases per 1M population vs number of days since 1st infected case
 
 ```{r warning=FALSE}
 confirmed_cases_last <- countries_cases %>% 
@@ -687,7 +687,7 @@ ggplot(
 ```
 
 
-#### Active cases per 1 million population vs # of days since 1st fatal case
+#### Active cases per 1 million population vs number of days since 1st fatal case
 
 ```{r warning=FALSE}
 deaths_cases_last <- countries_cases %>% 

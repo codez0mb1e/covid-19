@@ -1,14 +1,16 @@
 # Coronavirus Disease Analytics
+
 **Attempts to analyze the situation around the 2019-nCoV**.
 
 
 ## Steps
 
-1. Upload the latest data from [Kaggle API](https://www.kaggle.com/docs/api): 
-`kaggle datasets download -d sudalairajkumar/novel-corona-virus-2019-dataset -p ../input/`
-`kaggle datasets download -d imdevskp/world-population-19602018 -p ../input/`
+1. (Optional) Upload the latest data from [Kaggle API](https://www.kaggle.com/docs/api): 
 
-1. Run [covid_19_data.Rmd](src/covid-19-data.Rmd) or [**see results**](src/covid-19-data.md).
+  - `kaggle datasets download -d sudalairajkumar/novel-corona-virus-2019-dataset -p ../input/`
+  - `kaggle datasets download -d imdevskp/world-population-19602018 -p ../input/`
+
+1. Run [covid_19_EDA.Rmd](src/covid-19-eda.Rmd) or [**see results**](src/covid-19-eda.md).
 
 
 ## References
