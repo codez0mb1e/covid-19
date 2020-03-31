@@ -173,7 +173,7 @@ ggplot(
 
   theme(
     legend.position = "top",
-    plot.caption = element_text(size = 7)
+    plot.caption = element_text(size = 8)
   )
 
 ```
@@ -202,7 +202,7 @@ ggplot(
   
   theme(
     legend.position = "top",
-    plot.caption = element_text(size = 7)
+    plot.caption = element_text(size = 8)
   )
 
 ```
@@ -270,7 +270,7 @@ ggplot(
   
   theme(
     legend.position = "top",
-    plot.caption = element_text(size = 7)
+    plot.caption = element_text(size = 8)
   )
 ```
 
@@ -329,7 +329,7 @@ ggplot(mortality_df, aes(x = n_days)) +
   
   theme(
     legend.position = "top",
-    plot.caption = element_text(size = 7)
+    plot.caption = element_text(size = 8)
   )
 ```
 
@@ -350,7 +350,7 @@ ggplot(mortality_df, aes(x = n_days)) +
   theme(
     legend.position = "top",
     legend.title = element_blank(),
-    plot.caption = element_text(size = 7)
+    plot.caption = element_text(size = 8)
   )
 
 ```
@@ -372,7 +372,7 @@ ggplot(mortality_df, aes(x = n_days)) +
   theme(
     legend.position = "top",
     legend.title = element_blank(),
-    plot.caption = element_text(size = 7)
+    plot.caption = element_text(size = 8)
   )
 ```
 
@@ -629,7 +629,7 @@ observed_countries <- countries_cases_last %>%
 
 
 # Add countries that we are interested in
-observed_countries <- c(observed_countries, "US", "India",  "Mainland China", "South Korea", "Japan", "Iran") %>% unique
+observed_countries <- c(observed_countries, "US", "Mainland China", "South Korea","Iran") %>% unique
 observed_countries 
 ```
 
@@ -648,41 +648,43 @@ confirmed_cases_last <- countries_cases %>%
     n_days_since_1st_confirmed
   )
 
+active_case_since_1st_infected <- countries_cases %>% 
+  filter(country_region %in% observed_countries) %>% 
+  left_join(
+    confirmed_cases_last,
+    by = c("country_region", "n_days_since_1st_confirmed")
+  ) %>% 
+  mutate(
+    double_every_7d = (1 + 1/7)^n_days_since_1st_confirmed, # double every week
+    double_every_3d = (1 + 1/3)^n_days_since_1st_confirmed, # double every 3 days
+    double_every_2d = (1 + 1/2)^n_days_since_1st_confirmed, # double every 2 days
+    double_every_1d = (1 + 1)^n_days_since_1st_confirmed  # double every day
+  )
 
-ggplot(
-    countries_cases %>% 
-      filter(country_region %in% observed_countries) %>% 
-      left_join(
-        confirmed_cases_last,
-        by = c("country_region", "n_days_since_1st_confirmed")
-      ) %>% 
-      mutate(
-        double_every_7d = (1 + 1/7)^n_days_since_1st_confirmed, # double every week
-        double_every_3d = (1 + 1/3)^n_days_since_1st_confirmed, # double every 3 days
-        double_every_2d = (1 + 1/2)^n_days_since_1st_confirmed, # double every 2 days
-        double_every_1d = (1 + 1)^n_days_since_1st_confirmed  # double every day
-      ),
-    aes(x = n_days_since_1st_confirmed)
-  ) +
+
+ggplot(active_case_since_1st_infected, aes(x = n_days_since_1st_confirmed)) +
   
   geom_line(aes(y = double_every_7d), linetype = "dashed", color = "red", alpha = .45) +
   geom_line(aes(y = double_every_3d), linetype = "dashed", color = "red", alpha = .6) + 
   geom_line(aes(y = double_every_2d), linetype = "dashed", color = "red", alpha = .85) + 
-  geom_line(aes(y = double_every_1d), linetype = "dashed", color = "red", alpha = 1) +
   
   geom_line(aes(y = active_total_per_1M, color = country_region), show.legend = F) +
-  geom_text(aes(y = active_total_per_1M_last, label = country_region), 
-            hjust = 0.5,  vjust = -1) +
+  geom_text(aes(y = active_total_per_1M_last + 20, label = country_region, color = factor(country_region)),
+            hjust = 0.5, vjust = 0, check_overlap = T, show.legend = F, fontface = "bold", size = 3.6) +
+  
+  annotate(geom = "text", label = "Active cases double \n every 2 days", x = 17, y = 1550, vjust = 0, size = 3.2) +
+  annotate(geom = "text", label = "...every 3 days", x = 25, y = 1400, vjust = 0, size = 3.2) +
+  annotate(geom = "text", label = "...every week", x = 55, y = 1600, vjust = 0, size = 3.2) +
   
   ylim(c(0, max(countries_cases$active_total_per_1M) + 100)) +
   
   labs(x = "Number of days since 1st infected case", y = "Active cases per 1M population", 
-       title = "COVID-19 Аctive Сase", 
+       title = "COVID-19 Аctive Сases", 
        subtitle = "Number of active cases per 1 million population since 1st infected case", 
        caption = lab_caption) +
 
   theme(
-    plot.caption = element_text(size = 7)
+    plot.caption = element_text(size = 8)
   )
 ```
 
@@ -723,11 +725,16 @@ ggplot(
   geom_line(aes(y = double_every_2d), linetype = "dashed", color = "red", alpha = .85) + 
   geom_line(aes(y = double_every_1d), linetype = "dashed", color = "red", alpha = 1) +
   
-  geom_line(aes(y = active_total_per_1M, color = country_region), show.legend = F) +
-  geom_text(aes(y = active_total_per_1M_last, label = country_region), 
-            hjust = 0.5,  vjust = -1) +
+  geom_line(aes(y = active_total_per_1M, color = country_region)) +
+  geom_text(aes(y = active_total_per_1M_last + 20, label = country_region, color = factor(country_region)), 
+            hjust = 0.5, vjust = 0, check_overlap = T, show.legend = F, fontface = "bold", size = 3.6) +
   
-  xlim(c(0, 40)) +
+  annotate(geom = "text", label = "Active cases double \n every day", x = 10, y = 1050, vjust = 0, size = 3.2) +
+  annotate(geom = "text", label = "...every 2 days", x = 18, y = 1500, vjust = 0, size = 3.2) +
+  annotate(geom = "text", label = "...every 3 days", x = 22, y = 1250, vjust = 0, size = 3.2) +
+  annotate(geom = "text", label = "...every week", x = 200, y = 35, vjust = 0, size = 3.2) +
+  
+  xlim(c(0, 42)) +
   ylim(c(0, max(countries_cases$active_total_per_1M) + 100)) +
   
   labs(x = "Number of days since 1st fatal case", y = "Active cases per 1M population", 
@@ -736,7 +743,9 @@ ggplot(
        caption = lab_caption) +
   
   theme(
-    plot.caption = element_text(size = 7)
+    legend.title = element_blank(),
+    legend.position = "bottom",
+    plot.caption = element_text(size = 8)
   )
 ```
  
