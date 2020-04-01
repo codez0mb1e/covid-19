@@ -209,7 +209,7 @@ ggplot(
 
 
 
-## Dynamics of Infection
+## COVID-19 daily spread
 
 Get daily dynamics of new infected and recovered cases.
 
@@ -263,7 +263,7 @@ ggplot(
   
   facet_grid(area ~ ., scales = "free") +
   
-  labs(title = "COVID-19 Spread Dynamics", 
+  labs(title = "COVID-19 Daily Spread", 
        subtitle = "Daily dynamics by Hubei, China (exclude Hubei), US, and Rest of World. \nLines - infected cases minus recovered and fatal. Negative values indicate recovered and fatal cases", 
        x = "", y = "Number of cases per day",
        caption = lab_caption) +
@@ -275,7 +275,7 @@ ggplot(
 ```
 
 
-## Mortality rate
+## COVID-19 mortality rate
 
 ### Prepare data
 
@@ -377,7 +377,7 @@ ggplot(mortality_df, aes(x = n_days)) +
 ```
 
 
-## World population
+## Enrich COVID dataset with world population
 
 ### Load world population
 
@@ -464,8 +464,6 @@ Much better :)
 
 
 
-## Enrich COVID dataset with world population
-
 ### Infected, recovered, fatal, and active cases
 
 Calculate number of infected, recovered, fatal, and active cases grouped by country:
@@ -531,7 +529,7 @@ countries_cases %>%
 
 
 
-### Enrich COVID-19 dataset with world population
+### Join COVID-19 dataset with world population
 
 ```{r}
 countries_cases %<>% 
@@ -557,7 +555,7 @@ countries_cases %>%
 ```
 
 
-### TOPs
+### TOPs countries by infected, active, and fatal cases
 
 Calculate countries stats whose populations were most affected by the virus:
 
@@ -634,7 +632,7 @@ observed_countries
 ```
 
 
-#### Active cases per 1M population vs number of days since 1st infected case
+### Active cases per 1M population vs number of days since 1st infected case
 
 ```{r warning=FALSE}
 confirmed_cases_last <- countries_cases %>% 
@@ -689,7 +687,7 @@ ggplot(active_case_since_1st_infected, aes(x = n_days_since_1st_confirmed)) +
 ```
 
 
-#### Active cases per 1 million population vs number of days since 1st fatal case
+### Active cases per 1 million population vs number of days since 1st fatal case
 
 ```{r warning=FALSE}
 deaths_cases_last <- countries_cases %>% 
