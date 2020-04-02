@@ -5,7 +5,7 @@ output:
   github_document:
     toc: true
     toc_depth: 2
-    fig_width: 8 
+    fig_width: 9 
     fig_height: 6 
 ---
 
@@ -46,11 +46,11 @@ lab_caption <- paste0(
     "Data source: Novel Coronavirus (COVID-19) Cases provided by Johns Hopkins University Center for Systems Science. \n",
     sprintf("Last updated: %s. ", format(Sys.time(), '%d %B, %Y')),
     "Source code: github.com/codez0mb1e/covid-2019"
-  )            
+)            
 ```
 
 
-## Load dataset
+## Load COVID-19 data
 
 Get list of files in datasets container:
 
@@ -71,19 +71,18 @@ covid_data <- read.csv(unz(input_data_container, "covid_19_data.csv"),
 covid_data %>% sample_n(100) %>% as_tibble
 ```
 
-Get dataset structure:
-```{r}
-covid_data %>% skim
-```
 
 
-
-## Preprocessing data
+## Preprocessing COVID-19 data
 
 Set `area` column, processing `province_state` columns, and format dates columns:
+
 ```{r}
 # repair names
-names(covid_data) <- names(covid_data) %>% str_replace_all(fixed("."), "_") %>% str_to_lower
+names(covid_data) <- names(covid_data) %>% 
+  str_replace_all(fixed("."), "_") %>%
+  str_to_lower
+
 
 covid_data %<>% 
   rename(observation_date = observationdate) %>% 
@@ -105,8 +104,8 @@ covid_data %<>%
   
 
 covid_data %>% 
-  select(area, country_region, province_state, observation_date) %>% 
-  arrange(desc(observation_date)) %>% 
+  select(area, country_region, province_state, observation_date, confirmed) %>% 
+  arrange(desc(observation_date), desc(confirmed)) %>% 
   as_tibble
 ```
 
@@ -119,47 +118,81 @@ covid_data %>% skim
 
 ## COVID-19 spread
 
-Get virus spread statistics grouped by `area`:
-
-### Prepare data
-
 Calculate total infected, recovered, and fatal cases:
 
 ```{r}
 spread_df <- covid_data %>% 
   group_by(
-    area, observation_date
+    country_region, observation_date
   ) %>% 
   summarise(
     confirmed_total = sum(confirmed),
     deaths_total = sum(deaths),
     recovered_total = sum(recovered)
+  ) %>% 
+  mutate(
+    active_total = confirmed_total - recovered_total - deaths_total
   )
+```
 
-spread_df %>% arrange(desc(observation_date))
+```{r}
+format_to_percent <- function(.x) sprintf("%1.2f%%", 100*.x)
+
+calc_ratio <- function(.x) c(0, diff(.x))/lag(.x)
 ```
 
 
-### Visualize
 
-Wordwide virus spread statistics:
+### Wordwide spread
+
+Last week statistics:
+
 ```{r}
 spread_df %>% 
   group_by(observation_date) %>% 
-  summarise_at(vars(ends_with("_total")), sum) %>% 
-  arrange(desc(observation_date))
+  summarise_at(
+    vars(ends_with("_total")), sum
+  ) %>% 
+  mutate_at(
+    vars(ends_with("_total")), 
+    list("delta" = ~ format_to_percent( calc_ratio(.) ))
+  ) %>% 
+  arrange(desc(observation_date)) %>% 
+  select(
+    observation_date, starts_with("active_"), starts_with("confirmed_"), starts_with("recovered_"), starts_with("deaths_")
+  )
 ```
 
 ```{r}
-
 ggplot(
   spread_df %>% 
+    group_by(observation_date) %>% 
+    summarise_at(
+      vars(ends_with("_total")), sum
+    ) %>% 
     ungroup %>% 
-    mutate(confirmed_total = confirmed_total - recovered_total, deaths_total = -deaths_total) %>% 
-    gather(key = "case_state", value = "cases_n", -c(area, observation_date))
-  ) +
+    mutate(
+      confirmed_total = confirmed_total - recovered_total, 
+      deaths_total = -deaths_total
+    ) %>% 
+    gather(
+      key = "case_state", value = "cases_n", -c(observation_date, active_total)
+    ),
+  aes(x = observation_date)) +
   
-  geom_col(aes(x = observation_date, y = cases_n, fill = case_state), alpha = .75) +
+  geom_col(aes(y = cases_n, fill = case_state), alpha = .75) +
+  geom_smooth(aes(y = active_total), method = "loess", color = "#0080FF", size = .2) +
+  
+  geom_hline(aes(yintercept = c(3.5e5)), linetype = "dashed", color = "black", alpha = .33) +
+  annotate(geom = "text", label = "0.5% of world population", size = 3, color = "#666666", 
+           x = min(spread_df$observation_date), y = 3.7e5, 
+           vjust = "bottom", hjust = "left") +
+  
+  geom_hline(aes(yintercept = c(7e5)), linetype = "dashed", color = "black", alpha = .33) +
+  annotate(geom = "text", label = "1% of world population", size = 3, color = "#666666",
+           x = min(spread_df$observation_date), y = 7.2e5, 
+           vjust = "bottom", hjust = "left") +
+  
   
   scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
   scale_fill_manual(element_blank(), 
@@ -168,7 +201,7 @@ ggplot(
   
   labs(x = "", y = "Number of cases", 
        title = "COVID-19 Spread", 
-       subtitle = "Worldwide spread of the virus over time", 
+       subtitle = "Worldwide spread of the virus over time \nBlue line - infected cases minus recovered and fatal", 
        caption = lab_caption) +
 
   theme(
@@ -178,12 +211,17 @@ ggplot(
 
 ```
 
-
 ```{r}
 ggplot(
     spread_df %>% 
+      group_by(observation_date) %>% 
+      summarise_at(
+        vars(ends_with("_total")), sum
+      ) %>% 
       ungroup %>% 
-      gather(key = "case_state", value = "cases_n", -c(area, observation_date))
+      gather(
+        key = "case_state", value = "cases_n", -c(observation_date, active_total)
+      )
   ) +
   
   geom_col(aes(x = observation_date, y = cases_n, fill = case_state), position = "fill", alpha = .75) +
@@ -208,63 +246,120 @@ ggplot(
 ```
 
 
+### Spread by country
+```{r}
+spread_df %>% 
+  group_by(country_region, observation_date) %>% 
+  summarise_at(
+    vars(ends_with("_total")), sum
+  ) %>% 
+  mutate_at(
+    vars(ends_with("_total")), 
+    list("delta" = ~ format_to_percent(calc_ratio(.)))
+  ) %>% 
+  arrange(
+    desc(observation_date), desc(active_total)
+  ) %>% 
+  select(
+    country_region, observation_date, starts_with("active_"), starts_with("confirmed_"), starts_with("recovered_"), starts_with("deaths_")
+  )
+```
+
+```{r}
+country_spread_df <- spread_df %>% 
+    group_by(country_region) %>% 
+    summarise_at(vars(ends_with("_total")), sum) %>% 
+    ungroup %>% 
+    top_n(10, confirmed_total)
+
+country_spread_df$country_region <- factor(country_spread_df$country_region, 
+                                           levels = country_spread_df$country_region[order(country_spread_df$confirmed_total)])
+
+
+ggplot(
+   country_spread_df %>% 
+    gather( key = "case_state", value = "cases_n", -c(country_region, confirmed_total)),
+  
+  aes(x = country_region)) +
+  
+  geom_col(aes(y = confirmed_total), fill = "#0080FF", alpha = .25) +
+  geom_col(aes(y = cases_n, fill = country_region), show.legend = F) +
+  
+  scale_y_log10() +
+  
+  coord_flip() +
+  
+  facet_grid(case_state ~ .,) +
+  
+  labs(x = "Country", y = "Number of Cases", 
+       title = "COVID-19 Countries Spread", 
+       subtitle = "Blue bar - all infected cases", 
+       caption = lab_caption) +
+  
+  theme(
+    plot.caption = element_text(size = 8)
+  )
+  
+```
+
 
 ## COVID-19 daily spread
 
 Get daily dynamics of new infected and recovered cases.
 
-### Prepare data
+
+### World daily spread
 
 ```{r}
-covid_daily <- spread_df %>% 
+world_spread_daily <- spread_df %>% 
+  group_by(observation_date) %>% 
+  summarise_at(vars(ends_with("_total")), sum) %>% 
   ## calc cases per day stats
   mutate_at(
     vars(ends_with("_total")),
     list("per_day" = ~ (. - lag(.)))
   ) %>% 
-  ungroup() %>% 
+  ungroup %>% 
   ## calс cases per day 
   mutate_at(
     vars(ends_with("_per_day")), 
     list(~ replace_na(., 0))
   )
   
-covid_daily %>% 
-  filter(area == "Hubei") %>% 
-  arrange(desc(observation_date))
+world_spread_daily %>% 
+  arrange(desc(observation_date)) %>% 
+  top_n(7)
 ```
 
 
-### Visualize
-
 ```{r}
 ggplot(
-    covid_daily %>% 
+    world_spread_daily %>% 
       transmute(
-        area, observation_date,
+        observation_date,
+        
         confirmed_total_per_day,
-        increase_per_day = confirmed_total_per_day - (recovered_total_per_day + deaths_total_per_day),
+        active_total_per_day,
         deaths_total_per_day = -deaths_total_per_day,
         recovered_total_per_day = -recovered_total_per_day
       ) %>% 
       gather(
-        key = "case_state", value = "cases_n", -c(area, observation_date, increase_per_day)
+        key = "case_state", value = "cases_n", -c(observation_date, active_total_per_day)
       ), 
     aes(x = observation_date)
   ) +
   
   geom_col(aes(x = observation_date, y = cases_n, fill = case_state), alpha = .75) +
-  geom_smooth(aes(y = increase_per_day), method = "loess", color = "grey", alpha = .25) +
+  geom_smooth(aes(y = active_total_per_day), method = "loess", color = "#0080FF", size = .2) +
   
   scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
   scale_fill_manual(element_blank(), 
                     labels = c("confirmed_total_per_day" = "Infected cases", "recovered_total_per_day" = "Recovered cases", "deaths_total_per_day" = "Fatal cases"),
                     values = c("confirmed_total_per_day" = "grey", "recovered_total_per_day" = "gold", "deaths_total_per_day" = "black")) +
   
-  facet_grid(area ~ ., scales = "free") +
   
-  labs(title = "COVID-19 Daily Spread", 
-       subtitle = "Daily dynamics by Hubei, China (exclude Hubei), US, and Rest of World. \nLines - infected cases minus recovered and fatal. Negative values indicate recovered and fatal cases", 
+  labs(title = "COVID-19 World Daily Spread", 
+       subtitle = "World daily dynamics \nBlue line - infected cases minus recovered and fatal. Negative values indicate recovered and fatal cases", 
        x = "", y = "Number of cases per day",
        caption = lab_caption) +
   
@@ -273,6 +368,91 @@ ggplot(
     plot.caption = element_text(size = 8)
   )
 ```
+
+
+
+
+### Countries daily spread
+
+```{r}
+countries_spread_daily <- spread_df %>% 
+  ## calc cases per day stats
+  mutate_at(
+    vars(ends_with("_total")),
+    list("per_day" = ~ (. - lag(.)))
+  ) %>% 
+  ungroup %>% 
+  
+  ## calс cases per day 
+  mutate_at(
+    vars(ends_with("_per_day")), 
+    list(~ replace_na(., 0))
+  )
+
+countries_spread_daily %>% 
+  filter(country_region == "India") %>% 
+  arrange(desc(observation_date)) %>% 
+  top_n(7, observation_date)
+```
+
+Top 5 countries with the largest number of infected people:
+```{r}
+countries_spread_list <- covid_data %>% 
+  group_by(country_region) %>% 
+  summarise(total = sum(confirmed)) %>% 
+  arrange(desc(total)) %>% 
+  top_n(5, total) %>% 
+  select(country_region) %>% 
+  as_vector %>% 
+  sort
+
+countries_spread_list %>% as_tibble
+```
+
+
+
+
+
+```{r}
+ggplot(
+    countries_spread_daily %>% 
+      filter(country_region %in% countries_spread_list) %>% 
+      transmute(
+        country_region,
+        observation_date,
+        
+        confirmed_total_per_day,
+        active_total_per_day,
+        deaths_total_per_day = -deaths_total_per_day,
+        recovered_total_per_day = -recovered_total_per_day
+      ) %>% 
+      gather(
+        key = "case_state", value = "cases_n", -c(observation_date, active_total_per_day, country_region)
+      ), 
+    aes(x = observation_date)
+  ) +
+  
+  geom_col(aes(x = observation_date, y = cases_n, fill = case_state), alpha = .75) +
+  geom_smooth(aes(y = active_total_per_day), method = "loess", color = "#0080FF", size = .2) +
+  
+  scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
+  scale_fill_manual(element_blank(), 
+                    labels = c("confirmed_total_per_day" = "Infected cases", "recovered_total_per_day" = "Recovered cases", "deaths_total_per_day" = "Fatal cases"),
+                    values = c("confirmed_total_per_day" = "grey", "recovered_total_per_day" = "gold", "deaths_total_per_day" = "black")) +
+  
+  facet_grid(country_region ~ ., scales = "free") +
+  
+  labs(title = "COVID-19 Daily Spread by countries", 
+       subtitle = "World daily dynamics \nBlue line - infected cases minus recovered and fatal. \nNegative values indicate recovered and fatal cases", 
+       x = "", y = "Number of cases per day",
+       caption = lab_caption) +
+  
+  theme(
+    legend.position = "top",
+    plot.caption = element_text(size = 8)
+  )
+```
+
 
 
 ## COVID-19 mortality rate
@@ -466,7 +646,7 @@ Much better :)
 
 ### Infected, recovered, fatal, and active cases
 
-Calculate number of infected, recovered, fatal, and active cases grouped by country:
+Calculate number of infected, recovered, fatal, and active (infected cases minus recovered and fatal) cases grouped by country:
 
 ```{r}
 countries_cases <- covid_data %>% 
@@ -623,11 +803,12 @@ observed_countries <- countries_cases_last %>%
   arrange(desc(active_total_per_1M)) %>% 
   top_n(top_n, active_total_per_1M) %>% 
   select(country_region) %>% 
-  as_vector %>% sort
+  as_vector %>% 
+  sort
 
 
 # Add countries that we are interested in
-observed_countries <- c(observed_countries, "US", "Mainland China", "South Korea","Iran") %>% unique
+observed_countries <- c(observed_countries, "US", "Mainland China", "South Korea", "Iran") %>% unique
 observed_countries 
 ```
 
