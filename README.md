@@ -5,12 +5,23 @@
 
 ## Steps
 
-1. (Optional) Upload the latest data from [Kaggle API](https://www.kaggle.com/docs/api): 
+1. (Optional) Upload the latest data via [Kaggle API](https://www.kaggle.com/docs/api): 
 
-  - `kaggle datasets download -d sudalairajkumar/novel-corona-virus-2019-dataset -p ../input/`
-  - `kaggle datasets download -d imdevskp/world-population-19602018 -p ../input/`
+  - [COVID Spread Dataset](https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset): 
+  `kaggle datasets download -d sudalairajkumar/novel-corona-virus-2019-dataset -p ../input/`
+  - [Population by Country 2020 Dataset](https://www.kaggle.com/tanuprabhu/population-by-country-2020): 
+  `kaggle datasets download -d tanuprabhu/population-by-country-2020  -p ../input/`
+  - [COVID19 Global Forecasting Dataset](https://www.kaggle.com/c/covid19-global-forecasting-week-3): 
+  `kaggle competitions download -c covid19-global-forecasting-week-3 -p ../input/`
 
-1. Run [covid_19_EDA.Rmd](src/covid-19-eda.Rmd) or [**see results**](src/covid-19-eda.md).
+1. EDA and visualization
+
+  - run [covid_19_EDA.Rmd](src/covid-19-eda.Rmd) 
+  - or [**see results**](src/covid-19-eda.md)
+  
+2. Forecasting
+
+  - run [forecasting](src/forecasting.R) 
 
 
 ## References
