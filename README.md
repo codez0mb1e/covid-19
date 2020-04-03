@@ -47,7 +47,7 @@
 #### Forecasting
 
 1. The COVID-19 Vulnerability Index: [post](https://closedloop.ai/open-source-data-science-to-fight-covid-19-corona-virus/), [research paper](https://arxiv.org/abs/2003.07347), [source code](https://github.com/closedloop-ai/cv19index), ClosedLoop.ai.
-1. [COVID19 Global Forecasting](https://www.kaggle.com/c/covid19-global-forecasting-week-1/data), Kaggle. 
+1. COVID19 Global Forecasting: [week 1](https://www.kaggle.com/c/covid19-global-forecasting-week-1), [week 2](https://www.kaggle.com/c/covid19-global-forecasting-week-2), and [week 3](https://www.kaggle.com/c/covid19-global-forecasting-week-3), Kaggle. 
 1. [Computational predictions of protein structures associated with COVID-19](https://deepmind.com/research/open-source/computational-predictions-of-protein-structures-associated-with-COVID-19), DeepMind
 
 
