@@ -5,19 +5,10 @@
 
 ## Steps
 
-1. (Optional) Upload the latest data via [Kaggle API](https://www.kaggle.com/docs/api): 
+1. (Optional) Upload the latest datasets:
+`. ../input/upload_data.sh`
 
-  - [COVID Spread Dataset](https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset): 
-  `kaggle datasets download -d sudalairajkumar/novel-corona-virus-2019-dataset -p ../input/`
-  - [Population by Country 2020 Dataset](https://www.kaggle.com/tanuprabhu/population-by-country-2020): 
-  `kaggle datasets download -d tanuprabhu/population-by-country-2020  -p ../input/`
-  - [COVID19 Global Forecasting Dataset](https://www.kaggle.com/c/covid19-global-forecasting-week-3): 
-  `kaggle competitions download -c covid19-global-forecasting-week-3 -p ../input/`
-
-1. EDA and visualization
-
-  - run [covid_19_EDA.Rmd](src/covid-19-eda.Rmd) 
-  - or [**see results**](src/covid-19-eda.md)
+1. [EDA and visualization](src/covid-19-eda.Rmd) (**[report](src/covid-19-eda.md)**)
   
 2. Forecasting
 
@@ -55,11 +46,12 @@
 1. Kevin Simler. [COVID-2019 spread simulation](https://www.meltingasphalt.com/interactive/outbreak/), Melting Asphalt.
 
 
-#### Forecasting
+#### Forecasting, Competitions
 
 1. The COVID-19 Vulnerability Index: [post](https://closedloop.ai/open-source-data-science-to-fight-covid-19-corona-virus/), [research paper](https://arxiv.org/abs/2003.07347), [source code](https://github.com/closedloop-ai/cv19index), ClosedLoop.ai.
 1. COVID19 Global Forecasting: [week 1](https://www.kaggle.com/c/covid19-global-forecasting-week-1), [week 2](https://www.kaggle.com/c/covid19-global-forecasting-week-2), and [week 3](https://www.kaggle.com/c/covid19-global-forecasting-week-3), Kaggle. 
-1. [Computational predictions of protein structures associated with COVID-19](https://deepmind.com/research/open-source/computational-predictions-of-protein-structures-associated-with-COVID-19), DeepMind
+1. [Computational predictions of protein structures associated with COVID-19](https://deepmind.com/research/open-source/computational-predictions-of-protein-structures-associated-with-COVID-19), DeepMind.
+1. [Sberbank COVID-19 forecast](https://ods.ai/competitions/sberbank-covid19-forecast), Sberbank feat. ODS.ai.
 
 
 #### Datasets
