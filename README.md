@@ -6,7 +6,7 @@
 ## Steps
 
 1. (Optional) Upload the latest datasets:
-`. ../input/upload_data.sh`
+`. ../data/upload_data.sh`
 
 1. [EDA and visualization](src/covid-19-eda.Rmd) (**[report](src/covid-19-eda.md)**)
   
