@@ -1,8 +1,17 @@
-'
+
 #'
 #' Forecasting COVID-19 Spread
 #'
 
+
+# Methods:
+# + previous value (baseline)
+# + Indicators: simple moving average (SMA) exponential moving average (EMA)
+# - ARIMA, ETS
+# - Linear models: linear regression, Quasi-Poisson Regression 
+# - Decision trees: boosting
+# - Neural networks: LSTM, AR RNN
+# - SIR model
 
 
 # Import dependencies ----
@@ -23,19 +32,23 @@ suppressPackageStartupMessages({
   
   # tools
   library(skimr)
+
+  # forecasting
+  library(xts)
+  library(TTR)
   
   # graphics
   library(ggplot2)
-  library(ggthemes)
 })
+
+source("core.R")
 
 
 
 # Load COVID-19 data ----
 
-
 # Get list of files in datasets container:
-input_data_container <- "../input/covid19-global-forecasting-week-3.zip"
+input_data_container <- "../data/covid19-global-forecasting-week-3.zip"
 
 print(
   as.character(unzip(input_data_container, list = T)$Name)
@@ -43,7 +56,6 @@ print(
 
 
 # Load datasets:
-
 data <- paste0(c("test", "train"), sep = ".csv") %>% 
   map_dfr(
     ~ read.csv(unz(input_data_container, .x), 
@@ -60,6 +72,7 @@ data %<>%
     Forecast_Id = ForecastId,
     Confirmed_Cases = ConfirmedCases
   )
+
 names(data) <- names(data) %>% str_to_lower
 
 
@@ -88,7 +101,7 @@ data %<>%
   )
 
 
-##
+## view result
 data %>% skim
 
 
@@ -131,37 +144,68 @@ stopifnot(
 
 
 
-# Forecasting tools ----
-
-#' Calculate RMSLE (root mean squared logarithmic error)
-#' 
-#' $RMSLE = \sqrt {\frac{1}{n} \sum_{i = 1}^{n} {(log(p_i + 1) - log(a_i + 1))^2}}$
-#' where:
-#' - $n$ is the total number of observations
-#' - $p_i$ is each prediction
-#' - $a_i$ is each actual value
-#' - $log(x)$ is the natural logarithm of $x$
-#' 
-calc_RMSLE <- function(.actual, .pred) sqrt(mean((log(.pred + 1) - log(.actual + 1))^2))
-
-
-
 # Baseline ----
 
-# Naive approch: get last value
-baseline <- valid %>% 
-  group_by(country_region, province_state, date) %>% 
+# Calculate naive approch: get previous value
+baseline <- data %>% 
+  filter(type == "train") %>% 
+  group_by(country_region, date) %>% 
   summarise(actual = sum(confirmed_cases)) %>% 
   mutate(pred = lag(actual)) %>% 
   mutate(pred = if_else(is.na(pred), 0, pred))
 
-ggplot(baseline, aes(x = actual, y = pred)) +
-  geom_jitter()
-
-calc_RMSLE(baseline$actual, baseline$pred)
+# Eval
+RMSLE(baseline$actual, baseline$pred)
 
 
 
+# SMA, EMA, previous value ----
+
+# Calculate
+sma_ema_pred <- data %>% 
+  filter(type == "train") %>% 
+  group_by(country_region, date) %>% 
+  summarise(
+    confirmed = sum(confirmed_cases, na.rm = T), 
+    fatalities = sum(fatalities, na.rm = T)
+  ) %>% 
+  filter(n() > 8) %>% 
+  transmute(
+    date, 
+    actual = confirmed, 
+    
+    # previous value
+    prev = lag(confirmed),
+    
+    # SMAs
+    SMA_2 = SMA(confirmed, n = 2), 
+    SMA_4 = SMA(confirmed, n = 4), 
+    SMA_8 = SMA(confirmed, n = 8), 
+    
+    # EMAs
+    EMA_2 = EMA(confirmed, n = 2), 
+    EMA_4 = EMA(confirmed, n = 4), 
+    EMA_8 = EMA(confirmed, n = 8)
+  ) %>% 
+  ungroup %>% 
+  na.omit
+  
+
+ggplot(
+  sma_ema_pred %>% 
+    filter(country_region == "Italy" & actual > 0) %>% 
+    gather(
+      key = "f", value = "value", -c(country_region, date, actual)
+    ), 
+  aes(x = date)
+  ) +
+  geom_line(aes(y = actual)) +
+  geom_line(aes(y = value, color = f))
+
+
+# Eval best fitted
+list(sma_ema_pred$EMA_2, sma_ema_pred$EMA_4, sma_ema_pred$SMA_2, sma_ema_pred$SMA_4) %>% 
+  map(~ RMSLE(sma_ema_pred$actual, .x))
 
 
 
