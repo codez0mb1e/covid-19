@@ -3,6 +3,12 @@
 **Attempts to analyze the situation around the 2019-nCoV**.
 
 
+## Worldwide spread over time
+
+
+![worldwide spread over time](src/covid-19-eda_files/figure-gfm/worldwide_spread_over_time-1.png)
+
+
 ## Steps
 
 1. (Optional) Upload the latest datasets:
@@ -60,18 +66,9 @@
 1. [Coronavirus disease (COVID-2019) situation reports](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports), World Health Organization.
 1. [COVID-19 Open Research Dataset (CORD-19)](https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge), Kaggle.
 1. [COVID-19 Complete Dataset (Updated every 24hrs)](https://www.kaggle.com/imdevskp/corona-virus-report), Kaggle.
-1. [COVID-19 Data Repository by Johns Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19), GitHub.
+1. [**COVID-19 Data Repository by Johns Hopkins CSSE**](https://github.com/CSSEGISandData/COVID-19), GitHub.
 1. [#covid19 tag](https://www.kaggle.com/tags/covid19), Kaggle.
 
-Country level datasets:
-
-* [India](https://www.kaggle.com/sudalairajkumar/covid19-in-india)
-* [South Korea](https://www.kaggle.com/kimjihoo/coronavirusdataset)
-* [Italy](https://www.kaggle.com/sudalairajkumar/covid19-in-italy)
-* [Brazil](https://www.kaggle.com/unanimad/corona-virus-brazil)
-* [USA](https://www.kaggle.com/sudalairajkumar/covid19-in-usa)
-* [Switzerland](https://www.kaggle.com/daenuprobst/covid19-cases-switzerland)
-* [Indonesia](https://www.kaggle.com/ardisragen/indonesia-coronavirus-cases).
 
 
 *On God we trust. For everything else bring Data.*
