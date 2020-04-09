@@ -41,7 +41,7 @@ source("core.R")
 ```
 
 
-## Table of contents {#toc}
+#### Table of contents {#toc}
 
 ```{r toc, echo=FALSE}
 render_toc("covid-19-eda.Rmd")
@@ -250,7 +250,7 @@ world_spread %>%
 
 ### Dynamics of spread
 
-```{r}
+```{r worldwide_spread_over_time}
 total_population <- sum(population$population)
 
 ggplot(
