@@ -11,15 +11,36 @@
 
 ## Steps
 
-1. (Optional) Upload the latest datasets:
+
+#### Load datasets
+
+(Optional) Upload the latest datasets:
+
 `. ../data/upload_data.sh`
 
-1. [EDA and visualization](src/covid-19-eda.Rmd) (**[report](src/covid-19-eda.md)**)
-  
-2. Forecasting
 
-  - [Kaggle COVID-19 forecasting](src/kaggle-covid-forecasting.R) 
-  - [Sberbank COVID-19 forecasting](src/sberbank-covid-forecasting.R) 
+#### EDA and visualization
+
+[EDA and visualization](src/covid-19-eda.Rmd) (**[report](src/covid-19-eda.md)**)
+  
+
+
+#### Forecasting
+
+Kernels (in development):
+
+- [Kaggle COVID-19 forecasting](src/kaggle-covid-forecasting.R) 
+- [Sberbank COVID-19 forecasting](src/sberbank-covid-forecasting.R) 
+
+Methods:
+
+- [x] Previous value (naive approach)
+- [x] Indicators: simple moving average (SMA) exponential moving average (EMA)
+- [x] ARIMA, ETS
+- [ ] Linear models: linear regression, Quasi-Poisson Regression 
+- [ ] Decision trees: boosting
+- [ ] Neural networks: LSTM, AR RNN
+- [ ] [SIR model](https://www.kaggle.com/jordimas/differential-evolution-to-fit-covid-19-sir-model)
 
 
 ## References

@@ -4,16 +4,6 @@
 #'
 
 
-# Methods:
-# + Naive approch (previous value)
-# + Indicators: simple moving average (SMA) exponential moving average (EMA)
-# + ARIMA, ETS
-# - Linear models: linear regression, Quasi-Poisson Regression 
-# - Decision trees: boosting
-# - Neural networks: LSTM, AR RNN
-# - SIR model
-
-
 
 # Import dependencies ----
 
