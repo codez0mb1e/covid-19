@@ -7,7 +7,7 @@
 # Methods:
 # + Naive approch (previous value)
 # + Indicators: simple moving average (SMA) exponential moving average (EMA)
-# - ARIMA, ETS
+# + ARIMA, ETS
 # - Linear models: linear regression, Quasi-Poisson Regression 
 # - Decision trees: boosting
 # - Neural networks: LSTM, AR RNN
@@ -69,9 +69,6 @@ spread <- load_time_series("confirmed") %>% rename(confirmed_n = n) %>%
   inner_join(
     load_time_series("deaths") %>% rename(deaths_n = n),
     by = c("country", "date")
-  ) %>% 
-  mutate(
-    frame_type = "train"
   )
 
 
@@ -79,17 +76,30 @@ stopifnot(
   nrow(spread) > 0
 )
 
-
-spread %>% 
-  gather(key = "key", value = "value", -c(country, frame_type, date)) %>% 
-  count(key)
-
 spread %>% skim
 
 
 
 # Preprocessing ----
-data <- spread
+data <- spread %>% 
+  group_by(country, date) %>% 
+  summarise_if(is.integer, sum) %>% 
+  ungroup
+
+
+stopifnot(
+  nrow(data) > 0,
+  all(unique(data$country) %in% unique(spread$country)),
+  !anyNA(data)
+)
+
+
+data %>% 
+  gather(key = "key", value = "value", -c(country, date)) %>% 
+  count(key)
+
+data %>% skim
+
   
 # TODO: enrich by new dataset
 # TODO: generate future dataset
@@ -98,27 +108,26 @@ data <- spread
 
 # Split datasets ----
 
+last_observation_date <- max(data$date)
+
 train <- data %>% 
   filter(
-    frame_type == "train" &
-    date < Sys.Date() - weeks(2)
+    date <= last_observation_date - weeks(2)
   )
 
 valid <- data %>% 
   filter(
-    frame_type == "train" &
-    date >= Sys.Date() - weeks(2) & date < Sys.Date() - weeks(1)
+    date > last_observation_date - weeks(2) & 
+    date <= last_observation_date - weeks(1)
   )
 
 test <- data %>% 
   filter(
-    frame_type == "train" &
-    date >= Sys.Date() - weeks(1)
+    date > last_observation_date - weeks(1)
   )
 
 
 # TODO: add future dataset
-
 
 stopifnot(
   nrow(valid) > 0, 
@@ -242,3 +251,88 @@ list(pred_indicators$deaths_sma_2, pred_indicators$deaths_sma_4, pred_indicators
 
 
 
+
+# ARIMA, ETS ----
+
+predict_horizont <- 7
+
+
+## ARIMA
+
+pred_arima <- unique(data$country) %>% 
+  map_dfr(
+    function(.x) {
+      m <- data %>% 
+        # filter rows and cols
+        filter(
+          country == .x & 
+          date < min(test$date)
+        ) %>%
+        # convert to time-series
+        arrange(date) %>% 
+        select(confirmed_n) %>% # TODO: compare all ***_n
+        as.ts %>% 
+        # ARIMA model
+        auto.arima %>% 
+        # forecast
+        forecast(h = predict_horizont)
+      
+      tibble(
+        country = rep(.x, predict_horizont),
+        date = seq(min(test$date), max(test$date), by = "day"),
+        pred = m$mean %>% as.numeric()
+      )
+    }
+  ) %>% 
+  # join with actual
+  inner_join(
+    test, by = c("country", "date")
+  )
+
+
+MALE(pred_arima$confirmed_n, pred_arima$pred)
+
+
+
+## ETS
+
+pred_ets <- unique(data$country) %>% 
+  map_dfr(
+    function(.x) {
+      m <- data %>% 
+        # filter rows and cols
+        filter(
+          country == .x & 
+            date < min(test$date)
+        ) %>%
+        # convert to time-series
+        arrange(date) %>% 
+        select(confirmed_n) %>% # TODO: compare all ***_n
+        as.ts %>% 
+        # ARIMA model
+        ets %>% 
+        # forecast
+        forecast(h = predict_horizont)
+      
+      tibble(
+        country = rep(.x, predict_horizont),
+        date = seq(min(test$date), max(test$date), by = "day"),
+        pred = m$mean %>% as.numeric()
+      )
+    }
+  ) %>% 
+  # join with actual
+  inner_join(
+    test, by = c("country", "date")
+  )
+
+
+MALE(pred_ets$confirmed_n, pred_ets$pred)
+
+
+
+
+# Save submission ----
+
+# TODO
+# format: date, country, prediction_confirmed, prediction_deaths
