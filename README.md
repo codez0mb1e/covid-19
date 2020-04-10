@@ -18,14 +18,15 @@
   
 2. Forecasting
 
-  - run [forecasting](src/forecasting.R) 
+  - [Kaggle COVID-19 forecasting](src/kaggle-covid-forecasting.R) 
+  - [Sberbank COVID-19 forecasting](src/sberbank-covid-forecasting.R) 
 
 
 ## References
 
 #### Basics, Research Papers
 
-1. [Coronavirus disease outbreak](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/), World Health Organization.
+1. [**Coronavirus disease outbreak**](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/), World Health Organization.
 1. [Coronavirus Disease 2019](https://en.wikipedia.org/wiki/Coronavirus_disease_2019), Wikipedia.
 1. [Here’s what coronavirus does to the body](https://www.nationalgeographic.com/science/2020/02/here-is-what-coronavirus-does-to-the-body/), nationalgeographic.com.
 1. [COVID-19 SARS-CoV-2 preprints from medRxiv and bioRxiv](https://connect.medrxiv.org/relate/content/181), medrxiv.
@@ -55,18 +56,18 @@
 #### Forecasting, Competitions
 
 1. The COVID-19 Vulnerability Index: [post](https://closedloop.ai/open-source-data-science-to-fight-covid-19-corona-virus/), [research paper](https://arxiv.org/abs/2003.07347), [source code](https://github.com/closedloop-ai/cv19index), ClosedLoop.ai.
-1. COVID19 Global Forecasting: [week 1](https://www.kaggle.com/c/covid19-global-forecasting-week-1), [week 2](https://www.kaggle.com/c/covid19-global-forecasting-week-2), and [week 3](https://www.kaggle.com/c/covid19-global-forecasting-week-3), Kaggle. 
+1. **COVID19 Global Forecasting**: [week 1](https://www.kaggle.com/c/covid19-global-forecasting-week-1), [week 2](https://www.kaggle.com/c/covid19-global-forecasting-week-2), [week 3](https://www.kaggle.com/c/covid19-global-forecasting-week-3), and [week 4](https://www.kaggle.com/c/covid19-global-forecasting-week-4), Kaggle. 
 1. [Computational predictions of protein structures associated with COVID-19](https://deepmind.com/research/open-source/computational-predictions-of-protein-structures-associated-with-COVID-19), DeepMind.
 1. [Sberbank COVID-19 forecast](https://ods.ai/competitions/sberbank-covid19-forecast), Sberbank feat. ODS.ai.
 
 
 #### Datasets
 
+1. [**COVID-19 Data Repository by Johns Hopkins CSSE**](https://github.com/CSSEGISandData/COVID-19), GitHub.
 1. [Novel Corona Virus 2019 Dataset](https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset), Kaggle.
 1. [Coronavirus disease (COVID-2019) situation reports](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports), World Health Organization.
 1. [COVID-19 Open Research Dataset (CORD-19)](https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge), Kaggle.
 1. [COVID-19 Complete Dataset (Updated every 24hrs)](https://www.kaggle.com/imdevskp/corona-virus-report), Kaggle.
-1. [**COVID-19 Data Repository by Johns Hopkins CSSE**](https://github.com/CSSEGISandData/COVID-19), GitHub.
 1. [#covid19 tag](https://www.kaggle.com/tags/covid19), Kaggle.
 
 
