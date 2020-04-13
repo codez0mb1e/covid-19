@@ -53,18 +53,18 @@ Get list of files in datasets
 Load `covid_19_data.csv` dataset:
 
     ## # A tibble: 100 x 8
-    ##      SNo ObservationDate Province.State Country.Region Last.Update        Confirmed Deaths Recovered
-    ##    <int> <chr>           <chr>          <chr>          <chr>                  <dbl>  <dbl>     <dbl>
-    ##  1   405 01/30/2020      Qinghai        Mainland China 1/30/20 16:00              8      0         0
-    ##  2  2359 02/25/2020      <NA>           Finland        2020-02-12T00:03:…         1      0         1
-    ##  3  7247 03/20/2020      <NA>           Mongolia       2020-03-18T11:53:…         6      0         0
-    ##  4  1237 02/11/2020      Macau          Macau          2020-02-06T14:23:…        10      0         1
-    ##  5   674 02/03/2020      Queensland     Australia      2020-02-02T22:33:…         2      0         0
-    ##  6 11172 04/02/2020      Bermuda        UK             4/2/20 8:53               35      0        11
-    ##  7  8813 03/26/2020      <NA>           Albania        2020-03-26 23:53:…       174      6        17
-    ##  8 11249 04/02/2020      North Dakota   US             4/2/20 8:53              159      3         0
-    ##  9 13564 04/10/2020      <NA>           Colombia       2020-04-10 23:01:…      2473     80       197
-    ## 10  4623 03/10/2020      <NA>           Belarus        2020-03-10T16:13:…         9      0         3
+    ##      SNo ObservationDate Province.State Country.Region    Last.Update     Confirmed Deaths Recovered
+    ##    <int> <chr>           <chr>          <chr>             <chr>               <dbl>  <dbl>     <dbl>
+    ##  1  7592 03/21/2020      <NA>           Fiji              2020-03-19T14:…         1      0         0
+    ##  2  1407 02/13/2020      <NA>           Sri Lanka         2020-02-08T03:…         1      0         1
+    ##  3  7918 03/23/2020      <NA>           Algeria           2020-03-23 23:…       230     17        65
+    ##  4  7819 03/22/2020      Guangxi        Mainland China    3/8/20 5:31           254      2       250
+    ##  5  9661 03/28/2020      Maine          US                3/8/20 5:31           211      1         0
+    ##  6  2919 03/01/2020      <NA>           Estonia           2020-02-27T16:…         1      0         0
+    ##  7  5457 03/14/2020      <NA>           United Arab Emir… 2020-03-13T22:…        85      0        17
+    ##  8  5912 03/16/2020      Denmark        Denmark           2020-03-16T18:…       914      3         1
+    ##  9  2708 02/29/2020      Jiangxi        Mainland China    2020-02-29T01:…       935      1       811
+    ## 10  8614 03/25/2020      <NA>           Mongolia          2020-03-25 23:…        10      0         0
     ## # … with 90 more rows
 
 ### Load world population data
