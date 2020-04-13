@@ -48,18 +48,6 @@ render_toc("covid-19-eda.Rmd")
 ```
 
 
-```{r set_params, include=FALSE}
-theme_set(theme_minimal())
-
-lab_caption <- paste0(
-  "Data source: Novel Coronavirus (COVID-19) Cases provided by Johns Hopkins University Center for Systems Science. \n",
-  sprintf("Last updated: %s. ", format(Sys.time(), '%d %B, %Y')),
-  "Source code: github.com/codez0mb1e/covid-2019"
-)            
-```
-
-
-
 ## Load datasets
 
 ### Load COVID-19 spread data
@@ -202,6 +190,15 @@ covid_data %>%
 Much better :)
 
 
+```{r set_plot_params, include=FALSE}
+theme_set(theme_minimal())
+
+lab_caption <- paste0(
+  "Data source: Novel Coronavirus (COVID-19) Cases provided by Johns Hopkins University Center for Systems Science. \n",
+  sprintf("Last updated: %s. ", format(max(covid_data$observation_date), '%d %B, %Y')),
+  "Source code: github.com/codez0mb1e/covid-2019"
+)            
+```
 
 
 ## COVID-19 worldwide spread
@@ -272,9 +269,9 @@ ggplot(
   geom_col(aes(y = cases_n, fill = case_state), alpha = .75) +
   geom_smooth(aes(y = active_total), method = "loess", color = "#0080FF", size = .2) +
   
-  geom_hline(aes(yintercept = total_population*1e-4), linetype = "dashed", color = "black", alpha = .33) +
-  annotate(geom = "text", label = "0.01% of world population", size = 3, color = "#666666", 
-           x = min(world_spread$observation_date), y = (total_population*1e-4 + 2e4), 
+  geom_hline(aes(yintercept = total_population*2e-4), linetype = "dashed", color = "black", alpha = .33) +
+  annotate(geom = "text", label = "0.02% of world population", size = 3, color = "#666666", 
+           x = min(world_spread$observation_date), y = (total_population*2e-4 + 4e4), 
            vjust = "bottom", hjust = "left") +
   
   scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
@@ -296,7 +293,6 @@ ggplot(
 ```{r}
 ggplot(
   world_spread %>% 
-    filter(observation_date > Sys.Date() - weeks(2)) %>% 
     group_by(observation_date) %>% 
     summarise_at(
       vars(ends_with("_total")), sum
@@ -308,15 +304,16 @@ ggplot(
     ) %>% 
     gather(
       key = "case_state", value = "cases_n", -c(observation_date, active_total)
-    ),
+    ) %>% 
+    filter(observation_date > max(observation_date) - months(1)),
   aes(x = observation_date)) +
   
   geom_col(aes(y = cases_n, fill = case_state), alpha = .75) +
   geom_smooth(aes(y = active_total), method = "loess", color = "#0080FF", size = .2) +
   
-  geom_hline(aes(yintercept = total_population*1e-4), linetype = "dashed", color = "black", alpha = .33) +
-  annotate(geom = "text", label = "0.01% of world population", size = 3, color = "#666666", 
-           x = Sys.Date() - weeks(2), y = (total_population*1e-4 + 2e4), 
+  geom_hline(aes(yintercept = total_population*2e-4), linetype = "dashed", color = "black", alpha = .33) +
+  annotate(geom = "text", label = "0.02% of world population", size = 3, color = "#666666", 
+           x = Sys.Date() - weeks(2), y = (total_population*2e-4 + 4e4), 
            vjust = "bottom", hjust = "left") +
   
   scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
@@ -326,7 +323,7 @@ ggplot(
   
   labs(x = "", y = "Number of cases", 
        title = "COVID-19 Worldwide Spread", 
-       subtitle = "Spread for last 2 weeks. \nBlue line - infected cases minus recovered and fatal.", 
+       subtitle = "Spread for last month. \nBlue line - infected cases minus recovered and fatal.", 
        caption = lab_caption) +
 
   theme(
@@ -384,7 +381,7 @@ ggplot(
       gather(
         key = "case_state", value = "cases_n", -c(observation_date, active_total)
       ) %>% 
-      filter(observation_date > Sys.Date() - weeks(2))
+      filter(observation_date > max(observation_date) - months(1))
   ) +
   
   geom_col(aes(x = observation_date, y = cases_n, fill = case_state), position = "fill", alpha = .75) +
@@ -398,7 +395,7 @@ ggplot(
 
   labs(x = "", y = "% from the overall number of cases", 
        title = "COVID-19 Worldwide Cases Structure", 
-       subtitle = "Ratio of different types of cases for last 2 weeks", 
+       subtitle = "Ratio of different types of cases for last month", 
        caption = lab_caption) +
   
   theme(
@@ -461,7 +458,7 @@ ggplot(
   
   scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
   scale_fill_manual(element_blank(), 
-                    labels = c("confirmed_total_per_day" = "Infected cases", "recovered_total_per_day" = "Recovered cases", "deaths_total_per_day" = "Fatal cases"),
+                    labels = c("confirmed_total_per_day" = "New infected cases", "recovered_total_per_day" = "New recovered cases", "deaths_total_per_day" = "New fatal cases"),
                     values = c("confirmed_total_per_day" = "grey", "recovered_total_per_day" = "gold", "deaths_total_per_day" = "black")) +
   
   
@@ -490,7 +487,7 @@ ggplot(
       gather(
         key = "case_state", value = "cases_n", -c(observation_date, active_total_per_day)
       ) %>% 
-      filter(observation_date > Sys.Date() - weeks(2)), 
+      filter(observation_date > max(observation_date) - months(1)), 
     aes(x = observation_date)
   ) +
   
@@ -499,12 +496,12 @@ ggplot(
   
   scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
   scale_fill_manual(element_blank(), 
-                    labels = c("confirmed_total_per_day" = "Infected cases", "recovered_total_per_day" = "Recovered cases", "deaths_total_per_day" = "Fatal cases"),
+                    labels = c("confirmed_total_per_day" = "New infected cases", "recovered_total_per_day" = "New recovered cases", "deaths_total_per_day" = "New fatal cases"),
                     values = c("confirmed_total_per_day" = "grey", "recovered_total_per_day" = "gold", "deaths_total_per_day" = "black")) +
   
   
   labs(title = "COVID-19 Worldwide Daily Spread", 
-       subtitle = "Cases dynamics for last 2 weeks. \nBlue line - infected cases minus recovered and fatal.\nNegative values indicate recovered and fatal cases.", 
+       subtitle = "Cases dynamics for last month. \nBlue line - infected cases minus recovered and fatal.\nNegative values indicate recovered and fatal cases.", 
        x = "", y = "Number of new cases per day",
        caption = lab_caption) +
   
@@ -611,7 +608,7 @@ ggplot(
   geom_col(aes(y = confirmed_total), fill = "#0080FF", alpha = .25) +
   geom_col(aes(y = cases_n, fill = country), show.legend = F) +
   
-  scale_y_log10() +
+  #scale_y_log10() +
   
   coord_flip() +
   
@@ -685,7 +682,7 @@ ggplot(
       key = "case_state", value = "cases_n", -c(country, observation_date, active_total)
     ) %>% 
     filter(
-      observation_date > Sys.Date() - weeks(2)
+      observation_date > max(observation_date) - months(1)
     ),
   aes(x = observation_date)) +
   
@@ -701,7 +698,7 @@ ggplot(
   
   labs(x = "", y = "Number of cases", 
        title = "COVID-19 Spread by Countries", 
-       subtitle = "Spread for last 2 weeks. \nBlue line - infected cases minus recovered and fatal.", 
+       subtitle = "Spread for last month. \nBlue line - infected cases minus recovered and fatal.", 
        caption = lab_caption) +
 
   theme(
@@ -799,7 +796,7 @@ ggplot(
       gather(
         key = "case_state", value = "cases_n", -c(country, observation_date, active_total_per_day)
       ) %>% 
-      filter(observation_date > Sys.Date() - weeks(2)), 
+      filter(observation_date > max(observation_date) - months(1)), 
     aes(x = observation_date)
   ) +
   
@@ -814,7 +811,7 @@ ggplot(
   facet_grid(country ~ ., scales = "free") +
   
   labs(title = "COVID-19 Daily Spread by Countries", 
-       subtitle = "Cases dynamics for last 2 weeks. \nBlue line - new infected cases minus recovered and fatal.\nNegative values indicate recovered and fatal cases.", 
+       subtitle = "Cases dynamics for last month. \nBlue line - new infected cases minus recovered and fatal.\nNegative values indicate recovered and fatal cases.", 
        x = "", y = "Number of new cases per day",
        caption = lab_caption) +
   
@@ -1029,17 +1026,18 @@ active_cases_since_1st_confirmed <- population_spread %>%
     by = c("country", "n_days_since_1st_confirmed")
   ) %>% 
   mutate(
+    double_every_14d = (1 + 1/14)^n_days_since_1st_confirmed, # double every 2 weeks
     double_every_7d = (1 + 1/7)^n_days_since_1st_confirmed, # double every week
     double_every_3d = (1 + 1/3)^n_days_since_1st_confirmed, # double every 3 days
-    double_every_2d = (1 + 1/2)^n_days_since_1st_confirmed, # double every 2 days
-    double_every_1d = (1 + 1)^n_days_since_1st_confirmed  # double every day
+    double_every_2d = (1 + 1/2)^n_days_since_1st_confirmed # double every 2 days
   )
 
 
 ggplot(active_cases_since_1st_confirmed, aes(x = n_days_since_1st_confirmed)) +
   
-  geom_line(aes(y = double_every_7d), linetype = "dashed", color = "red", alpha = .45) +
-  geom_line(aes(y = double_every_3d), linetype = "dashed", color = "red", alpha = .6) + 
+  geom_line(aes(y = double_every_14d), linetype = "dashed", color = "red", alpha = .55) +
+  geom_line(aes(y = double_every_7d), linetype = "dashed", color = "red", alpha = .65) +
+  geom_line(aes(y = double_every_3d), linetype = "dashed", color = "red", alpha = .75) + 
   geom_line(aes(y = double_every_2d), linetype = "dashed", color = "red", alpha = .85) + 
   
   geom_line(aes(y = active_total_per_1M, color = country), show.legend = F) +
@@ -1047,8 +1045,9 @@ ggplot(active_cases_since_1st_confirmed, aes(x = n_days_since_1st_confirmed)) +
             hjust = 0.5, vjust = 0, check_overlap = T, show.legend = F, fontface = "bold", size = 3.6) +
   
   annotate(geom = "text", label = "Active cases double \n every 2 days", x = 17, y = 1550, vjust = 0, size = 3.2) +
-  annotate(geom = "text", label = "...every 3 days", x = 25, y = 1400, vjust = 0, size = 3.2) +
-  annotate(geom = "text", label = "...every week", x = 55, y = 1600, vjust = 0, size = 3.2) +
+  annotate(geom = "text", label = "...every 3 days", x = 25, y = 1800, vjust = 0, size = 3.2) +
+  annotate(geom = "text", label = "...every week", x = 55, y = 2000, vjust = 0, size = 3.2) +
+  annotate(geom = "text", label = "...every 2 weeks", x = 80, y = 300, vjust = 0, size = 3.2) +
   
   ylim(c(0, max(active_cases_since_1st_confirmed$active_total_per_1M) + 100)) +
   
@@ -1077,10 +1076,10 @@ active_cases_since_1st_death <- population_spread %>%
     by = c("country", "n_days_since_1st_deaths")
   ) %>% 
   mutate(
+    double_every_14d = (1 + 1/14)^n_days_since_1st_deaths, # double every 2 weeks
     double_every_7d = (1 + 1/7)^n_days_since_1st_deaths, # double every week
     double_every_3d = (1 + 1/3)^n_days_since_1st_deaths, # double every 3 days
-    double_every_2d = (1 + 1/2)^n_days_since_1st_deaths, # double every 2 days
-    double_every_1d = (1 + 1)^n_days_since_1st_deaths  # double every day
+    double_every_2d = (1 + 1/2)^n_days_since_1st_deaths # double every 2 days
   )
 
 
@@ -1089,19 +1088,19 @@ ggplot(
   aes(x = n_days_since_1st_deaths)
   ) +
   
-  geom_line(aes(y = double_every_7d), linetype = "dashed", color = "red", alpha = .45) +
-  geom_line(aes(y = double_every_3d), linetype = "dashed", color = "red", alpha = .6) + 
+  geom_line(aes(y = double_every_14d), linetype = "dashed", color = "red", alpha = .55) +
+  geom_line(aes(y = double_every_7d), linetype = "dashed", color = "red", alpha = .65) +
+  geom_line(aes(y = double_every_3d), linetype = "dashed", color = "red", alpha = .75) + 
   geom_line(aes(y = double_every_2d), linetype = "dashed", color = "red", alpha = .85) + 
-  geom_line(aes(y = double_every_1d), linetype = "dashed", color = "red", alpha = 1) +
   
   geom_line(aes(y = active_total_per_1M, color = country), show.legend = F) +
   geom_text(aes(y = active_total_per_1M_last + 20, label = country, color = country), 
             hjust = 0.5, vjust = 0, check_overlap = T, show.legend = F, fontface = "bold", size = 3.6) +
   
-  annotate(geom = "text", label = "Active cases double \n every day", x = 10, y = 1050, vjust = 0, size = 3.2) +
-  annotate(geom = "text", label = "...every 2 days", x = 18, y = 1500, vjust = 0, size = 3.2) +
-  annotate(geom = "text", label = "...every 3 days", x = 22, y = 1250, vjust = 0, size = 3.2) +
-  annotate(geom = "text", label = "...every week", x = 200, y = 35, vjust = 0, size = 3.2) +
+  annotate(geom = "text", label = "Active cases double \n every 2 days", x = 18, y = 1600, vjust = 0, size = 3.2) +
+  annotate(geom = "text", label = "...every 3 days", x = 25, y = 1750, vjust = 0, size = 3.2) +
+  annotate(geom = "text", label = "...every week", x = 40, y = 300, vjust = 0, size = 3.2) +
+  annotate(geom = "text", label = "...every 2 weeks", x = 40, y = 100, vjust = 0, size = 3.2) +
   
   xlim(c(0, 42)) +
   ylim(c(0, max(active_cases_since_1st_death$active_total_per_1M) + 100)) +
