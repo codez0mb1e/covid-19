@@ -5,7 +5,7 @@
 
 
 #' Calculate (current - prev)/prev
-calc_ratio <- function(.x) c(0, diff(.x))/lag(.x)
+calc_ratio <- function(.x, n = 1L) c(0, diff(.x, n))/(lag(.x, n) + 1e-7)
 
 
 #' Calculate RMSLE (root mean squared logarithmic error)
