@@ -536,31 +536,31 @@ countries_spread <- covid_data %>%
   ) %>% 
   ungroup() %>% 
   
-  ## calc number of days since first infected case
+  ## calc number of days since 100 infected case
   inner_join(
     covid_data %>% 
       group_by(country) %>% 
-      filter(confirmed > 0) %>% 
-      summarise(first_confirmed_date = min(observation_date)),
+      filter(confirmed > 100) %>% 
+      summarise(since_100_confirmed_date = min(observation_date)),
     by = "country"
   ) %>%
   mutate(
-    n_days_since_1st_confirmed = observation_date %>% difftime(first_confirmed_date, units = "days") %>% as.numeric
+    n_days_since_100_confirmed = observation_date %>% difftime(since_100_confirmed_date, units = "days") %>% as.numeric
   ) %>% 
-  filter(n_days_since_1st_confirmed >= 0) %>% 
+  filter(n_days_since_100_confirmed >= 0) %>% 
   
   ## calc number of days since 10th fatal case
   left_join(
     covid_data %>% 
       group_by(country, observation_date) %>% 
       summarise(deaths_total = sum(deaths)) %>% 
-      filter(deaths_total > 0) %>% 
-      summarise(first_deaths_case_date = min(observation_date)),
+      filter(deaths_total > 10) %>% 
+      summarise(since_10_deaths_date = min(observation_date)),
     by = "country"
   ) %>% 
   mutate(
-    n_days_since_1st_deaths = observation_date %>% difftime(first_deaths_case_date, units = "days") %>% as.numeric,
-    n_days_since_1st_deaths = if_else(n_days_since_1st_deaths >= 0, n_days_since_1st_deaths, NA_real_)
+    n_days_since_10th_deaths = observation_date %>% difftime(since_10_deaths_date, units = "days") %>% as.numeric,
+    n_days_since_10th_deaths = if_else(n_days_since_10th_deaths >= 0, n_days_since_10th_deaths, NA_real_)
   ) 
 
 ```
@@ -831,7 +831,7 @@ countries_mortality <- countries_spread %>%
     confirmed_deaths_rate = deaths_total/confirmed_total,
     recovered_deaths_rate = deaths_total/(recovered_total + deaths_total)
   ) %>% 
-  filter(n_days_since_1st_deaths >= 0)
+  filter(n_days_since_10th_deaths >= 0)
 
 
 countries_mortality %>% 
@@ -843,7 +843,7 @@ countries_mortality %>%
 ```{r}
 ggplot(
   countries_mortality %>% filter(country %in% unique(countries_spread_top$country)),
-  aes(x = n_days_since_1st_deaths)
+  aes(x = n_days_since_10th_deaths)
   ) +
   
   geom_area(aes(y = recovered_deaths_rate), alpha = .75, fill = "gold") +
@@ -853,7 +853,7 @@ ggplot(
   
   facet_grid(country ~ ., scales = "free") +
   
-  labs(x = "Number of days since 1st fatal case", y = "Mortality rate", 
+  labs(x = "Number of days since 10th fatal case", y = "Mortality rate", 
        title = "COVID-19 Mortality Rate", 
        subtitle = "Gold area - fatal to recovered cases ratio, grey area - fatal to infected cases ratio.", 
        caption = lab_caption) +
@@ -867,7 +867,7 @@ ggplot(
 ```{r}
 ggplot(
   countries_mortality %>% filter(country %in% unique(countries_spread_top$country)), 
-  aes(x = n_days_since_1st_deaths)
+  aes(x = n_days_since_10th_deaths)
   ) +
   
   geom_line(aes(y = confirmed_deaths_rate, color = country), size = 1, alpha = .75) +
@@ -893,7 +893,7 @@ ggplot(
 ```{r}
 ggplot(
   countries_mortality %>% filter(country %in% unique(countries_spread_top$country)), 
-  aes(x = n_days_since_1st_deaths)
+  aes(x = n_days_since_10th_deaths)
   ) +
   
   geom_line(aes(y = recovered_deaths_rate, color = country), size = 1, alpha = .75) +
@@ -935,8 +935,8 @@ population_spread <- countries_spread %>%
   
 population_spread %>% 
   filter(country == "Russia") %>% 
-  arrange(-n_days_since_1st_confirmed) %>% 
-  select(country, n_days_since_1st_confirmed, population, starts_with("confirmed_"))
+  arrange(-n_days_since_100_confirmed) %>% 
+  select(country, n_days_since_100_confirmed, population, starts_with("confirmed_"))
 ```
 
 
@@ -965,7 +965,7 @@ population_spread_last_day %>%
   select(
     country, population,
     confirmed_total, confirmed_total_per_1M,
-    n_days_since_1st_confirmed, n_days_since_1st_deaths
+    n_days_since_100_confirmed, n_days_since_10th_deaths
   )
 ```
 
@@ -978,7 +978,7 @@ population_spread_last_day %>%
   select(
     country, population,
     active_total, active_total_per_1M,
-    n_days_since_1st_confirmed, n_days_since_1st_deaths
+    n_days_since_100_confirmed, n_days_since_10th_deaths
   )
 ```
 
@@ -991,13 +991,13 @@ population_spread_last_day %>%
   select(
     country, population,
     deaths_total, deaths_total_per_1M,
-    n_days_since_1st_confirmed, n_days_since_1st_deaths
+    n_days_since_100_confirmed, n_days_since_10th_deaths
   )
 ```
 
 
 
-### Active cases per 1 million population vs number of days since 1st infected case
+### Active cases per 1 million population vs number of days since 100th infected case
 
 Select countries to monitoring:
 
@@ -1013,109 +1013,112 @@ observed_countries <- population_spread_last_day %>%
 
 
 # Add countries that we are interested in
-observed_countries <- c(observed_countries, "Russia", "India", "Mainland China", "South Korea") %>% unique
+observed_countries <- c(observed_countries, "Russia", "US", "Italy", "Mainland China", "Korea, South") %>% unique
 observed_countries 
 ```
 
 
 ```{r warning=FALSE}
-active_cases_since_1st_confirmed <- population_spread %>% 
+active_cases_since_100st_confirmed <- population_spread %>% 
   filter(country %in% observed_countries) %>% 
   left_join(
-    population_spread_last_day %>% transmute(country, active_total_per_1M_last = active_total_per_1M, n_days_since_1st_confirmed),
-    by = c("country", "n_days_since_1st_confirmed")
+    population_spread_last_day %>% transmute(country, active_total_per_1M_last = active_total_per_1M, n_days_since_100_confirmed),
+    by = c("country", "n_days_since_100_confirmed")
   ) %>% 
   mutate(
-    double_every_14d = (1 + 1/14)^n_days_since_1st_confirmed, # double every 2 weeks
-    double_every_7d = (1 + 1/7)^n_days_since_1st_confirmed, # double every week
-    double_every_3d = (1 + 1/3)^n_days_since_1st_confirmed, # double every 3 days
-    double_every_2d = (1 + 1/2)^n_days_since_1st_confirmed # double every 2 days
+    double_every_14d = (1 + 1/14)^n_days_since_100_confirmed, # double every 2 weeks
+    double_every_7d = (1 + 1/7)^n_days_since_100_confirmed, # double every week
+    double_every_3d = (1 + 1/3)^n_days_since_100_confirmed, # double every 3 days
+    double_every_2d = (1 + 1/2)^n_days_since_100_confirmed # double every 2 days
   )
 
 
-ggplot(active_cases_since_1st_confirmed, aes(x = n_days_since_1st_confirmed)) +
+ggplot(active_cases_since_100st_confirmed, aes(x = n_days_since_100_confirmed)) +
   
-  geom_line(aes(y = double_every_14d), linetype = "dashed", color = "red", alpha = .55) +
   geom_line(aes(y = double_every_7d), linetype = "dashed", color = "red", alpha = .65) +
   geom_line(aes(y = double_every_3d), linetype = "dashed", color = "red", alpha = .75) + 
   geom_line(aes(y = double_every_2d), linetype = "dashed", color = "red", alpha = .85) + 
   
-  geom_line(aes(y = active_total_per_1M, color = country), show.legend = F) +
-  geom_text(aes(y = active_total_per_1M_last + 20, label = country, color = country),
+  geom_line(aes(y = active_total_per_1M, color = country)) +
+  geom_text(aes(y = active_total_per_1M_last, label = country, color = country),
             hjust = 0.5, vjust = 0, check_overlap = T, show.legend = F, fontface = "bold", size = 3.6) +
   
-  annotate(geom = "text", label = "Active cases double \n every 2 days", x = 17, y = 1550, vjust = 0, size = 3.2) +
-  annotate(geom = "text", label = "...every 3 days", x = 25, y = 1800, vjust = 0, size = 3.2) +
-  annotate(geom = "text", label = "...every week", x = 55, y = 2000, vjust = 0, size = 3.2) +
-  annotate(geom = "text", label = "...every 2 weeks", x = 80, y = 300, vjust = 0, size = 3.2) +
+  annotate(geom = "text", label = "Cases double \n every 2 days", x = 17, y = 1550, vjust = 0, size = 3.1) +
+  annotate(geom = "text", label = "...every 3 days", x = 25, y = 1800, vjust = 0, size = 3.1) +
+  annotate(geom = "text", label = "...every week", x = 48, y = 800, vjust = 0, size = 3.1) +
   
-  ylim(c(0, max(active_cases_since_1st_confirmed$active_total_per_1M) + 100)) +
+  xlim(c(0, 50)) +
+  ylim(c(0, max(active_cases_since_100st_confirmed$active_total_per_1M))) +
   
-  labs(x = "Number of days since 1st infected case", y = "Active cases per 1M population", 
-       title = "COVID-19 Аctive Сases", 
-       subtitle = "Number of active cases per 1 million population since 1st infected case", 
+  labs(x = "Number of days since 100th infected case", y = "Active cases per 1M population", 
+       title = "COVID-19 Аctive Сases Dynamics", 
+       subtitle = "Number of active cases per 1 million population since 100th infected case", 
        caption = lab_caption) +
 
   theme(
+    legend.position = "bottom",
+    legend.title = element_blank(),
     plot.caption = element_text(size = 8)
   )
 
 
-rm(active_cases_since_1st_confirmed)
+rm(active_cases_since_100st_confirmed)
 ```
 
 
-### Active cases per 1 million population vs number of days since 1st fatal case
+### Active cases per 1 million population vs number of days since 10th fatal case
 
 ```{r warning=FALSE}
 
-active_cases_since_1st_death <- population_spread %>% 
+active_cases_since_10th_death <- population_spread %>% 
   filter(country %in% observed_countries) %>% 
   left_join(
-    population_spread_last_day %>% transmute(country, active_total_per_1M_last = active_total_per_1M, n_days_since_1st_deaths),
-    by = c("country", "n_days_since_1st_deaths")
+    population_spread_last_day %>% transmute(country, active_total_per_1M_last = active_total_per_1M, n_days_since_10th_deaths),
+    by = c("country", "n_days_since_10th_deaths")
   ) %>% 
   mutate(
-    double_every_14d = (1 + 1/14)^n_days_since_1st_deaths, # double every 2 weeks
-    double_every_7d = (1 + 1/7)^n_days_since_1st_deaths, # double every week
-    double_every_3d = (1 + 1/3)^n_days_since_1st_deaths, # double every 3 days
-    double_every_2d = (1 + 1/2)^n_days_since_1st_deaths # double every 2 days
+    double_every_14d = (1 + 1/14)^n_days_since_10th_deaths, # double every 2 weeks
+    double_every_7d = (1 + 1/7)^n_days_since_10th_deaths, # double every week
+    double_every_3d = (1 + 1/3)^n_days_since_10th_deaths, # double every 3 days
+    double_every_2d = (1 + 1/2)^n_days_since_10th_deaths # double every 2 days
   )
 
 
 ggplot(
-  active_cases_since_1st_death,
-  aes(x = n_days_since_1st_deaths)
+  active_cases_since_10th_death,
+  aes(x = n_days_since_10th_deaths)
   ) +
   
-  geom_line(aes(y = double_every_14d), linetype = "dashed", color = "red", alpha = .55) +
   geom_line(aes(y = double_every_7d), linetype = "dashed", color = "red", alpha = .65) +
   geom_line(aes(y = double_every_3d), linetype = "dashed", color = "red", alpha = .75) + 
   geom_line(aes(y = double_every_2d), linetype = "dashed", color = "red", alpha = .85) + 
   
-  geom_line(aes(y = active_total_per_1M, color = country), show.legend = F) +
+  geom_line(aes(y = active_total_per_1M, color = country)) +
   geom_text(aes(y = active_total_per_1M_last + 20, label = country, color = country), 
             hjust = 0.5, vjust = 0, check_overlap = T, show.legend = F, fontface = "bold", size = 3.6) +
   
-  annotate(geom = "text", label = "Active cases double \n every 2 days", x = 18, y = 1600, vjust = 0, size = 3.2) +
-  annotate(geom = "text", label = "...every 3 days", x = 25, y = 1750, vjust = 0, size = 3.2) +
-  annotate(geom = "text", label = "...every week", x = 40, y = 300, vjust = 0, size = 3.2) +
-  annotate(geom = "text", label = "...every 2 weeks", x = 40, y = 100, vjust = 0, size = 3.2) +
+  annotate(geom = "text", label = "Cases double \n every 2 days", x = 18, y = 1600, vjust = 0, size = 3.1) +
+  annotate(geom = "text", label = "...every 3 days", x = 25, y = 1750, vjust = 0, size = 3.1) +
+  annotate(geom = "text", label = "...every week", x = 40, y = 300, vjust = 0, size = 3.1) +
   
   xlim(c(0, 42)) +
-  ylim(c(0, max(active_cases_since_1st_death$active_total_per_1M) + 100)) +
+  ylim(c(0, max(active_cases_since_10th_death$active_total_per_1M) + 100)) +
   
-  labs(x = "Number of days since 1st fatal case", y = "Active cases per 1M population", 
-       title = "COVID-19 Аctive Сases", 
-       subtitle = "Number of active cases per 1 million population since 1st fatal case", 
+  labs(x = "Number of days since 10th fatal case", y = "Active cases per 1M population", 
+       title = "COVID-19 Аctive Сases Dynamics", 
+       subtitle = "Number of active cases per 1 million population since 10th fatal case", 
        caption = lab_caption) +
   
   theme(
-    legend.title = element_blank(),
     legend.position = "bottom",
+    legend.title = element_blank(),
     plot.caption = element_text(size = 8)
   )
+
+
+rm(active_cases_since_10th_death)
 ```
  
 
+**Stay healthy. Help the sick.**
 
