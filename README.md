@@ -35,12 +35,13 @@ Kernels (in development):
 Methods:
 
 - [x] Previous value (naive approach)
-- [x] Indicators: simple moving average (SMA) exponential moving average (EMA)
+- [x] Indicators: simple moving average (SMA), exponential moving average (EMA), double EMA
 - [x] ARIMA, ETS
 - [ ] Linear models: linear regression, Quasi-Poisson Regression 
 - [ ] Decision trees: boosting
 - [ ] Neural networks: LSTM, AR RNN
 - [ ] [SIR model](https://www.kaggle.com/jordimas/differential-evolution-to-fit-covid-19-sir-model)
+- [ ] [Prophet](https://facebook.github.io/prophet/) 
 
 
 ## References
