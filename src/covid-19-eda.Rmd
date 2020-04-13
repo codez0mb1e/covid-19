@@ -1120,5 +1120,5 @@ rm(active_cases_since_10th_death)
 ```
  
 
-**Stay healthy. Help the sick.**
+***Stay healthy. Help the sick.***
 
