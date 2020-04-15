@@ -21,8 +21,8 @@
 
 #### EDA and visualization
 
-[EDA and visualization](src/covid-19-eda.Rmd) (**[report](src/covid-19-eda.md)**)
-  
+- [EDA and visualization](src/covid-19-eda.Rmd) (**[report](src/covid-19-eda.md)**)
+- [COVID YAAA! or Yet Another Analyze Attempt ](src/covid-19-yaaa.Rmd) (**[report](src/covid-19-yaaa.md)**)
 
 
 #### Forecasting
