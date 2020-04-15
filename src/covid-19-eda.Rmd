@@ -608,8 +608,6 @@ ggplot(
   geom_col(aes(y = confirmed_total), fill = "#0080FF", alpha = .25) +
   geom_col(aes(y = cases_n, fill = country), show.legend = F) +
   
-  #scale_y_log10() +
-  
   coord_flip() +
   
   facet_grid(case_state ~ .,) +
@@ -1035,9 +1033,9 @@ active_cases_since_100st_confirmed <- population_spread %>%
 
 ggplot(active_cases_since_100st_confirmed, aes(x = n_days_since_100_confirmed)) +
   
-  geom_line(aes(y = double_every_7d), linetype = "dashed", color = "red", alpha = .65) +
-  geom_line(aes(y = double_every_3d), linetype = "dashed", color = "red", alpha = .75) + 
-  geom_line(aes(y = double_every_2d), linetype = "dashed", color = "red", alpha = .85) + 
+  geom_line(aes(y = double_every_7d), linetype = "dotted", color = "red", alpha = .65) +
+  geom_line(aes(y = double_every_3d), linetype = "dotted", color = "red", alpha = .75) + 
+  geom_line(aes(y = double_every_2d), linetype = "dotted", color = "red", alpha = .85) + 
   
   geom_line(aes(y = active_total_per_1M, color = country)) +
   geom_text(aes(y = active_total_per_1M_last, label = country, color = country),
@@ -1089,9 +1087,9 @@ ggplot(
   aes(x = n_days_since_10th_deaths)
   ) +
   
-  geom_line(aes(y = double_every_7d), linetype = "dashed", color = "red", alpha = .65) +
-  geom_line(aes(y = double_every_3d), linetype = "dashed", color = "red", alpha = .75) + 
-  geom_line(aes(y = double_every_2d), linetype = "dashed", color = "red", alpha = .85) + 
+  geom_line(aes(y = double_every_7d), linetype = "dotted", color = "red", alpha = .65) +
+  geom_line(aes(y = double_every_3d), linetype = "dotted", color = "red", alpha = .75) + 
+  geom_line(aes(y = double_every_2d), linetype = "dotted", color = "red", alpha = .85) + 
   
   geom_line(aes(y = active_total_per_1M, color = country)) +
   geom_text(aes(y = active_total_per_1M_last + 20, label = country, color = country), 
