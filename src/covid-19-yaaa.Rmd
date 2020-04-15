@@ -49,7 +49,7 @@ suppressPackageStartupMessages({
 #### Table of contents {#toc}
 
 ```{r toc, echo=FALSE}
-render_toc("covids-news-train-escape.Rmd")
+render_toc("covid-19-yaaa.Rmd")
 ```
 
 
