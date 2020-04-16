@@ -44,7 +44,9 @@ Methods:
 - [ ] [Prophet](https://facebook.github.io/prophet/) 
 
 
+
 ## References
+
 
 #### Basics, Research Papers
 
@@ -54,6 +56,16 @@ Methods:
 1. [COVID-19 SARS-CoV-2 preprints from medRxiv and bioRxiv](https://connect.medrxiv.org/relate/content/181), medrxiv.
 
 
+#### Datasets
+
+1. [**COVID-19 Data Repository by Johns Hopkins CSSE**](https://github.com/CSSEGISandData/COVID-19), GitHub.
+1. [Novel Corona Virus 2019 Dataset](https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset), Kaggle.
+1. [Coronavirus disease (COVID-2019) situation reports](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports), World Health Organization.
+1. [COVID-19 Open Research Dataset (CORD-19)](https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge), Kaggle.
+1. [COVID-19 Complete Dataset (Updated every 24hrs)](https://www.kaggle.com/imdevskp/corona-virus-report), Kaggle.
+1. [#covid19 tag](https://www.kaggle.com/tags/covid19), Kaggle.
+
+
 #### Analytics, Dashboards, Maps
 
 1. Tomas Pueyo. [Coronavirus: Why You Must Act Now](https://medium.com/@tomaspueyo/coronavirus-act-today-or-people-will-die-f4d3d9cd99ca), Medium.
@@ -61,7 +73,7 @@ Methods:
 1. [COVID-19 Cases Map](https://yandex.ru/web-maps/covid19), Yandex.
 1. [COVID-19 Animated Spread Map](https://www.healthmap.org/covid-19/), healthmap.org.
 1. [COVID-19 Cases Metrics](https://www.worldometers.info/coronavirus/), worldometers.info.
-
+1. [Coronavirus tracked: the latest figures as the pandemic spreads](https://www.ft.com/coronavirus-latest), Financial Times.
 
 #### Timeline
 
@@ -83,14 +95,9 @@ Methods:
 1. [Sberbank COVID-19 forecast](https://ods.ai/competitions/sberbank-covid19-forecast), Sberbank feat. ODS.ai.
 
 
-#### Datasets
+#### Collaborations
 
-1. [**COVID-19 Data Repository by Johns Hopkins CSSE**](https://github.com/CSSEGISandData/COVID-19), GitHub.
-1. [Novel Corona Virus 2019 Dataset](https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset), Kaggle.
-1. [Coronavirus disease (COVID-2019) situation reports](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports), World Health Organization.
-1. [COVID-19 Open Research Dataset (CORD-19)](https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge), Kaggle.
-1. [COVID-19 Complete Dataset (Updated every 24hrs)](https://www.kaggle.com/imdevskp/corona-virus-report), Kaggle.
-1. [#covid19 tag](https://www.kaggle.com/tags/covid19), Kaggle.
+1. [Open collaboration on COVID-19](https://github.blog/2020-03-23-open-collaboration-on-covid-19/), GitHub.
 
 
 
