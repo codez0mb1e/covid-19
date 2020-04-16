@@ -21,4 +21,4 @@ RMSLE <- function(.actual, .pred) sqrt(mean((log(.pred + 1) - log(.actual + 1))^
 
 
 #' Calculte Mean Absolute Logarithmic Error
-MALE <- function(.actual, .pred) sum(abs(log10((.pred + 1)/(.actual + 1))))
+MALE <- function(.actual, .pred) mean(abs(log10((.pred + 1)/(.actual + 1))))
