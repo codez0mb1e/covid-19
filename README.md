@@ -32,12 +32,12 @@ Kernels (in development):
 - [Kaggle COVID-19 forecasting](src/kaggle-covid-forecasting.R) 
 - [Sberbank COVID-19 forecasting](src/sberbank-covid-forecasting.R) 
 
-Methods:
+Forecasting methods:
 
 - [x] Previous value (naive approach)
 - [x] Indicators: simple moving average (SMA), exponential moving average (EMA), double EMA
 - [x] ARIMA, ETS
-- [ ] [Prophet](https://facebook.github.io/prophet/) 
+- [x] [Prophet](https://facebook.github.io/prophet/) 
 - [ ] Linear models: linear regression, Quasi-Poisson regression 
 - [ ] Decision trees: boosting
 - [ ] Neural networks: LSTM, AR RNN
