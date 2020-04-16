@@ -1,6 +1,6 @@
 # Coronavirus Disease Analytics
 
-**Attempts to analyze the situation around the 2019-nCoV**.
+**Analysing COVID-19 (2019-nCoV) disease**.
 
 
 ## Worldwide spread over time
@@ -37,11 +37,11 @@ Methods:
 - [x] Previous value (naive approach)
 - [x] Indicators: simple moving average (SMA), exponential moving average (EMA), double EMA
 - [x] ARIMA, ETS
-- [ ] Linear models: linear regression, Quasi-Poisson Regression 
+- [ ] [Prophet](https://facebook.github.io/prophet/) 
+- [ ] Linear models: linear regression, Quasi-Poisson regression 
 - [ ] Decision trees: boosting
 - [ ] Neural networks: LSTM, AR RNN
 - [ ] [SIR model](https://www.kaggle.com/jordimas/differential-evolution-to-fit-covid-19-sir-model)
-- [ ] [Prophet](https://facebook.github.io/prophet/) 
 
 
 
@@ -75,6 +75,7 @@ Methods:
 1. [COVID-19 Cases Metrics](https://www.worldometers.info/coronavirus/), worldometers.info.
 1. [Coronavirus tracked: the latest figures as the pandemic spreads](https://www.ft.com/coronavirus-latest), Financial Times.
 
+
 #### Timeline
 
 1. [Timeline of the 2019–20 coronavirus pandemic](https://en.wikipedia.org/wiki/Timeline_of_the_2019%E2%80%9320_coronavirus_pandemic), Wikipedia.
@@ -93,6 +94,7 @@ Methods:
 1. **COVID19 Global Forecasting**: [week 1](https://www.kaggle.com/c/covid19-global-forecasting-week-1), [week 2](https://www.kaggle.com/c/covid19-global-forecasting-week-2), [week 3](https://www.kaggle.com/c/covid19-global-forecasting-week-3), and [week 4](https://www.kaggle.com/c/covid19-global-forecasting-week-4), Kaggle. 
 1. [Computational predictions of protein structures associated with COVID-19](https://deepmind.com/research/open-source/computational-predictions-of-protein-structures-associated-with-COVID-19), DeepMind.
 1. [Sberbank COVID-19 forecast](https://ods.ai/competitions/sberbank-covid19-forecast), Sberbank feat. ODS.ai.
+1. [COVID-19 Estimates](https://imperialcollegelondon.github.io/covid19estimates/#/), Imperial College London.
 
 
 #### Collaborations
@@ -102,4 +104,3 @@ Methods:
 
 
 *On God we trust. For everything else bring Data.*
-
