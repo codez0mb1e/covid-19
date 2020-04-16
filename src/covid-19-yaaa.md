@@ -1,6 +1,6 @@
 COVID YAAA\! or Yet Another Analyze Attempt
 ================
-15 April, 2020
+16 April, 2020
 
 #### Table of contents
 
@@ -94,18 +94,18 @@ spread_raw %>% sample_n(10)
 ```
 
     ## # A tibble: 10 x 5
-    ##    country                date       confirmed_n recovered_n deaths_n
-    ##    <chr>                  <date>           <int>       <int>    <int>
-    ##  1 Bosnia and Herzegovina 2020-03-04           0           0        0
-    ##  2 Russia                 2020-02-18           2           2        0
-    ##  3 Lithuania              2020-02-09           0           0        0
-    ##  4 Philippines            2020-01-26           0           0        0
-    ##  5 Yemen                  2020-04-04           0           0        0
-    ##  6 Portugal               2020-04-10       15472         233      435
-    ##  7 Iceland                2020-04-13        1711         933        8
-    ##  8 Croatia                2020-02-01           0           0        0
-    ##  9 Dominican Republic     2020-03-08           5           0        0
-    ## 10 Brunei                 2020-02-18           0           0        0
+    ##    country     date       confirmed_n recovered_n deaths_n
+    ##    <chr>       <date>           <int>       <int>    <int>
+    ##  1 Zambia      2020-01-22           0           0        0
+    ##  2 Somalia     2020-02-03           0           0        0
+    ##  3 Cabo Verde  2020-02-13           0           0        0
+    ##  4 Barbados    2020-02-05           0           0        0
+    ##  5 Dominica    2020-02-07           0           0        0
+    ##  6 Timor-Leste 2020-04-05           1           0        0
+    ##  7 Barbados    2020-02-27           0           0        0
+    ##  8 Spain       2020-04-14      172541       67504    18056
+    ##  9 Kuwait      2020-01-29           0           0        0
+    ## 10 Cabo Verde  2020-03-17           0           0        0
 
 ### Load countries data
 
@@ -134,28 +134,28 @@ countries_raw <- load_countries_stats()
 countries_raw %>% sample_n(10)
 ```
 
-    ##    iso_alpha3    ccse_name density fertility_rate land_area median_age migrants population
-    ## 1         HND     Honduras      89            2.5    111890         24    -6800    9904607
-    ## 2         SWZ     Eswatini      67            3.0     17200         21    -8353    1160164
-    ## 3         MYS     Malaysia      99            2.0    328550         30    50000   32365999
-    ## 4         DJI     Djibouti      43            2.8     23180         27      900     988000
-    ## 5         ITA        Italy     206            1.3    294140         47   148943   60461826
-    ## 6         JOR       Jordan     115            2.8     88780         24    10220   10203134
-    ## 7         BFA Burkina Faso      76            5.2    273600         18   -25000   20903273
-    ## 8         PRY     Paraguay      18            2.4    397300         26   -16556    7132538
-    ## 9         DEU      Germany     240            1.6    348560         46   543822   83783942
-    ## 10        AND      Andorra     164             NA       470         NA       NA      77265
+    ##    iso_alpha3        ccse_name density fertility_rate land_area median_age migrants population
+    ## 1         UZB       Uzbekistan      79            2.4    425400         28    -8863   33469203
+    ## 2         ESP            Spain      94            1.3    498800         45    40000   46754778
+    ## 3         PNG Papua New Guinea      20            3.6    452860         22     -800    8947024
+    ## 4         ISR           Israel     400            3.0     21640         30    10000    8655535
+    ## 5         MNG         Mongolia       2            2.9   1553560         28     -852    3278290
+    ## 6         KOR     Korea, South     527            1.1     97230         44    11731   51269185
+    ## 7         SYR            Syria      95            2.8    183630         26  -427391   17500658
+    ## 8         FIN          Finland      18            1.5    303890         43    14000    5540720
+    ## 9         LIE    Liechtenstein     238             NA       160         NA       NA      38128
+    ## 10        LBN          Lebanon     667            2.1     10230         30   -30012    6825445
     ##    urban_pop_rate world_share
-    ## 1            0.57      0.0013
-    ## 2            0.30      0.0001
-    ## 3            0.78      0.0042
-    ## 4            0.79      0.0001
-    ## 5            0.69      0.0078
-    ## 6            0.91      0.0013
-    ## 7            0.31      0.0027
-    ## 8            0.62      0.0009
-    ## 9            0.76      0.0107
-    ## 10           0.88      0.0000
+    ## 1            0.50      0.0043
+    ## 2            0.80      0.0060
+    ## 3            0.13      0.0011
+    ## 4            0.93      0.0011
+    ## 5            0.67      0.0004
+    ## 6            0.82      0.0066
+    ## 7            0.60      0.0022
+    ## 8            0.86      0.0007
+    ## 9            0.15      0.0000
+    ## 10           0.78      0.0009
 
 ## Preprocessing
 
@@ -385,9 +385,9 @@ ggplot(plot_data, aes(x = since_1_confirmed_per_1M_date_n_days)) +
   )
 ```
 
-    ## Warning: Removed 72 rows containing missing values (position_stack).
+    ## Warning: Removed 75 rows containing missing values (position_stack).
 
-    ## Warning: Removed 3 rows containing missing values (geom_col).
+    ## Warning: Removed 6 rows containing missing values (geom_col).
 
 ![](covid-19-yaaa_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
