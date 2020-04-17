@@ -95,6 +95,7 @@ Forecasting methods:
 1. [Computational predictions of protein structures associated with COVID-19](https://deepmind.com/research/open-source/computational-predictions-of-protein-structures-associated-with-COVID-19), DeepMind.
 1. [Sberbank COVID-19 forecast](https://ods.ai/competitions/sberbank-covid19-forecast), Sberbank feat. ODS.ai.
 1. [COVID-19 Estimates](https://imperialcollegelondon.github.io/covid19estimates/#/), Imperial College London.
+1. [SIR (Susceptible-Infected-Recovered) model](https://covid19-scenarios.org/), covid19-scenarios.org.
 
 
 #### Collaborations
