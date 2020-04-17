@@ -1,6 +1,6 @@
 COVID YAAA\! or Yet Another Analyze Attempt
 ================
-16 April, 2020
+17 April, 2020
 
 #### Table of contents
 
@@ -94,18 +94,18 @@ spread_raw %>% sample_n(10)
 ```
 
     ## # A tibble: 10 x 5
-    ##    country     date       confirmed_n recovered_n deaths_n
-    ##    <chr>       <date>           <int>       <int>    <int>
-    ##  1 Zambia      2020-01-22           0           0        0
-    ##  2 Somalia     2020-02-03           0           0        0
-    ##  3 Cabo Verde  2020-02-13           0           0        0
-    ##  4 Barbados    2020-02-05           0           0        0
-    ##  5 Dominica    2020-02-07           0           0        0
-    ##  6 Timor-Leste 2020-04-05           1           0        0
-    ##  7 Barbados    2020-02-27           0           0        0
-    ##  8 Spain       2020-04-14      172541       67504    18056
-    ##  9 Kuwait      2020-01-29           0           0        0
-    ## 10 Cabo Verde  2020-03-17           0           0        0
+    ##    country   date       confirmed_n recovered_n deaths_n
+    ##    <chr>     <date>           <int>       <int>    <int>
+    ##  1 Australia 2020-03-22        1549          88        7
+    ##  2 Uruguay   2020-03-24         162           0        0
+    ##  3 Maldives  2020-02-07           0           0        0
+    ##  4 Burma     2020-03-04           0           0        0
+    ##  5 Sudan     2020-04-15          32           4        5
+    ##  6 Thailand  2020-03-15         114          35        1
+    ##  7 Eswatini  2020-01-29           0           0        0
+    ##  8 Egypt     2020-02-26           1           0        0
+    ##  9 Ethiopia  2020-04-08          55           4        2
+    ## 10 Guyana    2020-01-28           0           0        0
 
 ### Load countries data
 
@@ -135,27 +135,27 @@ countries_raw %>% sample_n(10)
 ```
 
     ##    iso_alpha3        ccse_name density fertility_rate land_area median_age migrants population
-    ## 1         UZB       Uzbekistan      79            2.4    425400         28    -8863   33469203
-    ## 2         ESP            Spain      94            1.3    498800         45    40000   46754778
-    ## 3         PNG Papua New Guinea      20            3.6    452860         22     -800    8947024
-    ## 4         ISR           Israel     400            3.0     21640         30    10000    8655535
-    ## 5         MNG         Mongolia       2            2.9   1553560         28     -852    3278290
-    ## 6         KOR     Korea, South     527            1.1     97230         44    11731   51269185
-    ## 7         SYR            Syria      95            2.8    183630         26  -427391   17500658
-    ## 8         FIN          Finland      18            1.5    303890         43    14000    5540720
-    ## 9         LIE    Liechtenstein     238             NA       160         NA       NA      38128
-    ## 10        LBN          Lebanon     667            2.1     10230         30   -30012    6825445
+    ## 1         SAU     Saudi Arabia      16            2.3   2149690         32   134979   34813871
+    ## 2         PER             Peru      26            2.3   1280000         31    99069   32971854
+    ## 3         TLS      Timor-Leste      89            4.1     14870         21    -5385    1318445
+    ## 4         CAN           Canada       4            1.5   9093510         41   242032   37742154
+    ## 5         VAT         Holy See    2003             NA         0         NA       NA        801
+    ## 6         UZB       Uzbekistan      79            2.4    425400         28    -8863   33469203
+    ## 7         PNG Papua New Guinea      20            3.6    452860         22     -800    8947024
+    ## 8         JPN            Japan     347            1.4    364555         48    71560  126476461
+    ## 9         GHA            Ghana     137            3.9    227540         22   -10000   31072940
+    ## 10        GBR   United Kingdom     281            1.8    241930         40   260650   67886011
     ##    urban_pop_rate world_share
-    ## 1            0.50      0.0043
-    ## 2            0.80      0.0060
-    ## 3            0.13      0.0011
-    ## 4            0.93      0.0011
-    ## 5            0.67      0.0004
-    ## 6            0.82      0.0066
-    ## 7            0.60      0.0022
-    ## 8            0.86      0.0007
-    ## 9            0.15      0.0000
-    ## 10           0.78      0.0009
+    ## 1            0.84      0.0045
+    ## 2            0.79      0.0042
+    ## 3            0.33      0.0002
+    ## 4            0.81      0.0048
+    ## 5              NA      0.0000
+    ## 6            0.50      0.0043
+    ## 7            0.13      0.0011
+    ## 8            0.92      0.0162
+    ## 9            0.57      0.0040
+    ## 10           0.83      0.0087
 
 ## Preprocessing
 
@@ -385,7 +385,7 @@ ggplot(plot_data, aes(x = since_1_confirmed_per_1M_date_n_days)) +
   )
 ```
 
-    ## Warning: Removed 75 rows containing missing values (position_stack).
+    ## Warning: Removed 81 rows containing missing values (position_stack).
 
     ## Warning: Removed 6 rows containing missing values (geom_col).
 
