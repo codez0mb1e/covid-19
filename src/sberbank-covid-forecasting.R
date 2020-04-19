@@ -39,7 +39,7 @@ source("datasets-uploader.R")
 
 
 # Set forecasting params ----
-forecast_horizont <- 7
+forecast_horizont <- 7L
 
 
 
@@ -121,7 +121,7 @@ prepare_data <- function(dt) dt %>%
   filter(date <= last_observation_date) %>% 
   filter(n() > forecast_horizont)
 
-filter_test_dataset <- function(dt) dt %>% filter(date >= test_dates$after & date < test_dates$before)
+apply_test_only_filter <- function(dt) dt %>% filter(date >= test_dates$after & date < test_dates$before)
 
 
   
@@ -140,7 +140,7 @@ pred_naive <- data %>%
     list(~ if_else(is.na(.), 0L, .))
   ) %>% 
   
-  filter_test_dataset
+  apply_test_only_filter
   
 
 
@@ -184,7 +184,7 @@ pred_indicators <- data %>%
     list(~ if_else(is.na(.), 0, .))
   ) %>% 
   
-  filter_test_dataset
+  apply_test_only_filter
 
 
 ggplot(
@@ -200,7 +200,10 @@ ggplot(
   geom_line(aes(y = confirmed_n)) +
   geom_line(aes(y = value, color = f)) +
   
-  facet_grid(country ~ ., scales = "free")
+  facet_grid(country ~ ., scales = "free") +
+  
+  theme_bw() +
+  theme(legend.position = "top")
 
 
 # Eval best fitted
@@ -224,7 +227,6 @@ list(pred_indicators$deaths_sma, pred_indicators$deaths_ema, pred_indicators$dea
 #'
 forecast_confirmed_cases <- function(.country, .after_date, .forecast_horizont, .fun, ...) {
   require(dplyr)
-  require(ts)
   require(forecast)
   
   dt <- data %>% 
@@ -264,7 +266,7 @@ forecast_confirmed_cases_batch <- function(.fun, ...) {
     as_vector %>% 
     unique
   
-  pred <- countries %>% 
+  countries %>% 
     map_dfr(
       function(.x) {
         
@@ -280,35 +282,41 @@ forecast_confirmed_cases_batch <- function(.fun, ...) {
     inner_join(
       data, by = c("country", "date")
     )
-  
-  
-  print(
-    sprintf("RMSLE: %2f. MALE: %2f", 
-            RMSLE(pred$confirmed_n, pred$pred),
-            MALE(pred$confirmed_n, pred$pred))
-  )
-  
-  
-  return(pred)
 }
 
 
-pred_ses <- forecast_confirmed_cases_batch(ses)
 pred_hw <- forecast_confirmed_cases_batch(HoltWinters, beta = T, gamma = F)
 pred_holt <- forecast_confirmed_cases_batch(holt)
 pred_ets <- forecast_confirmed_cases_batch(ets)
 pred_arima <- forecast_confirmed_cases_batch(auto.arima)
 
 
+list(pred_hw, pred_holt, pred_ets, pred_arima) %>% 
+  map_dfr(
+    ~ list(
+      RMSLE = RMSLE(.x$confirmed_n, .x$pred),
+      MALE = MALE(.x$confirmed_n, .x$pred)
+    )
+  )
+
+
 ggplot(
-  pred_ets %>% filter(country %in% c("US", "Italy", "Russia", "China")), 
+  list(pred_hw, pred_holt, pred_ets, pred_arima) %>% 
+    map2_dfr(
+      c("hw", "holt", "ets", "arima"),
+      ~ .x %>% mutate(model = .y)
+    ) %>% 
+    filter(country %in% c("US", "Italy", "Russia", "China")), 
   aes(x = date)
   ) +
   
-  geom_line(aes(y = confirmed_n)) +
-  geom_line(aes(y = pred)) +
+  geom_line(aes(y = pred, color = model)) +
+  geom_line(aes(y = confirmed_n), linetype = "dashed") +
   
-  facet_grid(country ~ ., scales = "free")
+  facet_grid(country ~ ., scales = "free") +
+  
+  theme_bw() +
+  theme(legend.position = "top")
 
 
 
@@ -355,19 +363,18 @@ prophet_confirmed_cases_batch <- function() {
   after_date <- test_dates$after + days() # last_observation_date + days()
   before_date <- test_dates$before # last_observation_date + days(forecast_horizont)
   
-  countries <- data %>% 
+  data %>% 
     prepare_data %>% 
     select(country) %>% 
     as_vector %>% 
-    unique
-  
-  pred <- countries %>% 
+    unique %>% 
     map_dfr(
       function(.x) {
         
         print(sprintf("Proccesing %s...", .x))
         
-        pred <- prophet_confirmed_cases(.x, after_date, forecast_horizont, yearly.seasonality = F, daily.seasonality = F)
+        pred <- prophet_confirmed_cases(.x, after_date, forecast_horizont, 
+                                        yearly.seasonality = F, weekly.seasonality = F, daily.seasonality = F)
         
         tibble(
           country = rep(.x, forecast_horizont),
@@ -379,20 +386,16 @@ prophet_confirmed_cases_batch <- function() {
     inner_join(
       data, by = c("country", "date")
     )
-  
-  
-  print(
-    sprintf("RMSLE: %2f. MALE: %2f", 
-            RMSLE(pred$confirmed_n, pred$pred),
-            MALE(pred$confirmed_n, pred$pred))
-  )
-  
-  
-  return(pred)
 }
 
-
 pred_prophet <- prophet_confirmed_cases_batch()
+
+
+print(
+  sprintf("RMSLE: %2f. MALE: %2f", 
+          RMSLE(pred_prophet$confirmed_n, pred_prophet$pred),
+          MALE(pred_prophet$confirmed_n, pred_prophet$pred))
+)
 
 pred_prophet %>% 
   group_by(country) %>% 
@@ -402,7 +405,15 @@ pred_prophet %>%
   ) %>% 
   mutate(
     resudals = abs(pred - confirmed_n)/confirmed_n
-  )
+  ) %>% 
+  arrange(-resudals)
+
+
+
+# DL ----
+
+# TODO
+
 
 
 
