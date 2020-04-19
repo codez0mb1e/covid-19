@@ -12,24 +12,24 @@
 ## Steps
 
 
-#### Load datasets
+#### 1. Load datasets
 
-(Optional) Upload the latest datasets:
+Upload the latest datasets:
 
 `. ../data/upload_data.sh`
 
 
-#### EDA and visualization
+#### 2. EDA and visualization
 
 - [EDA and visualization](src/covid-19-eda.Rmd) (**[report](src/covid-19-eda.md)**)
 - [COVID YAAA! or Yet Another Analyze Attempt ](src/covid-19-yaaa.Rmd) (**[report](src/covid-19-yaaa.md)**)
 
 
-#### Forecasting
+#### 3. Forecasting
 
 Kernels (in development):
 
-- [Kaggle COVID-19 forecasting](src/kaggle-covid-forecasting.R) 
+- (depricated) [Kaggle COVID-19 forecasting](src/kaggle-covid-forecasting.R) 
 - [Sberbank COVID-19 forecasting](src/sberbank-covid-forecasting.R) 
 
 Forecasting methods:
