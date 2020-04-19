@@ -22,13 +22,14 @@ kaggle datasets download -p ../data/ -d kwigan/reproduction-rate-russia-regions
 
 echo "Loading mobility info..."
 # Google mobility
-wget -N -P ../data/ https://raw.githubusercontent.com/tyz910/sberbank-covid19/master/data/mobility.csv
+wget -N -P ../data/ https://raw.githubusercontent.com/tyz910/sberbank-covid19/master/data/mobility-google.csv
 # Apple mobility
 wget -N -P ../data/ https://covid19-static.cdn-apple.com/covid19-mobility-data/2006HotfixDev6/v1/en-us/applemobilitytrends-2020-04-15.csv
-
+# Yandex mobility
+wget -N -P ../data/ https://raw.githubusercontent.com/tyz910/sberbank-covid19/master/data/mobility-yandex.csv
 
 echo "Loading quarantine info..."
-wget -N -P ../data/ https://raw.githubusercontent.com/tyz910/sberbank-covid19/master/data/quarantine_dates.csv
+wget -N -P ../data/ https://raw.githubusercontent.com/tyz910/sberbank-covid19/master/data/quarantine.csv
 kaggle datasets download -p ../data/ -d koryto/countryinfo
 
 
