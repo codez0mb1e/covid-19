@@ -1,6 +1,6 @@
 COVID YAAA\! or Yet Another Analyze Attempt
 ================
-17 April, 2020
+19 April, 2020
 
 #### Table of contents
 
@@ -94,18 +94,18 @@ spread_raw %>% sample_n(10)
 ```
 
     ## # A tibble: 10 x 5
-    ##    country   date       confirmed_n recovered_n deaths_n
-    ##    <chr>     <date>           <int>       <int>    <int>
-    ##  1 Australia 2020-03-22        1549          88        7
-    ##  2 Uruguay   2020-03-24         162           0        0
-    ##  3 Maldives  2020-02-07           0           0        0
-    ##  4 Burma     2020-03-04           0           0        0
-    ##  5 Sudan     2020-04-15          32           4        5
-    ##  6 Thailand  2020-03-15         114          35        1
-    ##  7 Eswatini  2020-01-29           0           0        0
-    ##  8 Egypt     2020-02-26           1           0        0
-    ##  9 Ethiopia  2020-04-08          55           4        2
-    ## 10 Guyana    2020-01-28           0           0        0
+    ##    country          date       confirmed_n recovered_n deaths_n
+    ##    <chr>            <date>           <int>       <int>    <int>
+    ##  1 Kosovo           2020-04-03         126          10        1
+    ##  2 Barbados         2020-01-31           0           0        0
+    ##  3 Belize           2020-03-14           0           0        0
+    ##  4 Turkey           2020-02-22           0           0        0
+    ##  5 Cyprus           2020-03-05           0           0        0
+    ##  6 Colombia         2020-02-17           0           0        0
+    ##  7 Papua New Guinea 2020-02-29           0           0        0
+    ##  8 Haiti            2020-02-25           0           0        0
+    ##  9 France           2020-01-24           2           0        0
+    ## 10 Seychelles       2020-03-25           7           0        0
 
 ### Load countries data
 
@@ -134,28 +134,28 @@ countries_raw <- load_countries_stats()
 countries_raw %>% sample_n(10)
 ```
 
-    ##    iso_alpha3        ccse_name density fertility_rate land_area median_age migrants population
-    ## 1         SAU     Saudi Arabia      16            2.3   2149690         32   134979   34813871
-    ## 2         PER             Peru      26            2.3   1280000         31    99069   32971854
-    ## 3         TLS      Timor-Leste      89            4.1     14870         21    -5385    1318445
-    ## 4         CAN           Canada       4            1.5   9093510         41   242032   37742154
-    ## 5         VAT         Holy See    2003             NA         0         NA       NA        801
-    ## 6         UZB       Uzbekistan      79            2.4    425400         28    -8863   33469203
-    ## 7         PNG Papua New Guinea      20            3.6    452860         22     -800    8947024
-    ## 8         JPN            Japan     347            1.4    364555         48    71560  126476461
-    ## 9         GHA            Ghana     137            3.9    227540         22   -10000   31072940
-    ## 10        GBR   United Kingdom     281            1.8    241930         40   260650   67886011
+    ##    iso_alpha3  ccse_name density fertility_rate land_area median_age migrants population
+    ## 1         ROU    Romania      84            1.6    230170         43   -73999   19237691
+    ## 2         DEU    Germany     240            1.6    348560         46   543822   83783942
+    ## 3         EST    Estonia      31            1.6     42390         42     3911    1326535
+    ## 4         IND      India     464            2.2   2973190         28  -532687 1380004385
+    ## 5         LUX Luxembourg     242            1.5      2590         40     9741     625978
+    ## 6         GAB      Gabon       9            4.0    257670         23     3260    2225734
+    ## 7         BHS    Bahamas      39            1.8     10010         32     1000     393244
+    ## 8         MDV   Maldives    1802            1.9       300         30    11370     540544
+    ## 9         MCO     Monaco   26337             NA         1         NA       NA      39242
+    ## 10        GIN     Guinea      53            4.7    245720         18    -4000   13132795
     ##    urban_pop_rate world_share
-    ## 1            0.84      0.0045
-    ## 2            0.79      0.0042
-    ## 3            0.33      0.0002
-    ## 4            0.81      0.0048
-    ## 5              NA      0.0000
-    ## 6            0.50      0.0043
-    ## 7            0.13      0.0011
-    ## 8            0.92      0.0162
-    ## 9            0.57      0.0040
-    ## 10           0.83      0.0087
+    ## 1            0.55      0.0025
+    ## 2            0.76      0.0107
+    ## 3            0.68      0.0002
+    ## 4            0.35      0.1770
+    ## 5            0.88      0.0001
+    ## 6            0.87      0.0003
+    ## 7            0.86      0.0001
+    ## 8            0.35      0.0001
+    ## 9              NA      0.0000
+    ## 10           0.39      0.0017
 
 ## Preprocessing
 
@@ -385,9 +385,9 @@ ggplot(plot_data, aes(x = since_1_confirmed_per_1M_date_n_days)) +
   )
 ```
 
-    ## Warning: Removed 81 rows containing missing values (position_stack).
+    ## Warning: Removed 96 rows containing missing values (position_stack).
 
-    ## Warning: Removed 6 rows containing missing values (geom_col).
+    ## Warning: Removed 9 rows containing missing values (geom_col).
 
 ![](covid-19-yaaa_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
