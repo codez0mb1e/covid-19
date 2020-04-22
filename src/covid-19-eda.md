@@ -1,6 +1,6 @@
 COVID-19 Analytics
 ================
-19 April, 2020
+22 April, 2020
 
 #### Table of contents
 
@@ -53,18 +53,18 @@ Get list of files in datasets
 Load `covid_19_data.csv` dataset:
 
     ## # A tibble: 100 x 8
-    ##      SNo ObservationDate Province.State Country.Region Last.Update        Confirmed Deaths Recovered
-    ##    <int> <chr>           <chr>          <chr>          <chr>                  <dbl>  <dbl>     <dbl>
-    ##  1  3119 03/03/2020      Jilin          Mainland China 2020-03-02T15:03:…        93      1        83
-    ##  2  9840 03/29/2020      <NA>           Monaco         3/8/20 5:31               46      1         1
-    ##  3   490 01/31/2020      <NA>           Finland        1/31/2020 23:59            1      0         0
-    ##  4  7118 03/20/2020      <NA>           Serbia         2020-03-20T20:43:…       135      1         1
-    ##  5 10963 04/01/2020      Tasmania       Australia      2020-04-01 22:04:…        69      2         5
-    ##  6  3317 03/04/2020      <NA>           Finland        2020-03-01T23:23:…         6      0         1
-    ##  7 11830 04/04/2020      Guangxi        Mainland China 4/4/20 9:38              254      2       252
-    ##  8  9651 03/28/2020      Jiangsu        Mainland China 3/8/20 5:31              641      0       631
-    ##  9  6756 03/19/2020      <NA>           Brazil         2020-03-19T20:43:…       621      6         2
-    ## 10  4389 03/09/2020      <NA>           Luxembourg     2020-03-08T05:13:…         3      0         0
+    ##      SNo ObservationDate Province.State      Country.Region Last.Update   Confirmed Deaths Recovered
+    ##    <int> <chr>           <chr>               <chr>          <chr>             <dbl>  <dbl>     <dbl>
+    ##  1  5081 03/12/2020      <NA>                Tunisia        2020-03-11T1…         7      0         0
+    ##  2 16240 04/18/2020      <NA>                South Africa   2020-04-18 2…      3034     52       903
+    ##  3 14730 04/13/2020      Kentucky            US             2020-04-13 2…      2018    113         0
+    ##  4  1018 02/08/2020      <NA>                Germany        2020-02-07T1…        13      0         0
+    ##  5  7800 03/22/2020      Diamond Princess c… Canada         3/8/20 5:31           0      1         0
+    ##  6  9862 03/29/2020      <NA>                Portugal       3/8/20 5:31        5962    119        43
+    ##  7  9116 03/27/2020      <NA>                Afghanistan    2020-03-27 2…       110      4         2
+    ##  8 13794 04/10/2020      Newfoundland and L… Canada         2020-04-10 2…       239      3         0
+    ##  9  5413 03/14/2020      Heilongjiang        Mainland China 2020-03-14T0…       482     13       447
+    ## 10  1672 02/17/2020      <NA>                Japan          2020-02-17T1…        66      1        12
     ## # … with 90 more rows
 
 ### Load world population data
@@ -99,27 +99,27 @@ Load `countries.csv` dataset:
 Set `area` column, processing `province_state` columns, and format dates
 columns:
 
-    ## # A tibble: 16,409 x 5
+    ## # A tibble: 17,049 x 5
     ##    area          country        province_state observation_date confirmed
     ##    <fct>         <chr>          <chr>          <date>               <dbl>
-    ##  1 US            US             New York       2020-04-18          241712
-    ##  2 Rest of World Spain          <NA>           2020-04-18          191726
-    ##  3 Rest of World Italy          <NA>           2020-04-18          175925
-    ##  4 Rest of World France         <NA>           2020-04-18          147969
-    ##  5 Rest of World Germany        <NA>           2020-04-18          143342
-    ##  6 Rest of World UK             <NA>           2020-04-18          114217
-    ##  7 Rest of World Turkey         <NA>           2020-04-18           82329
-    ##  8 US            US             New Jersey     2020-04-18           81420
-    ##  9 Rest of World Iran           <NA>           2020-04-18           80868
-    ## 10 Hubei         Mainland China Hubei          2020-04-18           68128
-    ## # … with 16,399 more rows
+    ##  1 US            US             New York       2020-04-20          253060
+    ##  2 Rest of World Spain          <NA>           2020-04-20          200210
+    ##  3 Rest of World Italy          <NA>           2020-04-20          181228
+    ##  4 Rest of World France         <NA>           2020-04-20          155275
+    ##  5 Rest of World Germany        <NA>           2020-04-20          147065
+    ##  6 Rest of World UK             <NA>           2020-04-20          124743
+    ##  7 Rest of World Turkey         <NA>           2020-04-20           90980
+    ##  8 US            US             New Jersey     2020-04-20           88722
+    ##  9 Rest of World Iran           <NA>           2020-04-20           83505
+    ## 10 Hubei         Mainland China Hubei          2020-04-20           68128
+    ## # … with 17,039 more rows
 
 Get dataset structure after preprocessing:
 
 |                                                  |            |
 | :----------------------------------------------- | :--------- |
 | Name                                             | Piped data |
-| Number of rows                                   | 16409      |
+| Number of rows                                   | 17049      |
 | Number of columns                                | 9          |
 | \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_   |            |
 | Column type frequency:                           |            |
@@ -138,7 +138,7 @@ character**
 
 | skim\_variable  | n\_missing | complete\_rate | min | max | empty | n\_unique | whitespace |
 | :-------------- | ---------: | -------------: | --: | --: | ----: | --------: | ---------: |
-| province\_state |       8194 |            0.5 |   2 |  43 |     0 |       295 |          0 |
+| province\_state |       8556 |            0.5 |   2 |  43 |     0 |       295 |          0 |
 | country         |          0 |            1.0 |   2 |  32 |     0 |       220 |          1 |
 
 **Variable type:
@@ -146,31 +146,31 @@ Date**
 
 | skim\_variable    | n\_missing | complete\_rate | min        | max        | median     | n\_unique |
 | :---------------- | ---------: | -------------: | :--------- | :--------- | :--------- | --------: |
-| observation\_date |          0 |              1 | 2020-01-22 | 2020-04-18 | 2020-03-23 |        88 |
+| observation\_date |          0 |              1 | 2020-01-22 | 2020-04-20 | 2020-03-25 |        90 |
 
 **Variable type:
 factor**
 
 | skim\_variable | n\_missing | complete\_rate | ordered | n\_unique | top\_counts                              |
 | :------------- | ---------: | -------------: | :------ | --------: | :--------------------------------------- |
-| area           |          0 |              1 | FALSE   |         4 | Res: 10491, US: 3192, Chi: 2638, Hub: 88 |
+| area           |          0 |              1 | FALSE   |         4 | Res: 10953, US: 3308, Chi: 2698, Hub: 90 |
 
 **Variable type:
 numeric**
 
 | skim\_variable | n\_missing | complete\_rate |    mean |       sd | p0 |  p25 |  p50 |   p75 |   p100 | hist  |
 | :------------- | ---------: | -------------: | ------: | -------: | -: | ---: | ---: | ----: | -----: | :---- |
-| sno            |          0 |              1 | 8205.00 |  4737.01 |  1 | 4103 | 8205 | 12307 |  16409 | ▇▇▇▇▇ |
-| confirmed      |          0 |              1 | 2435.51 | 12780.49 |  0 |    8 |   81 |   560 | 241712 | ▇▁▁▁▁ |
-| deaths         |          0 |              1 |  135.82 |  1095.34 |  0 |    0 |    1 |     6 |  23227 | ▇▁▁▁▁ |
-| recovered      |          0 |              1 |  598.48 |  4670.61 |  0 |    0 |    1 |    50 |  85400 | ▇▁▁▁▁ |
+| sno            |          0 |              1 | 8525.00 |  4921.77 |  1 | 4263 | 8525 | 12787 |  17049 | ▇▇▇▇▇ |
+| confirmed      |          0 |              1 | 2629.95 | 13579.29 |  0 |    8 |   89 |   588 | 253060 | ▇▁▁▁▁ |
+| deaths         |          0 |              1 |  150.37 |  1185.57 |  0 |    0 |    1 |     7 |  24114 | ▇▁▁▁▁ |
+| recovered      |          0 |              1 |  650.49 |  4967.68 |  0 |    0 |    1 |    55 |  91500 | ▇▁▁▁▁ |
 
 **Variable type:
 POSIXct**
 
 | skim\_variable | n\_missing | complete\_rate | min                 | max                 | median              | n\_unique |
 | :------------- | ---------: | -------------: | :------------------ | :------------------ | :------------------ | --------: |
-| last\_update   |          0 |              1 | 2020-01-22 17:00:00 | 2020-04-18 22:40:18 | 2020-03-19 10:53:03 |      1828 |
+| last\_update   |          0 |              1 | 2020-01-22 17:00:00 | 2020-04-20 23:44:50 | 2020-03-20 16:13:23 |      1830 |
 
 ### Preprocessing world population data
 
@@ -179,16 +179,16 @@ Get unmatched countries:
     ## # A tibble: 57 x 2
     ##    country                  n
     ##    <chr>                <dbl>
-    ##  1 Mainland China     5651848
-    ##  2 UK                 1447751
-    ##  3 South Korea         443793
-    ##  4 Czech Republic      122748
-    ##  5 Hong Kong            26665
+    ##  1 Mainland China     5817330
+    ##  2 UK                 1694779
+    ##  3 South Korea         465128
+    ##  4 Czech Republic      136394
+    ##  5 Hong Kong            28715
     ##  6 Others               26228
-    ##  7 Diamond Princess     17800
-    ##  8 Taiwan               11311
-    ##  9 Ivory Coast           9256
-    ## 10 West Bank and Gaza    5610
+    ##  7 Diamond Princess     19224
+    ##  8 Taiwan               12153
+    ##  9 Ivory Coast          10950
+    ## 10 West Bank and Gaza    6496
     ## # … with 47 more rows
 
 Correct top of unmached countries.
@@ -198,16 +198,16 @@ And updated matching:
     ## # A tibble: 52 x 2
     ##    country                n
     ##    <chr>              <dbl>
-    ##  1 Hong Kong          26665
+    ##  1 Hong Kong          28715
     ##  2 Others             26228
-    ##  3 Diamond Princess   17800
-    ##  4 Ivory Coast         9256
-    ##  5 West Bank and Gaza  5610
-    ##  6 Kosovo              5213
-    ##  7 Mali                1786
-    ##  8 Macau               1680
-    ##  9 Burma                817
-    ## 10 Guinea-Bissau        578
+    ##  3 Diamond Princess   19224
+    ##  4 Ivory Coast        10950
+    ##  5 West Bank and Gaza  6496
+    ##  6 Kosovo              6233
+    ##  7 Mali                2256
+    ##  8 Macau               1770
+    ##  9 Burma               1047
+    ## 10 Guinea-Bissau        678
     ## # … with 42 more rows
 
 Much better :)
@@ -220,20 +220,20 @@ Much better :)
 
 View spread statistics:
 
-    ## # A tibble: 88 x 9
+    ## # A tibble: 90 x 9
     ##    observation_date active_total active_total_de… confirmed_total confirmed_total… recovered_total
     ##    <date>                  <dbl> <chr>                      <dbl> <chr>                      <dbl>
-    ##  1 2020-04-18            1565930 3.16%                    2317759 3.46%                     592319
-    ##  2 2020-04-17            1518026 3.50%                    2240191 4.07%                     568343
-    ##  3 2020-04-16            1466739 3.96%                    2152647 4.70%                     542107
-    ##  4 2020-04-15            1410859 2.54%                    2056055 4.04%                     511019
-    ##  5 2020-04-14            1375947 1.98%                    1976192 3.07%                     474261
-    ##  6 2020-04-13            1349183 2.92%                    1917320 3.83%                     448655
-    ##  7 2020-04-12            1310869 3.96%                    1846680 4.24%                     421722
-    ##  8 2020-04-11            1260902 3.94%                    1771514 4.72%                     402110
-    ##  9 2020-04-10            1213098 5.86%                    1691719 6.04%                     376096
-    ## 10 2020-04-09            1145920 4.74%                    1595350 5.58%                     353975
-    ## # … with 78 more rows, and 3 more variables: recovered_total_delta <chr>, deaths_total <dbl>,
+    ##  1 2020-04-20            1656535 2.74%                    2472259 2.95%                     645738
+    ##  2 2020-04-19            1612432 2.97%                    2401379 3.61%                     623903
+    ##  3 2020-04-18            1565930 3.16%                    2317759 3.46%                     592319
+    ##  4 2020-04-17            1518026 3.50%                    2240191 4.07%                     568343
+    ##  5 2020-04-16            1466739 3.96%                    2152647 4.70%                     542107
+    ##  6 2020-04-15            1410859 2.54%                    2056055 4.04%                     511019
+    ##  7 2020-04-14            1375947 1.98%                    1976192 3.07%                     474261
+    ##  8 2020-04-13            1349183 2.92%                    1917320 3.83%                     448655
+    ##  9 2020-04-12            1310869 3.96%                    1846680 4.24%                     421722
+    ## 10 2020-04-11            1260902 3.94%                    1771514 4.72%                     402110
+    ## # … with 80 more rows, and 3 more variables: recovered_total_delta <chr>, deaths_total <dbl>,
     ## #   deaths_total_delta <chr>
 
 ### Dynamics of spread
@@ -290,20 +290,20 @@ cases minus recovered and fatal) cases grouped by country:
 
 Get countries ordered by total active cases:
 
-    ## # A tibble: 3,902 x 10
+    ## # A tibble: 4,165 x 10
     ##    country observation_date active_total active_total_de… confirmed_total confirmed_total…
     ##    <chr>   <date>                  <dbl> <chr>                      <dbl> <chr>           
-    ##  1 US      2020-04-18             628693 4.02%                     732197 4.64%           
-    ##  2 Italy   2020-04-18             107771 0.76%                     175925 2.02%           
-    ##  3 United… 2020-04-18              99402 4.89%                     115314 5.05%           
-    ##  4 Spain   2020-04-18              96886 0.88%                     191726 0.46%           
-    ##  5 France  2020-04-18              93217 -2.31%                    149149 0.01%           
-    ##  6 Turkey  2020-04-18              69986 2.70%                      82329 4.82%           
-    ##  7 Germany 2020-04-18              53483 -0.83%                    143342 1.38%           
-    ##  8 Russia  2020-04-18              33423 14.68%                     36793 14.95%          
-    ##  9 Nether… 2020-04-18              27836 3.74%                      31766 3.75%           
-    ## 10 Belgium 2020-04-18              23382 1.60%                      37183 2.89%           
-    ## # … with 3,892 more rows, and 4 more variables: recovered_total <dbl>, recovered_total_delta <chr>,
+    ##  1 US      2020-04-20             669903 3.37%                     784326 3.33%           
+    ##  2 United… 2020-04-20             108860 4.03%                     125856 3.87%           
+    ##  3 Italy   2020-04-20             108237 -0.02%                    181228 1.26%           
+    ##  4 Spain   2020-04-20              98771 -2.08%                    200210 0.77%           
+    ##  5 France  2020-04-20              98152 1.01%                     156480 1.55%           
+    ##  6 Turkey  2020-04-20              75410 4.28%                      90980 5.42%           
+    ##  7 Germany 2020-04-20              50703 -3.60%                    147065 1.30%           
+    ##  8 Russia  2020-04-20              43270 10.38%                     47121 9.96%           
+    ##  9 Nether… 2020-04-20              29502 2.37%                      33588 2.28%           
+    ## 10 Belgium 2020-04-20              25260 5.00%                      39983 3.86%           
+    ## # … with 4,155 more rows, and 4 more variables: recovered_total <dbl>, recovered_total_delta <chr>,
     ## #   deaths_total <dbl>, deaths_total_delta <chr>
 
 ![](covid-19-eda_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
@@ -324,21 +324,21 @@ Get daily dynamics of new infected and recovered cases by countries.
 
 World daily spread:
 
-    ## # A tibble: 3,902 x 6
-    ## # Groups:   country [131]
+    ## # A tibble: 4,165 x 6
+    ## # Groups:   country [133]
     ##    country  observation_date confirmed_total_p… recovered_total_p… deaths_total_pe… active_total_pe…
     ##    <chr>    <date>                        <dbl>              <dbl>            <dbl>            <dbl>
-    ##  1 Afghani… 2020-04-18                       27                 13                0               14
-    ##  2 Albania  2020-04-18                        9                 19                0              -10
-    ##  3 Algeria  2020-04-18                      116                 48                3               65
-    ##  4 Andorra  2020-04-18                        8                 14                0               -6
-    ##  5 Argenti… 2020-04-18                       89                 19                6               64
-    ##  6 Armenia  2020-04-18                       47                121                1              -75
-    ##  7 Austral… 2020-04-18                       25                316                1             -292
-    ##  8 Austria  2020-04-18                       76                510               12             -446
-    ##  9 Azerbai… 2020-04-18                       33                 62                3              -32
-    ## 10 Bahrain  2020-04-18                       33                 30                0                3
-    ## # … with 3,892 more rows
+    ##  1 Afghani… 2020-04-20                       30                  4                3               23
+    ##  2 Albania  2020-04-20                       22                 13                0                9
+    ##  3 Algeria  2020-04-20                       89                 52                9               28
+    ##  4 Andorra  2020-04-20                        4                 13                1              -10
+    ##  5 Argenti… 2020-04-20                      102                 28                4               70
+    ##  6 Armenia  2020-04-20                       48                 35                2               11
+    ##  7 Austral… 2020-04-20                        0                  0                0                0
+    ##  8 Austria  2020-04-20                       46                130               18             -102
+    ##  9 Azerbai… 2020-04-20                       38                 79                0              -41
+    ## 10 Bahrain  2020-04-20                       26                 10                0               16
+    ## # … with 4,155 more rows
 
     ## `geom_smooth()` using formula 'y ~ x'
 
@@ -350,20 +350,20 @@ World daily spread:
 
 ### Mortality rate
 
-    ## # A tibble: 40 x 8
+    ## # A tibble: 42 x 8
     ##    country observation_date since_100_confi… since_10_deaths… recovered_total deaths_total
     ##    <chr>   <date>           <date>           <date>                     <dbl>        <dbl>
-    ##  1 US      2020-04-18       2020-03-10       2020-03-04                 64840        38664
-    ##  2 US      2020-04-17       2020-03-10       2020-03-04                 58545        36773
-    ##  3 US      2020-04-16       2020-03-10       2020-03-04                 54703        32916
-    ##  4 US      2020-04-15       2020-03-10       2020-03-04                 52096        28325
-    ##  5 US      2020-04-14       2020-03-10       2020-03-04                 47763        25831
-    ##  6 US      2020-04-13       2020-03-10       2020-03-04                 43482        23528
-    ##  7 US      2020-04-12       2020-03-10       2020-03-04                 32988        22019
-    ##  8 US      2020-04-11       2020-03-10       2020-03-04                 31270        20462
-    ##  9 US      2020-04-10       2020-03-10       2020-03-04                 28790        18586
-    ## 10 US      2020-04-09       2020-03-10       2020-03-04                 25410        16478
-    ## # … with 30 more rows, and 2 more variables: confirmed_deaths_rate <dbl>,
+    ##  1 US      2020-04-20       2020-03-10       2020-03-04                 72329        42094
+    ##  2 US      2020-04-19       2020-03-10       2020-03-04                 70337        40661
+    ##  3 US      2020-04-18       2020-03-10       2020-03-04                 64840        38664
+    ##  4 US      2020-04-17       2020-03-10       2020-03-04                 58545        36773
+    ##  5 US      2020-04-16       2020-03-10       2020-03-04                 54703        32916
+    ##  6 US      2020-04-15       2020-03-10       2020-03-04                 52096        28325
+    ##  7 US      2020-04-14       2020-03-10       2020-03-04                 47763        25831
+    ##  8 US      2020-04-13       2020-03-10       2020-03-04                 43482        23528
+    ##  9 US      2020-04-12       2020-03-10       2020-03-04                 32988        22019
+    ## 10 US      2020-04-11       2020-03-10       2020-03-04                 31270        20462
+    ## # … with 32 more rows, and 2 more variables: confirmed_deaths_rate <dbl>,
     ## #   recovered_deaths_rate <dbl>
 
 ![](covid-19-eda_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
@@ -374,20 +374,20 @@ World daily spread:
 
 ## COVID-19 spread by countries population
 
-    ## # A tibble: 33 x 5
+    ## # A tibble: 35 x 5
     ##    country n_days_since_100_confirmed population confirmed_total confirmed_total_per_1M
     ##    <chr>                        <dbl>      <int>           <dbl>                  <dbl>
-    ##  1 Russia                          32  145934462           36793                  252. 
-    ##  2 Russia                          31  145934462           32008                  219. 
-    ##  3 Russia                          30  145934462           27938                  191. 
-    ##  4 Russia                          29  145934462           24490                  168. 
-    ##  5 Russia                          28  145934462           21102                  145. 
-    ##  6 Russia                          27  145934462           18328                  126. 
-    ##  7 Russia                          26  145934462           15770                  108. 
-    ##  8 Russia                          25  145934462           13584                   93.1
-    ##  9 Russia                          24  145934462           11917                   81.7
-    ## 10 Russia                          23  145934462           10131                   69.4
-    ## # … with 23 more rows
+    ##  1 Russia                          34  145934462           47121                  323. 
+    ##  2 Russia                          33  145934462           42853                  294. 
+    ##  3 Russia                          32  145934462           36793                  252. 
+    ##  4 Russia                          31  145934462           32008                  219. 
+    ##  5 Russia                          30  145934462           27938                  191. 
+    ##  6 Russia                          29  145934462           24490                  168. 
+    ##  7 Russia                          28  145934462           21102                  145. 
+    ##  8 Russia                          27  145934462           18328                  126. 
+    ##  9 Russia                          26  145934462           15770                  108. 
+    ## 10 Russia                          25  145934462           13584                   93.1
+    ## # … with 25 more rows
 
 ### TOPs countries by infected, active, and fatal cases
 
@@ -396,54 +396,54 @@ virus:
 
 #### …by infected cases
 
-    ## # A tibble: 75 x 6
+    ## # A tibble: 78 x 6
     ##    country   population confirmed_total confirmed_total_pe… n_days_since_100_co… n_days_since_10th_…
     ##    <chr>          <int>           <dbl>               <dbl>                <dbl>               <dbl>
-    ##  1 Spain       46754778          191726               4101.                   47                  41
-    ##  2 Belgium     11589623           37183               3208.                   43                  31
-    ##  3 Switzerl…    8654622           27404               3166.                   44                  36
-    ##  4 Ireland      4937786           14758               2989.                   35                  23
-    ##  5 Italy       60461826          175925               2910.                   55                  52
-    ##  6 France      65273511          149149               2285.                   48                  42
-    ##  7 US         331002651          732197               2212.                   39                  45
-    ##  8 Portugal    10196709           19685               1931.                   36                  28
-    ##  9 Netherla…   17134872           31766               1854.                   43                  35
-    ## 10 Qatar        2881053            5008               1738.                   38                  NA
-    ## # … with 65 more rows
+    ##  1 Spain       46754778          200210               4282.                   49                  43
+    ##  2 Belgium     11589623           39983               3450.                   45                  33
+    ##  3 Switzerl…    8654622           27944               3229.                   46                  38
+    ##  4 Ireland      4937786           15652               3170.                   37                  25
+    ##  5 Italy       60461826          181228               2997.                   57                  54
+    ##  6 France      65273511          156480               2397.                   50                  44
+    ##  7 US         331002651          784326               2370.                   41                  47
+    ##  8 Qatar        2881053            6015               2088.                   40                  NA
+    ##  9 Portugal    10196709           20863               2046.                   38                  30
+    ## 10 Netherla…   17134872           33588               1960.                   45                  37
+    ## # … with 68 more rows
 
 #### …by active cases
 
-    ## # A tibble: 75 x 6
+    ## # A tibble: 78 x 6
     ##    country     population active_total active_total_per_… n_days_since_100_con… n_days_since_10th_d…
     ##    <chr>            <int>        <dbl>              <dbl>                 <dbl>                <dbl>
-    ##  1 Ireland        4937786        14110              2858.                    35                   23
-    ##  2 Spain         46754778        96886              2072.                    47                   41
-    ##  3 Belgium       11589623        23382              2017.                    43                   31
-    ##  4 US           331002651       628693              1899.                    39                   45
-    ##  5 Portugal      10196709        18388              1803.                    36                   28
-    ##  6 Italy         60461826       107771              1782.                    55                   52
-    ##  7 Netherlands   17134872        27836              1625.                    43                   35
-    ##  8 Qatar          2881053         4490              1558.                    38                   NA
-    ##  9 United Kin…   67886011        99402              1464.                    44                   35
-    ## 10 France        65273511        93217              1428.                    48                   42
-    ## # … with 65 more rows
+    ##  1 Ireland        4937786        14888              3015.                    37                   25
+    ##  2 Belgium       11589623        25260              2180.                    45                   33
+    ##  3 Spain         46754778        98771              2113.                    49                   43
+    ##  4 US           331002651       669903              2024.                    41                   47
+    ##  5 Portugal      10196709        19518              1914.                    38                   30
+    ##  6 Qatar          2881053         5451              1892.                    40                   NA
+    ##  7 Italy         60461826       108237              1790.                    57                   54
+    ##  8 Netherlands   17134872        29502              1722.                    45                   37
+    ##  9 United Kin…   67886011       108860              1604.                    46                   37
+    ## 10 France        65273511        98152              1504.                    50                   44
+    ## # … with 68 more rows
 
 #### …by fatal cases
 
-    ## # A tibble: 75 x 6
+    ## # A tibble: 78 x 6
     ##    country     population deaths_total deaths_total_per_… n_days_since_100_con… n_days_since_10th_d…
     ##    <chr>            <int>        <dbl>              <dbl>                 <dbl>                <dbl>
-    ##  1 Belgium       11589623         5453               471.                    43                   31
-    ##  2 Spain         46754778        20043               429.                    47                   41
-    ##  3 Italy         60461826        23227               384.                    55                   52
-    ##  4 France        65273511        19345               296.                    48                   42
-    ##  5 United Kin…   67886011        15498               228.                    44                   35
-    ##  6 Netherlands   17134872         3613               211.                    43                   35
-    ##  7 Switzerland    8654622         1368               158.                    44                   36
-    ##  8 Sweden        10099265         1511               150.                    43                   30
-    ##  9 US           331002651        38664               117.                    39                   45
-    ## 10 Ireland        4937786          571               116.                    35                   23
-    ## # … with 65 more rows
+    ##  1 Belgium       11589623         5828               503.                    45                   33
+    ##  2 Spain         46754778        20852               446.                    49                   43
+    ##  3 Italy         60461826        24114               399.                    57                   54
+    ##  4 France        65273511        20292               311.                    50                   44
+    ##  5 United Kin…   67886011        16550               244.                    46                   37
+    ##  6 Netherlands   17134872         3764               220.                    45                   37
+    ##  7 Switzerland    8654622         1429               165.                    46                   38
+    ##  8 Sweden        10099265         1580               156.                    45                   32
+    ##  9 Ireland        4937786          687               139.                    37                   25
+    ## 10 US           331002651        42094               127.                    41                   47
+    ## # … with 68 more rows
 
 ### Active cases per 1 million population vs number of days since 100th infected case
 
