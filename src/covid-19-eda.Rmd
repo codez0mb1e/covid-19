@@ -1045,7 +1045,7 @@ ggplot(active_cases_since_100st_confirmed, aes(x = n_days_since_100_confirmed)) 
   annotate(geom = "text", label = "...every 3 days", x = 25, y = 1800, vjust = 0, size = 3.1) +
   annotate(geom = "text", label = "...every week", x = 48, y = 800, vjust = 0, size = 3.1) +
   
-  xlim(c(0, 50)) +
+  xlim(c(0, 60)) +
   ylim(c(0, max(active_cases_since_100st_confirmed$active_total_per_1M))) +
   
   labs(x = "Number of days since 100th infected case", y = "Active cases per 1M population", 
@@ -1099,7 +1099,7 @@ ggplot(
   annotate(geom = "text", label = "...every 3 days", x = 25, y = 1750, vjust = 0, size = 3.1) +
   annotate(geom = "text", label = "...every week", x = 40, y = 300, vjust = 0, size = 3.1) +
   
-  xlim(c(0, 42)) +
+  xlim(c(0, 60)) +
   ylim(c(0, max(active_cases_since_10th_death$active_total_per_1M) + 100)) +
   
   labs(x = "Number of days since 10th fatal case", y = "Active cases per 1M population", 

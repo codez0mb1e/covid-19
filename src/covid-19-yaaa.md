@@ -1,6 +1,6 @@
 COVID YAAA\! or Yet Another Analyze Attempt
 ================
-22 April, 2020
+24 April, 2020
 
 #### Table of contents
 
@@ -96,16 +96,16 @@ spread_raw %>% sample_n(10)
     ## # A tibble: 10 x 5
     ##    country                          date       confirmed_n recovered_n deaths_n
     ##    <chr>                            <date>           <int>       <int>    <int>
-    ##  1 Sao Tome and Principe            2020-04-01           0           0        0
-    ##  2 Belarus                          2020-02-29           1           0        0
-    ##  3 Turkey                           2020-03-27        5698          42       92
-    ##  4 Mauritania                       2020-03-01           0           0        0
-    ##  5 Libya                            2020-03-18           0           0        0
-    ##  6 Guinea                           2020-02-25           0           0        0
-    ##  7 France                           2020-02-15          12           4        1
-    ##  8 Saint Vincent and the Grenadines 2020-02-03           0           0        0
-    ##  9 Libya                            2020-02-29           0           0        0
-    ## 10 Trinidad and Tobago              2020-02-27           0           0        0
+    ##  1 Iceland                          2020-03-10          69           1        0
+    ##  2 Serbia                           2020-03-08           1           0        0
+    ##  3 Qatar                            2020-02-03           0           0        0
+    ##  4 Peru                             2020-03-13          28           0        0
+    ##  5 El Salvador                      2020-04-18         190          43        7
+    ##  6 Germany                          2020-03-06         670          17        0
+    ##  7 Nepal                            2020-03-20           1           1        0
+    ##  8 Ecuador                          2020-04-10        7161         368      297
+    ##  9 Dominica                         2020-03-10           0           0        0
+    ## 10 Saint Vincent and the Grenadines 2020-02-24           0           0        0
 
 ### Load countries data
 
@@ -134,28 +134,28 @@ countries_raw <- load_countries_stats()
 countries_raw %>% sample_n(10)
 ```
 
-    ##    iso_alpha3                        ccse_name density fertility_rate land_area median_age migrants
-    ## 1         VCT Saint Vincent and the Grenadines     284            1.9       390         33     -200
-    ## 2         BOL                          Bolivia      11            2.8   1083300         26    -9504
-    ## 3         DMA                         Dominica      96             NA       750         NA       NA
-    ## 4         ARE             United Arab Emirates     118            1.4     83600         33    40000
-    ## 5         DEU                          Germany     240            1.6    348560         46   543822
-    ## 6         GRD                          Grenada     331            2.1       340         32     -200
-    ## 7         GIN                           Guinea      53            4.7    245720         18    -4000
-    ## 8         RUS                           Russia       9            1.8  16376870         40   182456
-    ## 9         ISR                           Israel     400            3.0     21640         30    10000
-    ## 10        GEO                          Georgia      57            2.1     69490         38   -10000
-    ##    population urban_pop_rate world_share
-    ## 1      110940           0.53      0.0000
-    ## 2    11673021           0.69      0.0015
-    ## 3       71986           0.74      0.0000
-    ## 4     9890402           0.86      0.0013
-    ## 5    83783942           0.76      0.0107
-    ## 6      112523           0.35      0.0000
-    ## 7    13132795           0.39      0.0017
-    ## 8   145934462           0.74      0.0187
-    ## 9     8655535           0.93      0.0011
-    ## 10    3989167           0.58      0.0005
+    ##    iso_alpha3      ccse_name density fertility_rate land_area median_age migrants population
+    ## 1         BHS        Bahamas      39            1.8     10010         32     1000     393244
+    ## 2         SUR       Suriname       4            2.4    156000         29    -1000     586632
+    ## 3         MDV       Maldives    1802            1.9       300         30    11370     540544
+    ## 4         GBR United Kingdom     281            1.8    241930         40   260650   67886011
+    ## 5         EGY          Egypt     103            3.3    995450         25   -38033  102334404
+    ## 6         BEN          Benin     108            4.9    112760         19    -2000   12123200
+    ## 7         BRN         Brunei      83            1.8      5270         32        0     437479
+    ## 8         MDA        Moldova     123            1.3     32850         38    -1387    4033963
+    ## 9         NZL    New Zealand      18            1.9    263310         38    14881    4822233
+    ## 10        SWE         Sweden      25            1.9    410340         41    40000   10099265
+    ##    urban_pop_rate world_share
+    ## 1            0.86      0.0001
+    ## 2            0.65      0.0001
+    ## 3            0.35      0.0001
+    ## 4            0.83      0.0087
+    ## 5            0.43      0.0131
+    ## 6            0.48      0.0016
+    ## 7            0.80      0.0001
+    ## 8            0.43      0.0005
+    ## 9            0.87      0.0006
+    ## 10           0.88      0.0013
 
 ## Preprocessing
 
@@ -385,7 +385,7 @@ ggplot(plot_data, aes(x = since_1_confirmed_per_1M_date_n_days)) +
   )
 ```
 
-    ## Warning: Removed 123 rows containing missing values (position_stack).
+    ## Warning: Removed 141 rows containing missing values (position_stack).
 
     ## Warning: Removed 9 rows containing missing values (geom_col).
 
