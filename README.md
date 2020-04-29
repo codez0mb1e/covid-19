@@ -8,6 +8,10 @@
 
 ![worldwide spread over time](src/covid-19-eda_files/figure-gfm/worldwide_spread_over_time-1.png)
 
+![infected by countries prediction](src/covid-19-yaaa_files/figure-gfm/infected_by_countries_pred-1.png)
+
+![active cases dynamics](src/covid-19-eda_files/figure-gfm/active-cases-dynamics-1.png)
+
 
 ## Steps
 
