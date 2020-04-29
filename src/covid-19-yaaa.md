@@ -1,6 +1,6 @@
 COVID YAAA\! or Yet Another Analyze Attempt
 ================
-24 April, 2020
+29 April, 2020
 
 #### Table of contents
 
@@ -15,7 +15,6 @@ COVID YAAA\! or Yet Another Analyze Attempt
   - [Issue III: Infected vs active
     cases](#issue-iii:-infected-vs-active-cases)
   - [Issue IV: This is the past](#issue-iv:-this-is-the-past)
-  - [Conclusion](#conclusion)
 
 ## Load datasets
 
@@ -94,18 +93,18 @@ spread_raw %>% sample_n(10)
 ```
 
     ## # A tibble: 10 x 5
-    ##    country                          date       confirmed_n recovered_n deaths_n
-    ##    <chr>                            <date>           <int>       <int>    <int>
-    ##  1 Iceland                          2020-03-10          69           1        0
-    ##  2 Serbia                           2020-03-08           1           0        0
-    ##  3 Qatar                            2020-02-03           0           0        0
-    ##  4 Peru                             2020-03-13          28           0        0
-    ##  5 El Salvador                      2020-04-18         190          43        7
-    ##  6 Germany                          2020-03-06         670          17        0
-    ##  7 Nepal                            2020-03-20           1           1        0
-    ##  8 Ecuador                          2020-04-10        7161         368      297
-    ##  9 Dominica                         2020-03-10           0           0        0
-    ## 10 Saint Vincent and the Grenadines 2020-02-24           0           0        0
+    ##    country             date       confirmed_n recovered_n deaths_n
+    ##    <chr>               <date>           <int>       <int>    <int>
+    ##  1 Czechia             2020-04-07        5017         172       88
+    ##  2 Ireland             2020-04-18       14758          77      571
+    ##  3 Finland             2020-03-09          30           1        0
+    ##  4 Congo (Brazzaville) 2020-04-22         186          16        6
+    ##  5 Romania             2020-03-30        2109         209       65
+    ##  6 Monaco              2020-02-03           0           0        0
+    ##  7 Costa Rica          2020-03-28         295           3        2
+    ##  8 Mauritania          2020-02-28           0           0        0
+    ##  9 Burma               2020-03-25           0           0        0
+    ## 10 Somalia             2020-02-12           0           0        0
 
 ### Load countries data
 
@@ -134,28 +133,28 @@ countries_raw <- load_countries_stats()
 countries_raw %>% sample_n(10)
 ```
 
-    ##    iso_alpha3      ccse_name density fertility_rate land_area median_age migrants population
-    ## 1         BHS        Bahamas      39            1.8     10010         32     1000     393244
-    ## 2         SUR       Suriname       4            2.4    156000         29    -1000     586632
-    ## 3         MDV       Maldives    1802            1.9       300         30    11370     540544
-    ## 4         GBR United Kingdom     281            1.8    241930         40   260650   67886011
-    ## 5         EGY          Egypt     103            3.3    995450         25   -38033  102334404
-    ## 6         BEN          Benin     108            4.9    112760         19    -2000   12123200
-    ## 7         BRN         Brunei      83            1.8      5270         32        0     437479
-    ## 8         MDA        Moldova     123            1.3     32850         38    -1387    4033963
-    ## 9         NZL    New Zealand      18            1.9    263310         38    14881    4822233
-    ## 10        SWE         Sweden      25            1.9    410340         41    40000   10099265
+    ##    iso_alpha3        ccse_name density fertility_rate land_area median_age migrants population
+    ## 1         UKR          Ukraine      75            1.4    579320         41    10000   43733762
+    ## 2         NLD      Netherlands     508            1.7     33720         43    16000   17134872
+    ## 3         COD Congo (Kinshasa)      40            6.0   2267050         17    23861   89561403
+    ## 4         GBR   United Kingdom     281            1.8    241930         40   260650   67886011
+    ## 5         ISL          Iceland       3            1.8    100250         37      380     341243
+    ## 6         SLV      El Salvador     313            2.1     20720         28   -40539    6486205
+    ## 7         BRA           Brazil      25            1.7   8358140         33    21200  212559417
+    ## 8         BRN           Brunei      83            1.8      5270         32        0     437479
+    ## 9         FIN          Finland      18            1.5    303890         43    14000    5540720
+    ## 10        USA               US      36            1.8   9147420         38   954806  331002651
     ##    urban_pop_rate world_share
-    ## 1            0.86      0.0001
-    ## 2            0.65      0.0001
-    ## 3            0.35      0.0001
+    ## 1            0.69      0.0056
+    ## 2            0.92      0.0022
+    ## 3            0.46      0.0115
     ## 4            0.83      0.0087
-    ## 5            0.43      0.0131
-    ## 6            0.48      0.0016
-    ## 7            0.80      0.0001
-    ## 8            0.43      0.0005
-    ## 9            0.87      0.0006
-    ## 10           0.88      0.0013
+    ## 5            0.94      0.0000
+    ## 6            0.73      0.0008
+    ## 7            0.88      0.0273
+    ## 8            0.80      0.0001
+    ## 9            0.86      0.0007
+    ## 10           0.83      0.0425
 
 ## Preprocessing
 
@@ -385,7 +384,7 @@ ggplot(plot_data, aes(x = since_1_confirmed_per_1M_date_n_days)) +
   )
 ```
 
-    ## Warning: Removed 141 rows containing missing values (position_stack).
+    ## Warning: Removed 186 rows containing missing values (position_stack).
 
     ## Warning: Removed 9 rows containing missing values (geom_col).
 
@@ -449,7 +448,7 @@ plot_data <- data %>%
     pred %>% rename(active_n_per_1M = pred)
   ) %>% 
   mutate(
-    double_every_14d = (1 + 1/14)^since_1_confirmed_per_1M_date_n_days, # double every 2 weeks
+    double_every_10d = (1 + 1/10)^since_1_confirmed_per_1M_date_n_days, # double every 2 weeks
     double_every_7d = (1 + 1/7)^since_1_confirmed_per_1M_date_n_days, # double every week
     double_every_3d = (1 + 1/3)^since_1_confirmed_per_1M_date_n_days, # double every 3 days
     double_every_2d = (1 + 1/2)^since_1_confirmed_per_1M_date_n_days # double every 2 days
@@ -472,21 +471,19 @@ plot_data %<>%
 ``` r
 ggplot(plot_data, aes(x = since_1_confirmed_per_1M_date_n_days)) +
   
-  geom_line(aes(y = double_every_7d), linetype = "dotted", color = "red", alpha = .65) +
-  geom_line(aes(y = double_every_3d), linetype = "dotted", color = "red", alpha = .75) + 
-  geom_line(aes(y = double_every_2d), linetype = "dotted", color = "red", alpha = .85) + 
+  geom_line(aes(y = double_every_10d), linetype = "dotted", color = "red", alpha = .65) + 
+  geom_line(aes(y = double_every_7d), linetype = "dotted", color = "red", alpha = .75) +
   
   geom_line(aes(y = active_n_per_1M, color = country, linetype = data_type), show.legend = T) +
   geom_text(aes(y = active_n_per_1M_last + 20, label = country, color = country), 
             hjust = 0.5, vjust = 0, check_overlap = T, show.legend = F, fontface = "bold", size = 3.6) +
 
-  annotate(geom = "text", label = "Cases double \n every 2 days", x = 17, y = 1550, vjust = 0, size = 3.1) +
-  annotate(geom = "text", label = "...every 3 days", x = 25, y = 1800, vjust = 0, size = 3.1) +
-  annotate(geom = "text", label = "...every week", x = 50, y = 1500, vjust = 0, size = 3.1) +
+  annotate(geom = "text", label = "Cases double \n every week", x = 55, y = 1800, vjust = 0, size = 3) +
+  annotate(geom = "text", label = "...every 10 days", x = 65, y = 800, vjust = 0, size = 3) +
   
   scale_linetype_manual(values = c("longdash", "solid")) +
   
-  xlim(c(10, 55)) +
+  xlim(c(10, 70)) +
   ylim(c(0, max(plot_data$active_n_per_1M))) +
   
   labs(x = "# of days since 1 infected cases per 1M", y = "# of cases per 1M", 
@@ -501,14 +498,6 @@ ggplot(plot_data, aes(x = since_1_confirmed_per_1M_date_n_days)) +
   )
 ```
 
-![](covid-19-yaaa_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
-
-Excellent\!
-
-## Conclusion
-
-Compare last plot with naive approach (below) and find your way :)
-
-![](covid-19-yaaa_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](covid-19-yaaa_files/figure-gfm/infected_by_countries_pred-1.png)<!-- -->
 
 *Take care of yourself\!*
