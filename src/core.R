@@ -10,13 +10,14 @@
 #' Generate data
 #'
 #' @param n final x of the time series
+#' @param n_timesteps shift for predicted value
 #' @param amp amplitude of the cosine function
 #' @param period period of the cosine function
 #' @param x0 initial x of the time series
 #' @param step step of the time series discretization
 #' @param k exponential rate
 #' 
-generate_data <- function(n = 1e5, amp = 1, period = 1e3, x0 = 0, step = 1, k = 1e-4) {
+generate_data <- function(n = 1e5, n_timesteps = 1, amp = 1, period = 1e3, x0 = 0, step = 1, k = 1e-4) {
   require(dplyr)
   
   # Generates an absolute cosine time series with the amplitude exponentially decreasing
