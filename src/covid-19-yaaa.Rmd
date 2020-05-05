@@ -471,7 +471,7 @@ ggplot(plot_data, aes(x = since_1_confirmed_per_1M_date_n_days)) +
   geom_text(aes(y = active_n_per_1M_last + 20, label = country, color = country), 
             hjust = 0.5, vjust = 0, check_overlap = T, show.legend = F, fontface = "bold", size = 3.6) +
 
-  annotate(geom = "text", label = "Cases double \n every week", x = 55, y = 1800, vjust = 0, size = 3) +
+  annotate(geom = "text", label = "Cases double \n every week", x = 55, y = 2800, vjust = 0, size = 3) +
   annotate(geom = "text", label = "...every 10 days", x = 65, y = 800, vjust = 0, size = 3) +
   
   scale_linetype_manual(values = c("longdash", "solid")) +
@@ -497,5 +497,5 @@ rm(plot_data)
 ```
 
 
-*Take care of yourself!*
+*Take Care and Stay Healthy!*
 

@@ -36,6 +36,8 @@ suppressPackageStartupMessages({
 source("core.R")
 source("datasets-uploader.R")
 
+theme_set(theme_bw())
+
 
 
 # Set forecasting params ----
@@ -149,9 +151,7 @@ ggplot(pred_naive, aes(x = confirmed_n, y = pred_confirmed_n)) +
   geom_jitter(alpha = .25) +
   
   scale_x_log10() +
-  scale_y_log10() +
-  
-  theme_bw()
+  scale_y_log10()
 
 
 ## Evaluate
@@ -202,7 +202,6 @@ ggplot(
   
   facet_grid(country ~ ., scales = "free") +
   
-  theme_bw() +
   theme(legend.position = "top")
 
 
@@ -315,7 +314,6 @@ ggplot(
   
   facet_grid(country ~ ., scales = "free") +
   
-  theme_bw() +
   theme(legend.position = "top")
 
 
@@ -404,7 +402,7 @@ pred_prophet %>%
     confirmed_n = sum(confirmed_n)
   ) %>% 
   mutate(
-    resudals = abs(pred - confirmed_n)/confirmed_n
+    resudals = confirmed_n - pred
   ) %>% 
   arrange(-resudals)
 

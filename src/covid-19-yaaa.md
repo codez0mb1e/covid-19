@@ -1,6 +1,6 @@
 COVID YAAA\! or Yet Another Analyze Attempt
 ================
-29 April, 2020
+05 May, 2020
 
 #### Table of contents
 
@@ -93,18 +93,18 @@ spread_raw %>% sample_n(10)
 ```
 
     ## # A tibble: 10 x 5
-    ##    country             date       confirmed_n recovered_n deaths_n
-    ##    <chr>               <date>           <int>       <int>    <int>
-    ##  1 Czechia             2020-04-07        5017         172       88
-    ##  2 Ireland             2020-04-18       14758          77      571
-    ##  3 Finland             2020-03-09          30           1        0
-    ##  4 Congo (Brazzaville) 2020-04-22         186          16        6
-    ##  5 Romania             2020-03-30        2109         209       65
-    ##  6 Monaco              2020-02-03           0           0        0
-    ##  7 Costa Rica          2020-03-28         295           3        2
-    ##  8 Mauritania          2020-02-28           0           0        0
-    ##  9 Burma               2020-03-25           0           0        0
-    ## 10 Somalia             2020-02-12           0           0        0
+    ##    country          date       confirmed_n recovered_n deaths_n
+    ##    <chr>            <date>           <int>       <int>    <int>
+    ##  1 Congo (Kinshasa) 2020-04-22         359          45       25
+    ##  2 Cambodia         2020-03-09           2           1        0
+    ##  3 Jamaica          2020-03-03           0           0        0
+    ##  4 Mali             2020-05-03         563         213       27
+    ##  5 Cuba             2020-02-29           0           0        0
+    ##  6 Turkey           2020-01-22           0           0        0
+    ##  7 Bangladesh       2020-03-16           8           2        0
+    ##  8 Congo (Kinshasa) 2020-03-05           0           0        0
+    ##  9 New Zealand      2020-03-30         589          63        1
+    ## 10 Korea, South     2020-02-22         433          16        2
 
 ### Load countries data
 
@@ -133,28 +133,28 @@ countries_raw <- load_countries_stats()
 countries_raw %>% sample_n(10)
 ```
 
-    ##    iso_alpha3        ccse_name density fertility_rate land_area median_age migrants population
-    ## 1         UKR          Ukraine      75            1.4    579320         41    10000   43733762
-    ## 2         NLD      Netherlands     508            1.7     33720         43    16000   17134872
-    ## 3         COD Congo (Kinshasa)      40            6.0   2267050         17    23861   89561403
-    ## 4         GBR   United Kingdom     281            1.8    241930         40   260650   67886011
-    ## 5         ISL          Iceland       3            1.8    100250         37      380     341243
-    ## 6         SLV      El Salvador     313            2.1     20720         28   -40539    6486205
-    ## 7         BRA           Brazil      25            1.7   8358140         33    21200  212559417
-    ## 8         BRN           Brunei      83            1.8      5270         32        0     437479
-    ## 9         FIN          Finland      18            1.5    303890         43    14000    5540720
-    ## 10        USA               US      36            1.8   9147420         38   954806  331002651
+    ##    iso_alpha3       ccse_name density fertility_rate land_area median_age migrants population
+    ## 1         SYC      Seychelles     214            2.5       460         34     -200      98347
+    ## 2         SEN         Senegal      87            4.7    192530         19   -20000   16743927
+    ## 3         SRB          Serbia     100            1.5     87460         42     4000    8737371
+    ## 4         MKD North Macedonia      83            1.5     25220         39    -1000    2083374
+    ## 5         IDN       Indonesia     151            2.3   1811570         30   -98955  273523615
+    ## 6         KHM        Cambodia      95            2.5    176520         26   -30000   16718965
+    ## 7         IND           India     464            2.2   2973190         28  -532687 1380004385
+    ## 8         SAU    Saudi Arabia      16            2.3   2149690         32   134979   34813871
+    ## 9         PAK        Pakistan     287            3.6    770880         23  -233379  220892340
+    ## 10        KGZ      Kyrgyzstan      34            3.0    191800         26    -4000    6524195
     ##    urban_pop_rate world_share
-    ## 1            0.69      0.0056
-    ## 2            0.92      0.0022
-    ## 3            0.46      0.0115
-    ## 4            0.83      0.0087
-    ## 5            0.94      0.0000
-    ## 6            0.73      0.0008
-    ## 7            0.88      0.0273
-    ## 8            0.80      0.0001
-    ## 9            0.86      0.0007
-    ## 10           0.83      0.0425
+    ## 1            0.56      0.0000
+    ## 2            0.49      0.0021
+    ## 3            0.56      0.0011
+    ## 4            0.59      0.0003
+    ## 5            0.56      0.0351
+    ## 6            0.24      0.0021
+    ## 7            0.35      0.1770
+    ## 8            0.84      0.0045
+    ## 9            0.35      0.0283
+    ## 10           0.36      0.0008
 
 ## Preprocessing
 
@@ -384,9 +384,11 @@ ggplot(plot_data, aes(x = since_1_confirmed_per_1M_date_n_days)) +
   )
 ```
 
-    ## Warning: Removed 186 rows containing missing values (position_stack).
+    ## Warning: Removed 249 rows containing missing values (position_stack).
 
-    ## Warning: Removed 9 rows containing missing values (geom_col).
+    ## Warning: Removed 12 rows containing missing values (geom_col).
+
+    ## Warning: Removed 9 row(s) containing missing values (geom_path).
 
 ![](covid-19-yaaa_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
@@ -478,7 +480,7 @@ ggplot(plot_data, aes(x = since_1_confirmed_per_1M_date_n_days)) +
   geom_text(aes(y = active_n_per_1M_last + 20, label = country, color = country), 
             hjust = 0.5, vjust = 0, check_overlap = T, show.legend = F, fontface = "bold", size = 3.6) +
 
-  annotate(geom = "text", label = "Cases double \n every week", x = 55, y = 1800, vjust = 0, size = 3) +
+  annotate(geom = "text", label = "Cases double \n every week", x = 55, y = 2800, vjust = 0, size = 3) +
   annotate(geom = "text", label = "...every 10 days", x = 65, y = 800, vjust = 0, size = 3) +
   
   scale_linetype_manual(values = c("longdash", "solid")) +
@@ -500,4 +502,4 @@ ggplot(plot_data, aes(x = since_1_confirmed_per_1M_date_n_days)) +
 
 ![](covid-19-yaaa_files/figure-gfm/infected_by_countries_pred-1.png)<!-- -->
 
-*Take care of yourself\!*
+*Take Care and Stay Healthy\!*
