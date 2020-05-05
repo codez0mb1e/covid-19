@@ -1,6 +1,6 @@
 COVID YAAA\! or Yet Another Analyze Attempt
 ================
-04 May, 2020
+05 May, 2020
 
 #### Table of contents
 
@@ -93,18 +93,18 @@ spread_raw %>% sample_n(10)
 ```
 
     ## # A tibble: 10 x 5
-    ##    country                date       confirmed_n recovered_n deaths_n
-    ##    <chr>                  <date>           <int>       <int>    <int>
-    ##  1 North Macedonia        2020-01-22           0           0        0
-    ##  2 Malaysia               2020-02-22          22          15        0
-    ##  3 Djibouti               2020-03-01           0           0        0
-    ##  4 US                     2020-02-25          51           6        0
-    ##  5 Norway                 2020-04-06        5865          32       76
-    ##  6 Bosnia and Herzegovina 2020-01-25           0           0        0
-    ##  7 Ethiopia               2020-01-31           0           0        0
-    ##  8 Georgia                2020-02-05           0           0        0
-    ##  9 Saint Lucia            2020-05-01          17          15        0
-    ## 10 Uganda                 2020-03-18           0           0        0
+    ##    country          date       confirmed_n recovered_n deaths_n
+    ##    <chr>            <date>           <int>       <int>    <int>
+    ##  1 Congo (Kinshasa) 2020-04-22         359          45       25
+    ##  2 Cambodia         2020-03-09           2           1        0
+    ##  3 Jamaica          2020-03-03           0           0        0
+    ##  4 Mali             2020-05-03         563         213       27
+    ##  5 Cuba             2020-02-29           0           0        0
+    ##  6 Turkey           2020-01-22           0           0        0
+    ##  7 Bangladesh       2020-03-16           8           2        0
+    ##  8 Congo (Kinshasa) 2020-03-05           0           0        0
+    ##  9 New Zealand      2020-03-30         589          63        1
+    ## 10 Korea, South     2020-02-22         433          16        2
 
 ### Load countries data
 
@@ -133,28 +133,28 @@ countries_raw <- load_countries_stats()
 countries_raw %>% sample_n(10)
 ```
 
-    ##    iso_alpha3         ccse_name density fertility_rate land_area median_age migrants population
-    ## 1         GNQ Equatorial Guinea      50            4.6     28050         22    16000    1402985
-    ## 2         HND          Honduras      89            2.5    111890         24    -6800    9904607
-    ## 3         BHS           Bahamas      39            1.8     10010         32     1000     393244
-    ## 4         MOZ        Mozambique      40            4.9    786380         18    -5000   31255435
-    ## 5         NLD       Netherlands     508            1.7     33720         43    16000   17134872
-    ## 6         BGD        Bangladesh    1265            2.1    130170         28  -369501  164689383
-    ## 7         IDN         Indonesia     151            2.3   1811570         30   -98955  273523615
-    ## 8         TCD              Chad      13            5.8   1259200         17     2000   16425864
-    ## 9         NER             Niger      19            7.0   1266700         15     4000   24206644
-    ## 10        LUX        Luxembourg     242            1.5      2590         40     9741     625978
+    ##    iso_alpha3       ccse_name density fertility_rate land_area median_age migrants population
+    ## 1         SYC      Seychelles     214            2.5       460         34     -200      98347
+    ## 2         SEN         Senegal      87            4.7    192530         19   -20000   16743927
+    ## 3         SRB          Serbia     100            1.5     87460         42     4000    8737371
+    ## 4         MKD North Macedonia      83            1.5     25220         39    -1000    2083374
+    ## 5         IDN       Indonesia     151            2.3   1811570         30   -98955  273523615
+    ## 6         KHM        Cambodia      95            2.5    176520         26   -30000   16718965
+    ## 7         IND           India     464            2.2   2973190         28  -532687 1380004385
+    ## 8         SAU    Saudi Arabia      16            2.3   2149690         32   134979   34813871
+    ## 9         PAK        Pakistan     287            3.6    770880         23  -233379  220892340
+    ## 10        KGZ      Kyrgyzstan      34            3.0    191800         26    -4000    6524195
     ##    urban_pop_rate world_share
-    ## 1            0.73      0.0002
-    ## 2            0.57      0.0013
-    ## 3            0.86      0.0001
-    ## 4            0.38      0.0040
-    ## 5            0.92      0.0022
-    ## 6            0.39      0.0211
-    ## 7            0.56      0.0351
-    ## 8            0.23      0.0021
-    ## 9            0.17      0.0031
-    ## 10           0.88      0.0001
+    ## 1            0.56      0.0000
+    ## 2            0.49      0.0021
+    ## 3            0.56      0.0011
+    ## 4            0.59      0.0003
+    ## 5            0.56      0.0351
+    ## 6            0.24      0.0021
+    ## 7            0.35      0.1770
+    ## 8            0.84      0.0045
+    ## 9            0.35      0.0283
+    ## 10           0.36      0.0008
 
 ## Preprocessing
 
@@ -384,11 +384,11 @@ ggplot(plot_data, aes(x = since_1_confirmed_per_1M_date_n_days)) +
   )
 ```
 
-    ## Warning: Removed 237 rows containing missing values (position_stack).
+    ## Warning: Removed 249 rows containing missing values (position_stack).
 
     ## Warning: Removed 12 rows containing missing values (geom_col).
 
-    ## Warning: Removed 6 row(s) containing missing values (geom_path).
+    ## Warning: Removed 9 row(s) containing missing values (geom_path).
 
 ![](covid-19-yaaa_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
