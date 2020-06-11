@@ -316,7 +316,7 @@ ggplot(
   geom_col(aes(y = confirmed_n_per_1M), alpha = .9) +
   
   scale_y_log10() +
-  xlim(c(0, 55)) +
+  xlim(c(0, 100)) +
   
   facet_grid(country ~ .) +
   
@@ -359,7 +359,7 @@ ggplot(plot_data, aes(x = since_1_confirmed_per_1M_date_n_days)) +
                     labels = c("confirmed_n_per_1M" = "Infected cases", "recovered_n_per_1M" = "Recovered cases", "deaths_n_per_1M" = "Fatal cases"),
                     values = c("confirmed_n_per_1M" = "grey", "recovered_n_per_1M" = "gold", "deaths_n_per_1M" = "black")) +
   
-  xlim(c(0, 55)) +
+  xlim(c(0, 100)) +
   
   facet_grid(country ~ ., scales = "free") +
   
@@ -476,7 +476,7 @@ ggplot(plot_data, aes(x = since_1_confirmed_per_1M_date_n_days)) +
   
   scale_linetype_manual(values = c("longdash", "solid")) +
   
-  xlim(c(10, 70)) +
+  xlim(c(25, 125)) +
   ylim(c(0, max(plot_data$active_n_per_1M))) +
   
   labs(x = "# of days since 1 infected cases per 1M", y = "# of cases per 1M", 

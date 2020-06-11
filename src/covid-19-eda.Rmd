@@ -5,7 +5,7 @@ output:
   github_document:
     toc: true
     toc_depth: 2
-    fig_width: 9 
+    fig_width: 9
     fig_height: 6 
 ---
 
@@ -264,9 +264,9 @@ ggplot(
   geom_col(aes(y = cases_n, fill = case_state), alpha = .75) +
   geom_smooth(aes(y = active_total), method = "loess", color = "#0080FF", size = .2) +
   
-  geom_hline(aes(yintercept = total_population*3e-4), linetype = "dashed", color = "black", alpha = .33) +
-  annotate(geom = "text", label = "0.03% of world population", size = 3, color = "#666666", 
-           x = min(world_spread$observation_date), y = (1.05*total_population*3e-4), 
+  geom_hline(aes(yintercept = total_population*9e-4), linetype = "dashed", color = "black", alpha = .33) +
+  annotate(geom = "text", label = "0.09% of world population", size = 3, color = "#666666", 
+           x = min(world_spread$observation_date), y = (1.05*total_population*9e-4), 
            vjust = "bottom", hjust = "left") +
   
   scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
@@ -306,9 +306,9 @@ ggplot(
   geom_col(aes(y = cases_n, fill = case_state), alpha = .75) +
   geom_smooth(aes(y = active_total), method = "loess", color = "#0080FF", size = .2) +
   
-  geom_hline(aes(yintercept = total_population*3e-4), linetype = "dashed", color = "black", alpha = .33) +
-  annotate(geom = "text", label = "0.03% of world population", size = 3, color = "#666666", 
-           x = Sys.Date() - weeks(4), y = (1.05*total_population*3e-4), 
+  geom_hline(aes(yintercept = total_population*9e-4), linetype = "dashed", color = "black", alpha = .33) +
+  annotate(geom = "text", label = "0.09% of world population", size = 3, color = "#666666", 
+           x = Sys.Date() - weeks(4), y = (1.05*total_population*9e-4), 
            vjust = "bottom", hjust = "left") +
   
   scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
@@ -1038,7 +1038,7 @@ ggplot(active_cases_since_100st_confirmed, aes(x = n_days_since_100_confirmed)) 
   annotate(geom = "text", label = "Cases double \nevery 3 days", x = 30, y = 2800, vjust = 0, size = 3) +
   annotate(geom = "text", label = "...every week", x = 60, y = 3100, vjust = 0, size = 3) +
   
-  xlim(c(10, 65)) +
+  xlim(c(30, 100)) +
   ylim(c(0, max(active_cases_since_100st_confirmed$active_total_per_1M))) +
   
   labs(x = "Number of days since 100th infected case", y = "Active cases per 1M population", 
@@ -1092,7 +1092,7 @@ ggplot(
   annotate(geom = "text", label = "...every 3 days", x = 25, y = 1750, vjust = 0, size = 3.1) +
   annotate(geom = "text", label = "...every week", x = 40, y = 300, vjust = 0, size = 3.1) +
   
-  xlim(c(0, 60)) +
+  xlim(c(30, 100)) +
   ylim(c(0, max(active_cases_since_10th_death$active_total_per_1M) + 100)) +
   
   labs(x = "Number of days since 10th fatal case", y = "Active cases per 1M population", 

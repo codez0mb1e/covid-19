@@ -1,6 +1,6 @@
 COVID YAAA\! or Yet Another Analyze Attempt
 ================
-05 May, 2020
+11 June, 2020
 
 #### Table of contents
 
@@ -93,18 +93,18 @@ spread_raw %>% sample_n(10)
 ```
 
     ## # A tibble: 10 x 5
-    ##    country          date       confirmed_n recovered_n deaths_n
-    ##    <chr>            <date>           <int>       <int>    <int>
-    ##  1 Congo (Kinshasa) 2020-04-22         359          45       25
-    ##  2 Cambodia         2020-03-09           2           1        0
-    ##  3 Jamaica          2020-03-03           0           0        0
-    ##  4 Mali             2020-05-03         563         213       27
-    ##  5 Cuba             2020-02-29           0           0        0
-    ##  6 Turkey           2020-01-22           0           0        0
-    ##  7 Bangladesh       2020-03-16           8           2        0
-    ##  8 Congo (Kinshasa) 2020-03-05           0           0        0
-    ##  9 New Zealand      2020-03-30         589          63        1
-    ## 10 Korea, South     2020-02-22         433          16        2
+    ##    country     date       confirmed_n recovered_n deaths_n
+    ##    <chr>       <date>           <int>       <int>    <int>
+    ##  1 Libya       2020-02-15           0           0        0
+    ##  2 Chad        2020-05-20         565         177       57
+    ##  3 El Salvador 2020-05-10         889         293       17
+    ##  4 Sweden      2020-05-07       24623           0     3040
+    ##  5 Mauritius   2020-04-28         334         303       10
+    ##  6 Germany     2020-03-27       50871        6658      342
+    ##  7 Philippines 2020-04-04        3094          57      144
+    ##  8 Honduras    2020-02-05           0           0        0
+    ##  9 New Zealand 2020-03-22         102           0        0
+    ## 10 Denmark     2020-04-11        6191        2111      260
 
 ### Load countries data
 
@@ -133,28 +133,28 @@ countries_raw <- load_countries_stats()
 countries_raw %>% sample_n(10)
 ```
 
-    ##    iso_alpha3       ccse_name density fertility_rate land_area median_age migrants population
-    ## 1         SYC      Seychelles     214            2.5       460         34     -200      98347
-    ## 2         SEN         Senegal      87            4.7    192530         19   -20000   16743927
-    ## 3         SRB          Serbia     100            1.5     87460         42     4000    8737371
-    ## 4         MKD North Macedonia      83            1.5     25220         39    -1000    2083374
-    ## 5         IDN       Indonesia     151            2.3   1811570         30   -98955  273523615
-    ## 6         KHM        Cambodia      95            2.5    176520         26   -30000   16718965
-    ## 7         IND           India     464            2.2   2973190         28  -532687 1380004385
-    ## 8         SAU    Saudi Arabia      16            2.3   2149690         32   134979   34813871
-    ## 9         PAK        Pakistan     287            3.6    770880         23  -233379  220892340
-    ## 10        KGZ      Kyrgyzstan      34            3.0    191800         26    -4000    6524195
-    ##    urban_pop_rate world_share
-    ## 1            0.56      0.0000
-    ## 2            0.49      0.0021
-    ## 3            0.56      0.0011
-    ## 4            0.59      0.0003
-    ## 5            0.56      0.0351
-    ## 6            0.24      0.0021
-    ## 7            0.35      0.1770
-    ## 8            0.84      0.0045
-    ## 9            0.35      0.0283
-    ## 10           0.36      0.0008
+    ##     iso_alpha3    ccse_name density fertility_rate land_area median_age migrants population
+    ##  1:        NER        Niger      19            7.0   1266700         15     4000   24206644
+    ##  2:        IDN    Indonesia     151            2.3   1811570         30   -98955  273523615
+    ##  3:        ESP        Spain      94            1.3    498800         45    40000   46754778
+    ##  4:        MUS    Mauritius     626            1.4      2030         37        0    1271768
+    ##  5:        GTM    Guatemala     167            2.9    107160         23    -9215   17915568
+    ##  6:        KOR Korea, South     527            1.1     97230         44    11731   51269185
+    ##  7:        PAK     Pakistan     287            3.6    770880         23  -233379  220892340
+    ##  8:        DJI     Djibouti      43            2.8     23180         27      900     988000
+    ##  9:        KHM     Cambodia      95            2.5    176520         26   -30000   16718965
+    ## 10:        GRD      Grenada     331            2.1       340         32     -200     112523
+    ##     urban_pop_rate world_share
+    ##  1:           0.17      0.0031
+    ##  2:           0.56      0.0351
+    ##  3:           0.80      0.0060
+    ##  4:           0.41      0.0002
+    ##  5:           0.52      0.0023
+    ##  6:           0.82      0.0066
+    ##  7:           0.35      0.0283
+    ##  8:           0.79      0.0001
+    ##  9:           0.24      0.0021
+    ## 10:           0.35      0.0000
 
 ## Preprocessing
 
@@ -217,6 +217,10 @@ data %<>%
     ## ℹ Use `all_of(.case_type)` instead of `.case_type` to silence this message.
     ## ℹ See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
     ## This message is displayed once per session.
+
+    ## `summarise()` ungrouping output (override with `.groups` argument)
+    ## `summarise()` ungrouping output (override with `.groups` argument)
+    ## `summarise()` ungrouping output (override with `.groups` argument)
 
 ## Issue I: Absolute vs relative values
 
@@ -326,7 +330,7 @@ ggplot(
   geom_col(aes(y = confirmed_n_per_1M), alpha = .9) +
   
   scale_y_log10() +
-  xlim(c(0, 55)) +
+  xlim(c(0, 100)) +
   
   facet_grid(country ~ .) +
   
@@ -369,7 +373,7 @@ ggplot(plot_data, aes(x = since_1_confirmed_per_1M_date_n_days)) +
                     labels = c("confirmed_n_per_1M" = "Infected cases", "recovered_n_per_1M" = "Recovered cases", "deaths_n_per_1M" = "Fatal cases"),
                     values = c("confirmed_n_per_1M" = "grey", "recovered_n_per_1M" = "gold", "deaths_n_per_1M" = "black")) +
   
-  xlim(c(0, 55)) +
+  xlim(c(0, 100)) +
   
   facet_grid(country ~ ., scales = "free") +
   
@@ -384,11 +388,9 @@ ggplot(plot_data, aes(x = since_1_confirmed_per_1M_date_n_days)) +
   )
 ```
 
-    ## Warning: Removed 249 rows containing missing values (position_stack).
+    ## Warning: Removed 168 rows containing missing values (position_stack).
 
-    ## Warning: Removed 12 rows containing missing values (geom_col).
-
-    ## Warning: Removed 9 row(s) containing missing values (geom_path).
+    ## Warning: Removed 9 rows containing missing values (geom_col).
 
 ![](covid-19-yaaa_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
@@ -485,7 +487,7 @@ ggplot(plot_data, aes(x = since_1_confirmed_per_1M_date_n_days)) +
   
   scale_linetype_manual(values = c("longdash", "solid")) +
   
-  xlim(c(10, 70)) +
+  xlim(c(25, 125)) +
   ylim(c(0, max(plot_data$active_n_per_1M))) +
   
   labs(x = "# of days since 1 infected cases per 1M", y = "# of cases per 1M", 
