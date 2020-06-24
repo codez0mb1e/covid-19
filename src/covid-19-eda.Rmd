@@ -269,7 +269,7 @@ ggplot(
            x = min(world_spread$observation_date), y = (1.05*total_population*9e-4), 
            vjust = "bottom", hjust = "left") +
   
-  scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
+  scale_x_date(date_labels = "%d %b", date_breaks = "14 days") +
   scale_fill_manual(element_blank(), 
                     labels = c("confirmed_total" = "Infected cases", "recovered_total" = "Recovered cases", "deaths_total" = "Fatal cases"),
                     values = c("confirmed_total" = "grey", "recovered_total" = "gold", "deaths_total" = "black")) +
@@ -311,7 +311,7 @@ ggplot(
            x = Sys.Date() - weeks(4), y = (1.05*total_population*9e-4), 
            vjust = "bottom", hjust = "left") +
   
-  scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
+  scale_x_date(date_labels = "%d %b", date_breaks = "5 days") +
   scale_fill_manual(element_blank(), 
                     labels = c("confirmed_total" = "Infected cases", "recovered_total" = "Recovered cases", "deaths_total" = "Fatal cases"),
                     values = c("confirmed_total" = "grey", "recovered_total" = "gold", "deaths_total" = "black")) +
@@ -345,7 +345,7 @@ ggplot(
   
   geom_col(aes(x = observation_date, y = cases_n, fill = case_state), position = "fill", alpha = .75) +
   
-  scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
+  scale_x_date(date_labels = "%d %b", date_breaks = "14 days") +
   scale_fill_manual(element_blank(), 
                     labels = c("confirmed_total" = "Infected cases", "deaths_total" = "Fatal cases", "recovered_total" = "Recovered cases"),
                     values = c("confirmed_total" = "grey", "deaths_total" = "black", "recovered_total" = "gold")) +
@@ -381,7 +381,7 @@ ggplot(
   
   geom_col(aes(x = observation_date, y = cases_n, fill = case_state), position = "fill", alpha = .75) +
   
-  scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
+  scale_x_date(date_labels = "%d %b", date_breaks = "5 days") +
   scale_fill_manual(element_blank(), 
                     labels = c("confirmed_total" = "Infected cases", "deaths_total" = "Fatal cases", "recovered_total" = "Recovered cases"),
                     values = c("confirmed_total" = "grey", "deaths_total" = "black", "recovered_total" = "gold")) +
@@ -451,7 +451,7 @@ ggplot(
   geom_col(aes(x = observation_date, y = cases_n, fill = case_state), alpha = .75) +
   geom_smooth(aes(y = active_total_per_day), method = "loess", color = "#0080FF", size = .2) +
   
-  scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
+  scale_x_date(date_labels = "%d %b", date_breaks = "14 days") +
   scale_fill_manual(element_blank(), 
                     labels = c("confirmed_total_per_day" = "New infected cases", "recovered_total_per_day" = "New recovered cases", "deaths_total_per_day" = "New fatal cases"),
                     values = c("confirmed_total_per_day" = "grey", "recovered_total_per_day" = "gold", "deaths_total_per_day" = "black")) +
@@ -489,7 +489,7 @@ ggplot(
   geom_col(aes(x = observation_date, y = cases_n, fill = case_state), alpha = .75) +
   geom_smooth(aes(y = active_total_per_day), method = "loess", color = "#0080FF", size = .2) +
   
-  scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
+  scale_x_date(date_labels = "%d %b", date_breaks = "5 days") +
   scale_fill_manual(element_blank(), 
                     labels = c("confirmed_total_per_day" = "New infected cases", "recovered_total_per_day" = "New recovered cases", "deaths_total_per_day" = "New fatal cases"),
                     values = c("confirmed_total_per_day" = "grey", "recovered_total_per_day" = "gold", "deaths_total_per_day" = "black")) +
@@ -641,7 +641,7 @@ ggplot(
   geom_col(aes(y = cases_n, fill = case_state), alpha = .75) +
   geom_smooth(aes(y = active_total), method = "loess", color = "#0080FF", size = .2) +
   
-  scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
+  scale_x_date(date_labels = "%d %b", date_breaks = "14 days") +
   scale_fill_manual(element_blank(), 
                     labels = c("confirmed_total" = "Infected cases", "recovered_total" = "Recovered cases", "deaths_total" = "Fatal cases"),
                     values = c("confirmed_total" = "grey", "recovered_total" = "gold", "deaths_total" = "black")) +
@@ -682,7 +682,7 @@ ggplot(
   geom_col(aes(y = cases_n, fill = case_state), alpha = .75) +
   geom_smooth(aes(y = active_total), method = "loess", color = "#0080FF", size = .2) +
   
-  scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
+  scale_x_date(date_labels = "%d %b", date_breaks = "5 days") +
   scale_fill_manual(element_blank(), 
                     labels = c("confirmed_total" = "Infected cases", "recovered_total" = "Recovered cases", "deaths_total" = "Fatal cases"),
                     values = c("confirmed_total" = "grey", "recovered_total" = "gold", "deaths_total" = "black")) +
@@ -751,7 +751,7 @@ ggplot(
   geom_col(aes(x = observation_date, y = cases_n, fill = case_state), alpha = .75) +
   geom_smooth(aes(y = active_total_per_day), method = "loess", color = "#0080FF", size = .2) +
   
-  scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
+  scale_x_date(date_labels = "%d %b", date_breaks = "14 days") +
   scale_fill_manual(element_blank(), 
                     labels = c("confirmed_total_per_day" = "New infected cases", "recovered_total_per_day" = "New recovered cases", "deaths_total_per_day" = "New fatal cases"),
                     values = c("confirmed_total_per_day" = "grey", "recovered_total_per_day" = "gold", "deaths_total_per_day" = "black")) +
@@ -796,7 +796,7 @@ ggplot(
   geom_col(aes(x = observation_date, y = cases_n, fill = case_state), alpha = .75) +
   geom_smooth(aes(y = active_total_per_day), method = "loess", color = "#0080FF", size = .2) +
   
-  scale_x_date(date_labels = "%d %b", date_breaks = "7 days") +
+  scale_x_date(date_labels = "%d %b", date_breaks = "5 days") +
   scale_fill_manual(element_blank(), 
                     labels = c("confirmed_total_per_day" = "New infected cases", "recovered_total_per_day" = "New recovered cases", "deaths_total_per_day" = "New fatal cases"),
                     values = c("confirmed_total_per_day" = "grey", "recovered_total_per_day" = "gold", "deaths_total_per_day" = "black")) +
@@ -846,7 +846,7 @@ ggplot(
   
   facet_grid(country ~ ., scales = "free") +
   
-  labs(x = "Number of days since 10th fatal case", y = "Mortality rate", 
+  labs(x = "Number of days since 10th fatal case", y = "Mortality rate (attention: different scales)", 
        title = "COVID-19 Mortality Rate", 
        subtitle = "Gold area - fatal to recovered cases ratio, grey area - fatal to infected cases ratio.", 
        caption = lab_caption) +

@@ -53,18 +53,18 @@ Get list of files in datasets
 Load `covid_19_data.csv` dataset:
 
     ## # A tibble: 100 x 8
-    ##      SNo ObservationDate Province.State      Country.Region Last.Update   Confirmed Deaths Recovered
-    ##    <int> <chr>           <chr>               <chr>          <chr>             <dbl>  <dbl>     <dbl>
-    ##  1 10319 03/30/2020      Quebec              Canada         3/8/20 5:31        3430     22         0
-    ##  2 21467 05/04/2020      Macau               Macau          2020-05-05 0…        45      0        39
-    ##  3 11712 04/04/2020      <NA>                Madagascar     4/4/20 9:38          70      0         0
-    ##  4  9407 03/27/2020      Tianjin             Mainland China 2020-03-27 2…       155      3       133
-    ##  5 24013 05/12/2020      Falkland Islands (… UK             2020-05-13 0…        13      0        13
-    ##  6   709 02/04/2020      Fujian              Mainland China 2020-02-04T1…       194      0         3
-    ##  7 26847 05/20/2020      <NA>                Rwanda         2020-05-21 0…       314      0       216
-    ##  8 20382 05/01/2020      <NA>                Philippines    2020-05-02 0…      8772    579      1084
-    ##  9 14319 04/12/2020      <NA>                Somalia        2020-04-12 2…        25      1         2
-    ## 10 44774 06/18/2020      Gotland             Sweden         2020-06-19 0…       122      6         0
+    ##      SNo ObservationDate Province.State Country.Region    Last.Update     Confirmed Deaths Recovered
+    ##    <int> <chr>           <chr>          <chr>             <chr>               <dbl>  <dbl>     <dbl>
+    ##  1 24953 05/15/2020      <NA>           Pakistan          2020-05-16 02:…     38799    834     10880
+    ##  2 43165 06/16/2020      Aguascalientes Mexico            2020-06-17 04:…      1561     84      1130
+    ##  3 32293 05/31/2020      Guerrero       Mexico            2020-06-01 02:…      1893    266      1285
+    ##  4 42187 06/14/2020      Tocantins      Brazil            2020-06-15 03:…      6972    132      3780
+    ##  5 26260 05/18/2020      New Mexico     US                2020-05-19 02:…      6096    270         0
+    ##  6  1875 02/20/2020      Jiangsu        Mainland China    2020-02-20T12:…       631      0       356
+    ##  7  7441 03/21/2020      <NA>           Dominican Republ… 2020-03-21T15:…       112      2         0
+    ##  8 12174 04/05/2020      Martinique     France            2020-04-05 23:…       149      4        50
+    ##  9 16100 04/18/2020      <NA>           Bahamas           2020-04-18 22:…        55      9        10
+    ## 10  5047 03/12/2020      Virginia       US                2020-03-12T21:…        17      0         0
     ## # … with 90 more rows
 
 ### Load world population data
