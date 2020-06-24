@@ -31,9 +31,8 @@ Upload the latest datasets:
 
 #### 3. Forecasting
 
-Kernels (in development):
+Kernels:
 
-- (depricated) [Kaggle COVID-19 forecasting](src/kaggle-covid-forecasting.R) 
 - [Sberbank COVID-19 forecasting](src/sberbank-covid-forecasting.R) 
 
 Forecasting methods:
@@ -73,11 +72,11 @@ Forecasting methods:
 #### Analytics, Dashboards, Maps
 
 1. Tomas Pueyo. [Coronavirus: Why You Must Act Now](https://medium.com/@tomaspueyo/coronavirus-act-today-or-people-will-die-f4d3d9cd99ca), Medium.
-1. COVID-19 Data Resource Hub: [COVID-19 Cases Dashboard](https://public.tableau.com/profile/covid.19.data.resource.hub#!/vizhome/COVID-19Cases_15840488375320/COVID-19Cases), Tableau.
 1. [COVID-19 Cases Map](https://yandex.ru/web-maps/covid19), Yandex.
 1. [COVID-19 Animated Spread Map](https://www.healthmap.org/covid-19/), healthmap.org.
 1. [COVID-19 Cases Metrics](https://www.worldometers.info/coronavirus/), worldometers.info.
 1. [Coronavirus tracked: the latest figures as the pandemic spreads](https://www.ft.com/coronavirus-latest), Financial Times.
+1. [Understanding and tracking our progress against COVID-19](https://app.powerbi.com/view?r=eyJrIjoiM2Q1M2YxMmMtYzBkMC00YWI0LWE2ODMtZGFhZmM4OTNiYzcxIiwidCI6ImMxMzZlZWMwLWZlOTItNDVlMC1iZWFlLTQ2OTg0OTczZTIzMiIsImMiOjF9), Microsoft.
 
 
 #### Timeline
