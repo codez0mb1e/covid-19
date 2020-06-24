@@ -1,6 +1,6 @@
 COVID YAAA\! or Yet Another Analyze Attempt
 ================
-11 June, 2020
+24 June, 2020
 
 #### Table of contents
 
@@ -93,18 +93,18 @@ spread_raw %>% sample_n(10)
 ```
 
     ## # A tibble: 10 x 5
-    ##    country     date       confirmed_n recovered_n deaths_n
-    ##    <chr>       <date>           <int>       <int>    <int>
-    ##  1 Libya       2020-02-15           0           0        0
-    ##  2 Chad        2020-05-20         565         177       57
-    ##  3 El Salvador 2020-05-10         889         293       17
-    ##  4 Sweden      2020-05-07       24623           0     3040
-    ##  5 Mauritius   2020-04-28         334         303       10
-    ##  6 Germany     2020-03-27       50871        6658      342
-    ##  7 Philippines 2020-04-04        3094          57      144
-    ##  8 Honduras    2020-02-05           0           0        0
-    ##  9 New Zealand 2020-03-22         102           0        0
-    ## 10 Denmark     2020-04-11        6191        2111      260
+    ##    country                  date       confirmed_n recovered_n deaths_n
+    ##    <chr>                    <date>           <int>       <int>    <int>
+    ##  1 Central African Republic 2020-02-23           0           0        0
+    ##  2 Australia                2020-04-07        5895        1080       45
+    ##  3 Panama                   2020-02-23           0           0        0
+    ##  4 Kuwait                   2020-02-04           0           0        0
+    ##  5 Bangladesh               2020-02-03           0           0        0
+    ##  6 Cuba                     2020-05-13        1810        1326       79
+    ##  7 Costa Rica               2020-03-09           9           0        0
+    ##  8 Israel                   2020-01-30           0           0        0
+    ##  9 Greece                   2020-02-04           0           0        0
+    ## 10 Taiwan*                  2020-06-05         443         429        7
 
 ### Load countries data
 
@@ -133,28 +133,28 @@ countries_raw <- load_countries_stats()
 countries_raw %>% sample_n(10)
 ```
 
-    ##     iso_alpha3    ccse_name density fertility_rate land_area median_age migrants population
-    ##  1:        NER        Niger      19            7.0   1266700         15     4000   24206644
-    ##  2:        IDN    Indonesia     151            2.3   1811570         30   -98955  273523615
-    ##  3:        ESP        Spain      94            1.3    498800         45    40000   46754778
-    ##  4:        MUS    Mauritius     626            1.4      2030         37        0    1271768
-    ##  5:        GTM    Guatemala     167            2.9    107160         23    -9215   17915568
-    ##  6:        KOR Korea, South     527            1.1     97230         44    11731   51269185
-    ##  7:        PAK     Pakistan     287            3.6    770880         23  -233379  220892340
-    ##  8:        DJI     Djibouti      43            2.8     23180         27      900     988000
-    ##  9:        KHM     Cambodia      95            2.5    176520         26   -30000   16718965
-    ## 10:        GRD      Grenada     331            2.1       340         32     -200     112523
+    ##     iso_alpha3          ccse_name density fertility_rate land_area median_age migrants population
+    ##  1:        DOM Dominican Republic     225            2.4     48320         28   -30000   10847910
+    ##  2:        BRN             Brunei      83            1.8      5270         32        0     437479
+    ##  3:        GUY             Guyana       4            2.5    196850         27    -6000     786552
+    ##  4:        PER               Peru      26            2.3   1280000         31    99069   32971854
+    ##  5:        CYP             Cyprus     131            1.3      9240         37     5000    1207359
+    ##  6:        ESP              Spain      94            1.3    498800         45    40000   46754778
+    ##  7:        GEO            Georgia      57            2.1     69490         38   -10000    3989167
+    ##  8:        PHL        Philippines     368            2.6    298170         26   -67152  109581078
+    ##  9:        PAK           Pakistan     287            3.6    770880         23  -233379  220892340
+    ## 10:        ETH           Ethiopia     115            4.3   1000000         19    30000  114963588
     ##     urban_pop_rate world_share
-    ##  1:           0.17      0.0031
-    ##  2:           0.56      0.0351
-    ##  3:           0.80      0.0060
-    ##  4:           0.41      0.0002
-    ##  5:           0.52      0.0023
-    ##  6:           0.82      0.0066
-    ##  7:           0.35      0.0283
-    ##  8:           0.79      0.0001
-    ##  9:           0.24      0.0021
-    ## 10:           0.35      0.0000
+    ##  1:           0.85      0.0014
+    ##  2:           0.80      0.0001
+    ##  3:           0.27      0.0001
+    ##  4:           0.79      0.0042
+    ##  5:           0.67      0.0002
+    ##  6:           0.80      0.0060
+    ##  7:           0.58      0.0005
+    ##  8:           0.47      0.0141
+    ##  9:           0.35      0.0283
+    ## 10:           0.21      0.0147
 
 ## Preprocessing
 
@@ -388,9 +388,11 @@ ggplot(plot_data, aes(x = since_1_confirmed_per_1M_date_n_days)) +
   )
 ```
 
-    ## Warning: Removed 168 rows containing missing values (position_stack).
+    ## Warning: Removed 309 rows containing missing values (position_stack).
 
-    ## Warning: Removed 9 rows containing missing values (geom_col).
+    ## Warning: Removed 12 rows containing missing values (geom_col).
+
+    ## Warning: Removed 24 row(s) containing missing values (geom_path).
 
 ![](covid-19-yaaa_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
