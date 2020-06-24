@@ -38,4 +38,8 @@ kaggle datasets download -p ../data/ -d danevans/world-bank-wdi-212-health-syste
 kaggle datasets download -p ../data/ -d osciiart/smokingstats
 
 
+echo "Packages data..."
+Rscript ../data/tidycovid19-package-data-uploader.R
+
+
 echo "Completed."
