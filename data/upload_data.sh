@@ -24,7 +24,7 @@ echo "Loading mobility info..."
 # Google mobility
 wget -N -P ../data/ https://raw.githubusercontent.com/tyz910/sberbank-covid19/master/data/mobility-google.csv
 # Apple mobility
-wget -N -P ../data/ https://covid19-static.cdn-apple.com/covid19-mobility-data/2006HotfixDev6/v1/en-us/applemobilitytrends-2020-04-15.csv
+wget -N -P ../data/ https://covid19-static.cdn-apple.com/covid19-mobility-data/2010HotfixDev27/v3/en-us/applemobilitytrends-2020-06-22.csv
 # Yandex mobility
 wget -N -P ../data/ https://raw.githubusercontent.com/tyz910/sberbank-covid19/master/data/mobility-yandex.csv
 
