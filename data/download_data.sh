@@ -39,7 +39,7 @@ kaggle datasets download -p ../data/ -d osciiart/smokingstats
 
 
 echo "Packages data..."
-Rscript ../data/tidycovid19-package-data-uploader.R
+Rscript ../data/tidycovid19-package-data.R
 
 
 echo "Completed."
