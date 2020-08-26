@@ -71,6 +71,7 @@ Forecasting methods:
 
 #### Analytics, Dashboards, Maps
 
+1. [**An interactive visualization of the exponential spread of COVID-19**](http://91-divoc.com/pages/covid-visualization/), 91-DIVOC.
 1. Tomas Pueyo. [Coronavirus: Why You Must Act Now](https://medium.com/@tomaspueyo/coronavirus-act-today-or-people-will-die-f4d3d9cd99ca), Medium.
 1. [COVID-19 Cases Map](https://yandex.ru/web-maps/covid19), Yandex.
 1. [COVID-19 Animated Spread Map](https://www.healthmap.org/covid-19/), healthmap.org.
