@@ -20,7 +20,7 @@
 
 Upload the latest datasets:
 
-`. ../data/upload_data.sh`
+`. ../data/download-data.sh`
 
 
 #### 2. EDA and visualization
