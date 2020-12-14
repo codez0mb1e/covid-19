@@ -78,6 +78,7 @@ Forecasting methods:
 1. [COVID-19 Cases Metrics](https://www.worldometers.info/coronavirus/), worldometers.info.
 1. [Coronavirus tracked: the latest figures as the pandemic spreads](https://www.ft.com/coronavirus-latest), Financial Times.
 1. [Understanding and tracking our progress against COVID-19](https://app.powerbi.com/view?r=eyJrIjoiM2Q1M2YxMmMtYzBkMC00YWI0LWE2ODMtZGFhZmM4OTNiYzcxIiwidCI6ImMxMzZlZWMwLWZlOTItNDVlMC1iZWFlLTQ2OTg0OTczZTIzMiIsImMiOjF9), Microsoft.
+1. [**COVID-19 statistics**](https://yandex.ru/covid19/stat), Yandex.
 
 
 #### Timeline
